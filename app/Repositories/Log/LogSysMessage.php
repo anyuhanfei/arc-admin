@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Repositories\Log;
+
+use App\Models\Log\LogSysMessage as Model;
+use Dcat\Admin\Repositories\EloquentRepository;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model as EloquentModel;
+
+/**
+ * 系统消息表数据仓库
+ */
+class LogSysMessage extends EloquentRepository{
+    protected $eloquentClass = Model::class;
+
+    /**
+     * 获取会员的消息列表
+     *
+     * @param integer $user_id
+     * @param integer $page
+     * @param integer $limit
+     * @return Collection
+     */
+    public function get_user_message_list(int $user_id, int $page, int $limit):Collection{
+        return $this->eloquentClass::userIds($user_id)->orderby("id", 'desc')->page($page, $limit)->get();
+    }
+
+    /**
+     * 获取会员的消息详情
+     *
+     * @param integer $user_id
+     * @param integer $message_id
+     * @return EloquentModel|null
+     */
+    public function get_user_message_detail(int $user_id, int $message_id):EloquentModel|null{
+        return $this->eloquentClass::userIds($user_id)->id($message_id)->first();
+    }
+
+    /**
+     * 会员系统消息是否已读模块
+     * 方法有：获取、设置为已读、设置为未读(用于后台修改系统消息后)
+     *
+     * redis 键名全称：sys_message_read_status:{user_id}
+     *
+     * @param integer $user_id
+     * @param integer $message_id
+     * @return int  0:未读 1:已读
+     */
+    public function get_user_read_status(int $user_id, int $message_id):int{
+        return Redis::getbit("sysmsgrs:{$user_id}", $message_id);
+    }
+
+    public function set_user_read_status(int $user_id, int $message_id){
+        Redis::setbit("sysmsgrs:{$user_id}", $message_id, 1);
+    }
+
+    public function del_user_read_status(int $user_id, int $message_id){
+        Redis::setbit("sysmsgrs:{$user_id}", $message_id, 0);
+    }
+}
