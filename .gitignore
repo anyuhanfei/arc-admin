@@ -21,4 +21,4 @@ yarn-error.log
 .htaccess
 nginx.htaccess
 composer.lock
-
+.DS_Store

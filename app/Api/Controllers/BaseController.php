@@ -31,10 +31,3 @@ class BaseController extends Controller{
         data_set($data, 'products.desk.price', 200);
     }
 }
-
-aery	n. 高巢,高处房子,高处的城堡
-afar	ad. 由远处,遥远地
-airy	a. 空气的,幻想的,轻快的
-ant	n.蚂蚁
-arc	n.弧，弓形物；弧光
-awl	n. （钻皮革的）尖钻
