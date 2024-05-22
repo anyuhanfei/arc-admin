@@ -12,7 +12,8 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "overtrue/laravel-filesystem-qiniu": "^2.2",
-        "qiniu/php-sdk": "^7.11"
+        "qiniu/php-sdk": "^7.11",
+        "yansongda/pay": "~3.7.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
