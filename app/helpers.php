@@ -176,6 +176,12 @@ function admin_show_user_data($user_data, $default = '已注销'){
     }
 }
 
+/**
+ * 后台图片上传
+ *
+ * @param [type] $image_obj
+ * @return void
+ */
 function admin_image_field($image_obj){
     return $image_obj->autoUpload()->uniqueName()->saveFullUrl()->removable(false)->retainable();
 }

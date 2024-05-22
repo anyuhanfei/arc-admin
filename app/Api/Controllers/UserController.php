@@ -131,6 +131,12 @@ class UserController extends BaseController{
         return success("提现列表", $data);
     }
 
+    /**
+     * 退出登录
+     *
+     * @param Request $request
+     * @return void
+     */
     public function logout(Request $request){
         $this->service->logout_operation($this->user_id, $this->token);
         return success("退出成功");

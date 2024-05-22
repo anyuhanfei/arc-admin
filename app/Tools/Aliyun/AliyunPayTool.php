@@ -79,7 +79,7 @@ class AliyunPayTool{
      */
     public function wap(string $subject, string $out_trade_no, int|float $money){
         try {
-            $result = Factory::payment()->wap()->pay($subject, $out_trade_no, $money, "https://www.tbq11.com/h5", "https://www.tbq11.com/h5");
+            $result = Factory::payment()->wap()->pay($subject, $out_trade_no, $money, config("app.url"), config("app.url"));
             $responseChecker = new ResponseChecker();
             if ($responseChecker->success($result)) {
                 return $result->body;
