@@ -15,7 +15,7 @@ class SysSetting extends EloquentRepository{
 
     /**
      * 此方法定义了项目中系统配置的结构与键数据
-     * 格式可参考测试设置，其中，type、title 必填。type目前支持：text、number、onoff、select、radio、image
+     * 格式可参考测试设置，其中，type、title 必填。type目前支持：text、number、onoff、select、radio、image、textarea、edit
      *
      * @return void
      */
@@ -32,6 +32,8 @@ class SysSetting extends EloquentRepository{
                     '选项1', '选项2', '选项3'
                 ]],
                 'test_image'=> ['type'=> "image", "title"=> "测试图片"],
+                'test_textarea'=> ['type'=> "textarea", "title"=> "测试长文本"],
+                'test_eidt'=> ['type'=> "edit", "title"=> "测试富文本"],
             ],
             '应用设置'=> [
                 'withdraw_minimum_amount'=> ['type'=> 'number', 'title'=> "最低提现金额"],

@@ -4,8 +4,6 @@ namespace App\Admin\Controllers\Sys;
 
 use App\Repositories\Sys\SysSetting;
 use Dcat\Admin\Form;
-use Dcat\Admin\Grid;
-use Dcat\Admin\Show;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Http\Controllers\AdminController;
 
@@ -50,15 +48,26 @@ class SysSettingController extends AdminController{
                                 $field = $form->switch($field_key, $value_arr['title']);
                                 break;
                             case "image":
-                                $field = admin_image_field($form->image($field_key, $value_arr['title'])->required());
+                                $field = admin_image_field($form->image($field_key, $value_arr['title']));
                                 break;
                             case "number":
                                 $field = $form->number($field_key, $value_arr['title']);
+                                break;
+                            case "textarea":
+                                $field = $form->textarea($field_key, $value_arr['title'])->rows(5);
+                                break;
+                            case "edit":
+                                $field = $form->editor($field_key, $value_arr['title'])->height('600');
                                 break;
                             default:
                                 $field = $form->text($field_key, $value_arr['title']);
                                 break;
                         }
+                        // 既然配置了系统配置，那么就默认必填，但是如果是开关表单并选择了关闭，无法通过必填验证。
+                        if($value_arr['type'] != 'onoff'){
+                            $field = $field->required();
+                        }
+                        // 赋值
                         $field = $field->value($set_obj->value);
                         // 如果有备注才会展示备注
                         if(!empty($value_arr['help'])){
