@@ -5,7 +5,6 @@ namespace App\Repositories\Users;
 use App\Models\Users\UsersFund as Model;
 use App\Repositories\Log\LogUsersFund;
 use Dcat\Admin\Repositories\EloquentRepository;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 /**
@@ -61,12 +60,23 @@ class UsersFund extends EloquentRepository{
     }
 
     /**
-     * 通过会员id获取会员资产
+     * 获取会员资产
      *
      * @param integer $user_id
      * @return EloquentModel|null
      */
-    public function use_id_get_data(int $user_id):EloquentModel|null{
+    public function get_user_fund(int $user_id):EloquentModel|null{
         return $this->eloquentClass::id($user_id)->first();
+    }
+
+    /**
+     * 获取会员某个币种的持有金额
+     *
+     * @param integer $user_id
+     * @param string $coin_type
+     * @return float
+     */
+    public function get_user_coin_type_amount(int $user_id, string $coin_type):float{
+        return floatval($this->eloquentClass::id($user_id)->value($coin_type) ?? 0);
     }
 }

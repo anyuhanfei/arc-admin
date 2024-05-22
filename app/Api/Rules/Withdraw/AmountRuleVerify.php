@@ -28,7 +28,7 @@ class AmountRuleVerify implements ValidationRule, DataAwareRule{
             $fail("最低提现金额为：{$withdraw_minimum_amount_set}");
             return;
         }
-        $user_fund = (new UsersFund())->use_id_get_data($this->data['user_id']);
+        $user_fund = (new UsersFund())->get_user_fund($this->data['user_id']);
         if(!$user_fund){
             $fail("系统异常");
             return;

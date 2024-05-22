@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers\Users;
 
 use App\Repositories\Users\Users;
+use App\Repositories\Users\UsersFund;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -21,7 +22,8 @@ class UsersController extends AdminController{
 
 
     protected function grid(){
-        return Grid::make(new Users(['parentUser']), function (Grid $grid) {
+        $fund_types = UsersFund::fund_type_array();
+        return Grid::make(new Users(['parentUser']), function (Grid $grid) use($fund_types){
             $grid->showColumnSelector();
             $grid->model()->orderby("id", 'desc');
             $grid->column('id')->sortable();
@@ -30,15 +32,16 @@ class UsersController extends AdminController{
             $grid->column('account');
             $grid->column('phone');
             $grid->column('email');
-            $grid->column('fund')->display(function(){
-                $str = '余额: ' . $this->funds->money . '<br/>';
-                $str .= '积分: ' . $this->funds->integral;
+            $grid->column('fund')->display(function() use($fund_types){
+                $str = '';
+                foreach($fund_types as $key=>$value){
+                    $str .= $value . ': ' . $this->funds->$key . '<br/>';
+                }
                 return $str;
             });
-            $grid->column('parent_user_id')->display(function(){
-                return $this->parent_user_id == 0 ? '' : $this->parent_user_id;
+            $grid->column('parent_user_id', '上级会员信息')->width("300px")->display(function(){
+                return $this->parent_user_id == 0 ? '' : admin_show_user_data($this->parentUser);;
             });
-            $grid->column('parentUser.account', '上级会员账号');
             $grid->column('login_status')->switch()->help('如果关闭则此会员无法登录');
             $grid->column('created_at');
             $field_parent_enable = $this->field_parent_enable;

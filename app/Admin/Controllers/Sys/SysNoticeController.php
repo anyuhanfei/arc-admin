@@ -52,7 +52,13 @@ class SysNoticeController extends AdminController{
                     break;
                 case '多条富文本':
                     $grid->column('id')->sortable();
-                    $grid->column('title')->width("40%");
+                    $grid->column('title')->width("30%");
+                    $grid->column('content')->display('')->modal(function ($modal) {
+                        $modal->title($this->title);
+                        $this->content == null ? $modal->icon('feather ') : $modal->icon('feather icon-eye');
+                        $card = (new Card(null, ''))->header($this->content);
+                        return "<div style='padding:10px 10px 0'>$card</div>";
+                    });
                     break;
                 default:
                     (new SysNotice())->init();

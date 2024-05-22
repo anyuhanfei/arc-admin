@@ -11,12 +11,19 @@ use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 use Dcat\Admin\Widgets\Metrics\Card;
 
+/**
+ * 系统消息模块控制器
+ *
+ * 系统消息一般有以下几种情况：
+ *    短消息类：使用 title 字段作为内容
+ *    文章类：使用 title 字段作为标题，使用 content 字段作为内容
+ */
 class LogSysMessageController extends AdminController{
     // 字段标题、图片是否使用
     protected bool $field_title_enable = false;
     protected bool $field_image_enable = false;
     // 内容是否使用富文本格式
-    protected bool $field_content_editor_enable = false;
+    protected bool $field_content_editor_enable = true;
 
 
     protected function grid(){

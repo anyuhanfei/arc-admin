@@ -23,7 +23,7 @@ class LogUserWithdrawController extends AdminController{
             });
             $grid->column('coin_type')->using(UsersFund::fund_type_array());
             $grid->column('amount')->display(function(){
-                return '提现金额: ' . $this->amount . "<br/>手续费: " . $this->fee . "<br/>应发金额: <span  class='label' style='background:#586cb1'>" . ($this->amount - $this->fee) . '</span>';
+                return '提现金额: ¥' . $this->amount . "<br/>手续费: ¥" . $this->fee . "<br/>应发金额: <span  class='label' style='background:#586cb1'>¥ " . ($this->amount - $this->fee) . '</span>';
             });
             $grid->column('data', "账户信息")->display(function(){
                 if($this->wx_openid != ''){
@@ -127,6 +127,11 @@ class LogUserWithdrawController extends AdminController{
                 }
                 $form->deleteInput('remit_status');
             });
+            $form->disableDeleteButton();
+            $form->disableCreatingCheck();
+            $form->disableEditingCheck();
+            $form->disableViewButton();
+            $form->disableViewCheck();
         });
     }
 }

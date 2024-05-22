@@ -28,15 +28,17 @@ class LogUsersFundController extends AdminController{
                 return "<span class='label' style='background:#586cb1;padding-bottom: 2px;'>{$this->amount}</span><br/><span>操作前金额: {$this->before_money}</span><br/><span>操作后金额: {$this->after_money}</span>";
             });
             $grid->column('created_at');
-            $grid->filter(function (Grid\Filter $filter) use($coin_array){
+            $grid->filter(function (Grid\Filter $filter){
                 $filter->equal('id');
                 $filter->equal('user_id');
                 $filter->equal('user.account', '会员账号');
                 $filter->equal('user.phone', '会员手机号');
-                $filter->equal('coin_type')->select($coin_array);
                 $fund_type_array = LogUsersFund::fund_type_array();
                 $filter->equal('fund_type')->select(array_combine($fund_type_array, $fund_type_array));
                 $filter->between('created_at')->datetime();
+            });
+            $grid->selector(function (Grid\Tools\Selector $selector) use($coin_array){
+                $selector->select("coin_type", "币种", $coin_array);
             });
             $grid->disableCreateButton();
             $grid->disableDeleteButton();

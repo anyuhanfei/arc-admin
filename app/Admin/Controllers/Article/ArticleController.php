@@ -92,7 +92,7 @@ class ArticleController extends AdminController{
             $this->field_intro_enable ? $form->textarea('intro')->rows(3) : '';
             $this->field_image_enable ? admin_image_field($form->image('image')->required()) : '';
             $form->text('author')->required();
-            $this->field_keyword_enable ? $form->tags('keyword')->help("输入一个关键词后，按下空格键，再按下回车键，即成功添加一个关键词。")->saving(function ($value) {return implode(',', $value);}) : '';
+            $this->field_keyword_enable ? $form->tags('keyword')->help("输入一个关键词后，按下空格键，再按下回车键，即成功添加一个关键词。")->saving(function ($value) {return is_array($value) ? implode(',', $value) : '';}) : '';
             $form->editor('content')->height('600')->required();
             $form->saving(function(Form $form){
                 $form->intro = $form->intro ?? '';
