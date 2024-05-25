@@ -28,6 +28,7 @@ class LogSysMessageController extends AdminController{
 
     protected function grid(){
         return Grid::make(new LogSysMessage(), function (Grid $grid) {
+            $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             $grid->column('user_ids', '发送会员')->width('30%')->display(function(){
                 if($this->user_ids == 0){

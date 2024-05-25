@@ -28,6 +28,7 @@ class IdxBannerController extends AdminController{
             return admin_error('error', '当前已关闭轮播图功能，请删除此目录或联系管理员打开轮播图功能');
         }
         return Grid::make(new IdxBanner(), function (Grid $grid) {
+            $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             if(count($this->site_array) != 1){
                 $grid->column("site", '位置');

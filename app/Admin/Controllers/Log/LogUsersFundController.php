@@ -16,6 +16,7 @@ class LogUsersFundController extends AdminController{
     protected function grid(){
         $coin_array = LogUsersFund::coin_array();
         return Grid::make(new LogUsersFund(['user']), function (Grid $grid) use($coin_array){
+            $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             $grid->column("user", '会员信息')->width("370px")->display(function(){
                 return admin_show_user_data($this->user);

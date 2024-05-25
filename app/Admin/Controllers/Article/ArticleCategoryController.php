@@ -18,6 +18,7 @@ class ArticleCategoryController extends AdminController{
 
     protected function grid(){
         return Grid::make(new ArticleCategory(), function (Grid $grid) {
+            $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             $grid->column('name');
             $this->field_image_enable ? $grid->column('image')->image('', 40, 40)->width("15%") : '';

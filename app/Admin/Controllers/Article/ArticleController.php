@@ -22,6 +22,7 @@ class ArticleController extends AdminController{
 
     protected function grid(){
         return Grid::make(new Article(['category']), function (Grid $grid) {
+            $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             $grid->column('category.name', '文章分类')->width("10%");
             $grid->column('title')->width("25%")->display(function(){
