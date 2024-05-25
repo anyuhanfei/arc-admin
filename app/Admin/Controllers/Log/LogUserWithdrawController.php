@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers\Log;
 
+use App\Repositories\Log\LogSysMessage;
 use App\Repositories\Log\LogUserWithdraw;
 use App\Repositories\Users\UsersFund;
 use Dcat\Admin\Form;
@@ -96,6 +97,9 @@ class LogUserWithdrawController extends AdminController{
                 $form->radio('status')->options(['1' => '通过', '3' => '驳回'])->when('1', function(Form $form){
                     // 如果是自动转账，请注释\删除
                     $form->radio('remit_status', '打款状态')->options(['2' => '已打款'])->help("如果现实中已打款，请勾选");
+                })->when("3", function(Form $form){
+                    // 输入驳回原因
+                    $form->text('reject_cause', '驳回原因')->required();
                 })->required();
             }
             // 如果是自动转账，请注释\删除
@@ -107,14 +111,14 @@ class LogUserWithdrawController extends AdminController{
                 $is_auto = false;
                 if($form->status == 1){  // 通过的处理操作
                     // TODO::自动转账操作（手动打款无需编写额外代码）
-
                     if($is_auto){
                         $form->status = 2;
                     }
-                }elseif($form->status == 3){  // 驳回的处理操作, 退回资金
+                }elseif($form->status == 3){  // 驳回的处理操作, 退回金额，发送驳回消息
                     DB::beginTransaction();
                     try{
                         (new UsersFund())->update_fund($form->model()->user_id, $form->model()->coin_type, $form->model()->amount, '提现申请驳回', $form->model()->id);
+                        (new LogSysMessage())->send_message($form->model()->user_id, "您的提现申请已被驳回", "提现申请被驳回，原因：{$form->reject_cause}，请重新提交申请。", '', "withdraw:{$form->model()->id}");
                         DB::commit();
                     }catch(\Exception $e){
                         DB::rollBack();
@@ -126,6 +130,7 @@ class LogUserWithdrawController extends AdminController{
                     $form->status = 2;
                 }
                 $form->deleteInput('remit_status');
+                $form->deleteInput('reject_cause');
             });
             $form->disableDeleteButton();
             $form->disableCreatingCheck();

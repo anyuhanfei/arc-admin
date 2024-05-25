@@ -23,5 +23,4 @@ php artisan admin:publish
 
 
 #### 未完成功能
-- 提现的驳回说明
 - 文章的草稿功能

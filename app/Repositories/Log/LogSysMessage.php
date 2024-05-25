@@ -15,6 +15,26 @@ class LogSysMessage extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**
+     * 向指定会员发送系统消息
+     *
+     * @param integer|array $user_ids 会员id或会员id集
+     * @param string $title 标题
+     * @param string $content 内容
+     * @param string $image 图片
+     * @param string $relevance_data 关联数据,格式一般为 <type>:<id>
+     * @return void
+     */
+    public function send_message(int|array $user_ids, string $title, string $content, string $image = '', string $relevance_data = ""){
+        return $this->eloquentClass::create([
+            'user_ids' => $user_ids,
+            'title' => $title,
+            'content' => $content,
+            'image' => $image,
+            'relevance_data' => $relevance_data,
+        ]);
+    }
+
+    /**
      * 获取会员的消息列表
      *
      * @param integer $user_id
