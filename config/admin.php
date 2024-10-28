@@ -11,7 +11,7 @@ return [
     | login page.
     |
     */
-    'name' => 'act-admin',
+    'name' => 'arc-admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<img src="/static/logo.png">&nbsp;<span>ACT Admin</span>',
+    'logo' => '<img src="/static/logo.png">&nbsp;<span>ARC Admin</span>',
 
     /*
     |--------------------------------------------------------------------------

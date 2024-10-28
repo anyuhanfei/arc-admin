@@ -1,4 +1,4 @@
-## 关于 aner_admin7
+## 关于 arc_admin
 
 通用后台管理系统。内置了例如：网站设置、轮播图、公告、系统消息、会员管理、资金管理、文章管理等。
 
@@ -9,7 +9,7 @@
 
 1. 克隆项目到本地
 ```bash
-git clone https://github.com/aner/aner_admin7.git
+git clone https://github.com/anyuhanfei/arc-admin.git
 ```
 2. 进入项目根目录，安装依赖
 ```bash
@@ -20,7 +20,3 @@ composer install
 php artisan admin:publish
 ```
 4. 复制 `.env.example` 文件，重命名为 `.env`，并修改配置
-
-
-#### 未完成功能
-- 文章的草稿功能
