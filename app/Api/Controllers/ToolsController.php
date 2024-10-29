@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Api\Services\SmsService;
 use App\Api\Tools\FileUploadTool;
-
+use Illuminate\Support\Facades\Redis;
 
 /**
  * 工具方法类
@@ -39,5 +39,18 @@ class ToolsController extends BaseController{
             return success("上传成功", $data);
         }
        return error('上传文件不存在');
+    }
+
+    /**
+     * 创建验证码图片
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function captcha_image(Request $request){
+        delete_files_older_than_hours('/uploads/captcha', 1);
+        $captcha = create_captcha(4, 'lowercase+uppercase+figure');
+        $image_file_path = generate_captcha_image(58, 23, $captcha, 5, 10, 5);
+        return success('发送成功', ['captcha_image' => $image_file_path, 'captcha_code' => $captcha]);
     }
 }

@@ -185,3 +185,76 @@ function admin_show_user_data($user_data, $default = '已注销'){
 function admin_image_field($image_obj){
     return $image_obj->autoUpload()->uniqueName()->saveFullUrl()->removable(false)->retainable();
 }
+
+/**
+ * 删除指定目录下指定小时前的文件
+ *
+ * @param string $directory 目录路径
+ * @param int $hours 指定小时
+ * @return array [结果, 错误信息]
+ */
+function delete_files_older_than_hours(string $directory, int $hours):array{
+    // 检查目录是否存在
+    if(!is_dir($directory)){
+        return [false, "指定的目录不存在: $directory"];
+    }
+    // 获取当前时间
+    $currentTime = time();
+    // 打开目录
+    $dirHandle = opendir($directory);
+    if($dirHandle === false){
+        return [false, "无法打开目录: $directory"];
+    }
+    // 遍历目录中的文件
+    while(($file = readdir($dirHandle)) !== false){
+        // 跳过 . 和 .. 目录
+        if($file == '.' || $file == '..' || $file == '.gitignore'){
+            continue;
+        }
+        // 构建文件完整路径
+        $filePath = $directory . DIRECTORY_SEPARATOR . $file;
+        // 检查是否为文件
+        if(is_file($filePath)){
+            // 获取文件的创建时间
+            $fileCreationTime = filectime($filePath);
+            // 计算文件创建时间和当前时间的差值（秒）
+            $timeDifference = $currentTime - $fileCreationTime;
+            // 判断文件是否超过指定小时
+            if($timeDifference > ($hours * 3600)){
+                // 删除文件
+                unlink($filePath);
+            }
+        }
+    }
+    // 关闭目录
+    closedir($dirHandle);
+    return [true, ''];
+}
+
+/**
+ * 创建验证码图片并保存到 uploads/captcha 目录下(该目录需要自行创建)
+ *
+ * @param integer $image_width 验证码图片宽度
+ * @param integer $image_height 验证码图片高度
+ * @param string $captcha 验证码字符串
+ * @param integer $font_size 字体大小
+ * @param integer $x X轴偏移量
+ * @param integer $y Y轴偏移量
+ * @return string 验证码图片路径
+ */
+function generate_captcha_image(int $image_width, int $image_height, string $captcha, int $font_size = 5, int $x = 10, int $y = 5):string{
+    // 创建图像资源
+    $image = imagecreate($image_width, $image_height);
+    // 设置颜色
+    $background_color = imagecolorallocate($image, 255, 255, 255); // 白色背景
+    $text_color = imagecolorallocate($image, 0, 0, 0); // 黑色文字
+    // 填充背景
+    imagefilledrectangle($image, 0, 0, $image_width, $image_height, $background_color);
+    // 绘制验证码
+    imagestring($image, $font_size, $x, $y, $captcha, $text_color);
+    // 保存图像
+    imagepng($image, "uploads/captcha/{$captcha}.png");
+    // 销毁图像资源
+    imagedestroy($image);
+    return "/uploads/captcha/{$captcha}.png";
+}

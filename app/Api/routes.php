@@ -3,10 +3,13 @@
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
+
 // 上传文件
 Route::post('upload', [\App\Api\Controllers\ToolsController::class, 'upload']);
 // 发送短信验证码
 Route::post('send/sms', [\App\Api\Controllers\ToolsController::class, 'send_sms']);
+// 生成验证码图片
+Route::get('captcha_image', [\App\Api\Controllers\ToolsController::class, 'captcha_image']);
 
 // 账号登录注册
 Route::post('register/account', [\App\Api\Controllers\UserLoginController::class, 'account_register']);
