@@ -12,7 +12,6 @@ return [
     |
     */
     'name' => 'arc-admin',
-
     /*
     |--------------------------------------------------------------------------
     | dcat-admin logo
@@ -22,8 +21,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<img src="/static/logo.png">&nbsp;<span>ARC Admin</span>',
-
+    'logo' => '<img src="/static/logo.png" width="35">&nbsp;<span>ARC Admin</span>',
     /*
     |--------------------------------------------------------------------------
     | dcat-admin mini logo
@@ -42,7 +40,7 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'favicon' => "/static/logo.png",
+    'favicon' => '@admin/images/favicon.ico',
 
     /*
      |--------------------------------------------------------------------------
@@ -54,6 +52,15 @@ return [
      */
     'default_avatar' => '@admin/images/default-avatar.jpg',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Login page background image
+    |--------------------------------------------------------------------------
+    |
+    | This value is used to set the background image of login page.
+    |
+    */
+    'login_background_image' => '@admin/images/login-bg.jpg',
     /*
     |--------------------------------------------------------------------------
     | dcat-admin route settings
@@ -262,7 +269,7 @@ return [
     'upload' => [
 
         // Disk in `config/filesystem.php`.
-        'disk' => env('FILESYSTEM_DISK'),
+        'disk' => 'public',
 
         // Image and file upload path under the disk above.
         'directory' => [
@@ -336,6 +343,10 @@ return [
 
         // bg-primary, bg-info, bg-warning, bg-success, bg-danger, bg-dark
         'navbar_color' => '',
+
+        'full_screen' => true, // 是否展示全屏按钮
+
+        'home_url'=> env('APP_URL') // 是否展示官网url
     ],
 
     /*
@@ -364,5 +375,15 @@ return [
         // When you use command `php artisan admin:ext-make` to generate extensions,
         // the extension files will be generated in this directory.
         'dir' => base_path('dcat-admin-extensions'),
+    ],
+    /*
+    |--------------------------------------------------------------------------
+    | 多应用
+    |--------------------------------------------------------------------------
+    */ 
+    'multi_app'                 => [
+        // 'seller'    => true,
+        // 'reseller'  => true,
+        // 'brand'     => true,
     ],
 ];

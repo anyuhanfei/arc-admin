@@ -48,5 +48,5 @@ return [
         'threads' => 1,
         'time' => 4,
     ],
-
+    'hehash_on_login'=> false,
 ];
