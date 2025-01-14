@@ -29,3 +29,9 @@ Route::group([
     $router->resource('log/userwithdraw', 'Log\LogUserWithdrawController');
 
 });
+Route::group([
+    'prefix'     => config('admin.route.prefix'),
+    'namespace'  => config('admin.route.namespace'),
+], function (Router $router) {
+    Route::get("captcha/image", "AuthController@captcha_image");
+});

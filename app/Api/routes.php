@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('upload', [\App\Api\Controllers\ToolsController::class, 'upload']);
 // 发送短信验证码
 Route::post('send/sms', [\App\Api\Controllers\ToolsController::class, 'send_sms']);
+// 生成验证码
+Route::get('captcha/image', [\App\Api\Controllers\ToolsController::class, 'captcha_image']);
 
 // 账号登录注册
 Route::post('register/account', [\App\Api\Controllers\UserLoginController::class, 'account_register']);

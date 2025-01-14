@@ -6,8 +6,7 @@ use App\Api\Services\FileUploadService;
 use Illuminate\Http\Request;
 
 use App\Api\Services\SmsService;
-use App\Api\Tools\FileUploadTool;
-
+use App\Tools\CaptchaImageTool;
 
 /**
  * 工具方法类

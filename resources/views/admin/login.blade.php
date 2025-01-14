@@ -77,6 +77,7 @@
     .form-box .title{
         padding-top: 88px;
         padding-bottom: 34px;
+        font-size: 22px;
     }
     .form-box .form-item{
         width: 340px;
@@ -151,17 +152,16 @@
         <div class="right-box">
             <form class="form-box" id="login-form1" method="POST" action="{{ admin_url('auth/login') }}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-                <input type="hidden" id="captcha_code" name="captcha_code" value=""/>
                 <img class="form-tips" src="/static/admin_login/form-tips.png" alt="" />
                 <div class="title">
-                    账号登录
+                    {{ $app_name }}
                 </div>
                 <div class="form-item ">
                     <div class="borderr">
                         <div class="item-lable">
                             <img class="icon" src="/static/admin_login/form-item-icon1.png" alt="">
                         </div>
-                        <input name="username" type="text" placeholder="请输入账户" value="{{ old('username') }}" required autofocus/>
+                        <input name="username" type="text" placeholder="请输入用户名" value="{{ old('username') }}" required autofocus/>
                     </div>
                     <div class="help-block with-errors"></div>
                 </div>
@@ -182,7 +182,7 @@
                         <input type="text" placeholder="请输入验证码" name="captcha" required/>
                     </div>
                     <div class="border code-img">
-                        <img class="img" id="captcha_img" src="" alt="" onclick="reloadCaptcha()"/>
+                        <img id="captcha-img" class="img" src="/admin/captcha/image?_token={{ csrf_token() }}" width="100" height="30" onclick="this.src = '/admin/captcha/image?_token={{ csrf_token() }}&r=' + Math.random();"/>
                     </div>
                 </div>
                 <div style="display: flex;align-items: center; margin-bottom: 60px;">
@@ -253,17 +253,4 @@
         });
     });
 
-    reloadCaptcha()
-    function reloadCaptcha() {
-        const img = document.getElementById('captcha_img');
-        $.ajax({
-            type: "get",
-            url: "/api/captcha_image",
-            success: function (data) {
-                console.log(data.data.captcha_image);
-                img.src=data.data.captcha_image;
-                $('#captcha_code').val(data.data.captcha_code);
-            }
-        })
-    }
 </script>
