@@ -1,12 +1,12 @@
 <?php
 namespace App\Api\Controllers;
 
-use App\Api\Controllers\BaseController;
-use App\Api\Services\FileUploadService;
 use Illuminate\Http\Request;
 
+use App\Api\Controllers\BaseController;
+
 use App\Api\Services\SmsService;
-use App\Tools\CaptchaImageTool;
+use App\Api\Services\FileUploadService;
 
 /**
  * 工具方法类

@@ -20,7 +20,6 @@ class UsersController extends AdminController{
     // 上级id字段是否启用
     protected bool $field_parent_enable = true;
 
-
     protected function grid(){
         $fund_types = UsersFund::fund_type_array();
         return Grid::make(new Users(['parentUser']), function (Grid $grid) use($fund_types){
@@ -40,7 +39,7 @@ class UsersController extends AdminController{
                 return $str;
             });
             $grid->column('parent_user_id', '上级会员信息')->width("300px")->display(function(){
-                return $this->parent_user_id == 0 ? '' : admin_show_user_data($this->parentUser);;
+                return $this->parent_user_id == 0 ? '' : admin_show_user_data($this->parentUser);
             });
             $grid->column('login_status')->switch()->help('如果关闭则此会员无法登录');
             $grid->column('created_at');
@@ -64,22 +63,42 @@ class UsersController extends AdminController{
             if($this->delete_operation == false){
                 $grid->disableDeleteButton();
             }
+            // 导出
+            $titles = [
+                'id'=> "ID", 'nickname'=> "昵称", 'account'=> "账号", 'phone'=> "手机号", 'email'=> "邮箱", 'parent_user_id'=> "上级会员ID", 'parentUser.phone'=> "上级手机号", 'login_status'=> "登录权限", 'created_at'=> "创建时间"
+            ];
+            foreach($fund_types as $key=>$value){
+                $titles[$key] = $value;
+            }
+            $grid->export()->titles($titles)->rows(function($rows) use($fund_types){
+                foreach($rows as $index=> &$row){
+                    $row['parentUser.phone'] = $row['parentUser'] == null ? '' : $row['parentUser']['phone'];
+                    foreach($fund_types as $key=>$value){
+                        $row[$key] = $row->funds->$key;
+                    }
+                    $row['login_status'] = $row->login_status == 1 ? '正常' : '冻结';
+                }
+                return $rows;
+            });
         });
     }
 
     protected function detail($id){
-        return Show::make($id, new Users(), function (Show $show) {
+        return Show::make($id, new Users(['parentUser']), function (Show $show) {
             $show->field('id');
-            $show->field('avatar');
+            $show->field('avatar')->image("", 60, 60);
             $show->field('nickname');
             $show->field('account');
             $show->field('phone');
             $show->field('email');
-            $show->field('password');
+            $show->divider();
             $show->field('parent_user_id');
-            $show->field('login_status');
+            $show->field('parentUser.phone', '上级手机号');
+            $show->divider();
+            $show->field('login_status')->as(function($value){
+                return $value == 1 ? '正常' : '冻结';
+            });
             $show->field('created_at');
-            $show->field('updated_at');
         });
     }
 
@@ -87,7 +106,7 @@ class UsersController extends AdminController{
         return Form::make(new Users(["funds", "detail"]), function (Form $form) {
             $form->hidden('login_status');
             if($form->isCreating()){  // 添加
-                admin_image_field($form->image('image')->required());
+                admin_image_field($form->image('avatar')->required());
                 $form->text('nickname')->required();
                 $form->text('account')->required();
                 $form->text('phone')->required();
@@ -129,8 +148,10 @@ class UsersController extends AdminController{
                 });
                 // 资产管理
                 $form->tab('资产', function(Form $form){
-                    $form->number('funds.money', '余额');
-                    $form->number('funds.integral', '积分');
+                    $fund_types = UsersFund::fund_type_array();
+                    foreach($fund_types as $key=>$value){
+                        $form->number('funds.'.$key, $value);
+                    }
                 });
                 // 详情信息
                 $form->tab('详细信息', function(Form $form){
@@ -150,6 +171,7 @@ class UsersController extends AdminController{
                     }else{
                         $form->password = (new Users())->set_user_password($form->password ?? '');
                     }
+                    // TODO::资产记录
                 });
             }
             $form->disableViewCheck();

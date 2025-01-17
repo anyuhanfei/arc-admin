@@ -13,7 +13,7 @@ return [
         'password' => '密码',
         'fund' => '资产',
         'parent_user_id' => '上级会员id',
-        'login_status' => '登录状态',
+        'login_status' => '登录权限',
     ],
     'options' => [
     ],

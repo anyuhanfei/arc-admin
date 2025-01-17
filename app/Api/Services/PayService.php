@@ -1,7 +1,6 @@
 <?php
 namespace App\Api\Services;
 
-use App\Api\Repositories\Idx\IdxSettingRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 

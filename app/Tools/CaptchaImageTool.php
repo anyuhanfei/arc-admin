@@ -1,7 +1,6 @@
 <?php
 namespace App\Tools;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 
 class CaptchaImageTool{
