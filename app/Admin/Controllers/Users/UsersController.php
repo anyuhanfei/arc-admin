@@ -155,7 +155,6 @@ class UsersController extends AdminController{
                 });
                 // 详情信息
                 $form->tab('详细信息', function(Form $form){
-                    
                 });
                 $form->saving(function (Form $form) {
                     $form->avatar = $form->avatar ?? $form->model()->avatar;
@@ -171,7 +170,12 @@ class UsersController extends AdminController{
                     }else{
                         $form->password = (new Users())->set_user_password($form->password ?? '');
                     }
-                    // TODO::资产记录
+                    $fund_types = UsersFund::fund_type_array();
+                    foreach($fund_types as $key=>$value){
+                        if($form->model()->funds->$key != $form->funds[$key]){
+                            (new UsersFund())->update_fund($form->model()->id, $key, $form->funds[$key] - $form->model()->funds->$key, '管理员更新', '', '管理员更新');
+                        }
+                    }
                 });
             }
             $form->disableViewCheck();

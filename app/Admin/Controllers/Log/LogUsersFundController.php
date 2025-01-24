@@ -45,7 +45,6 @@ class LogUsersFundController extends AdminController{
             $grid->disableDeleteButton();
             $grid->disableEditButton();
             $grid->disableRowSelector();
-
         });
     }
 
