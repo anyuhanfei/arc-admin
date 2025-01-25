@@ -11,7 +11,7 @@
  Target Server Version : 80040 (8.0.40)
  File Encoding         : 65001
 
- Date: 14/01/2025 11:16:06
+ Date: 25/01/2025 09:39:14
 */
 
 SET NAMES utf8mb4;
@@ -513,21 +513,28 @@ CREATE TABLE `idx_banner` (
   `id` int NOT NULL AUTO_INCREMENT,
   `site` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '位置',
   `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '图片',
-  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '链接',
+  `link_type` enum('nothing','external_link','internal_link','article_id') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'nothing',
+  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '链接',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='轮播图表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='轮播图表';
 
 -- ----------------------------
 -- Records of idx_banner
 -- ----------------------------
 BEGIN;
-INSERT INTO `idx_banner` (`id`, `site`, `image`, `url`, `created_at`, `updated_at`, `deleted_at`) VALUES (1, '首页', 'http://localhost/storage/images/08c9855cd21ffd42e8cd7773f2da6bd7.jpg', 'http://www.baidu.com', '2023-10-31 10:10:45', '2023-10-31 10:26:21', '2023-10-31 10:26:21');
-INSERT INTO `idx_banner` (`id`, `site`, `image`, `url`, `created_at`, `updated_at`, `deleted_at`) VALUES (2, '测试页', 'http://localhost/storage/images/b05c9a811a95db977b54dacd16a93a43.jpg', 'http://www.baidu.com', '2023-10-31 10:13:42', '2023-10-31 10:13:42', NULL);
-INSERT INTO `idx_banner` (`id`, `site`, `image`, `url`, `created_at`, `updated_at`, `deleted_at`) VALUES (3, '测试页', 'http://localhost/storage/images/ca2059eb97d1fbc7da846e3ae298c4a6.jpg', 'http://www.baicu.dom', '2023-10-31 10:14:52', '2023-10-31 10:14:52', NULL);
-INSERT INTO `idx_banner` (`id`, `site`, `image`, `url`, `created_at`, `updated_at`, `deleted_at`) VALUES (4, '首页', 'http://localhost/uploads/images/15b4b650e5b2572cd8c1cfa219acf0b3.jpg', '', '2023-10-31 10:20:14', '2023-10-31 10:20:14', NULL);
+INSERT INTO `idx_banner` (`id`, `site`, `image`, `link_type`, `link`, `created_at`, `updated_at`, `deleted_at`) VALUES (1, '首页', 'http://localhost/storage/images/08c9855cd21ffd42e8cd7773f2da6bd7.jpg', 'nothing', 'http://www.baidu.com', '2023-10-31 10:10:45', '2023-10-31 10:26:21', '2023-10-31 10:26:21');
+INSERT INTO `idx_banner` (`id`, `site`, `image`, `link_type`, `link`, `created_at`, `updated_at`, `deleted_at`) VALUES (2, '测试页', 'http://localhost/storage/images/b05c9a811a95db977b54dacd16a93a43.jpg', 'nothing', 'http://www.baidu.com', '2023-10-31 10:13:42', '2025-01-25 09:35:21', '2025-01-25 09:35:21');
+INSERT INTO `idx_banner` (`id`, `site`, `image`, `link_type`, `link`, `created_at`, `updated_at`, `deleted_at`) VALUES (3, '测试页', 'http://localhost/storage/images/ca2059eb97d1fbc7da846e3ae298c4a6.jpg', 'nothing', 'http://www.baicu.dom', '2023-10-31 10:14:52', '2025-01-25 09:08:39', '2025-01-25 09:08:39');
+INSERT INTO `idx_banner` (`id`, `site`, `image`, `link_type`, `link`, `created_at`, `updated_at`, `deleted_at`) VALUES (4, '首页', 'http://local.arc-admin.test/uploads/images/79e0db0dc96e16a877efd0dc83b2e745.jpg', 'nothing', '', '2023-10-31 10:20:14', '2025-01-25 09:08:36', '2025-01-25 09:08:36');
+INSERT INTO `idx_banner` (`id`, `site`, `image`, `link_type`, `link`, `created_at`, `updated_at`, `deleted_at`) VALUES (5, '首页', 'http://local.arc-admin.test/uploads/images/caa22b68903a3b76e7b76d8e623f70d4.jpg', 'nothing', '', '2025-01-25 09:08:31', '2025-01-25 09:08:31', NULL);
+INSERT INTO `idx_banner` (`id`, `site`, `image`, `link_type`, `link`, `created_at`, `updated_at`, `deleted_at`) VALUES (6, '首页', 'http://local.arc-admin.test/uploads/images/de50bbdcad5f921911da9463fec76e6a.jpg', 'external_link', '', '2025-01-25 09:16:53', '2025-01-25 09:16:53', NULL);
+INSERT INTO `idx_banner` (`id`, `site`, `image`, `link_type`, `link`, `created_at`, `updated_at`, `deleted_at`) VALUES (7, '首页', 'http://local.arc-admin.test/uploads/images/9e62a6d22b76b430caca2f9ded33d5de.jpg', 'external_link', 'http://www.google.com', '2025-01-25 09:17:47', '2025-01-25 09:17:47', NULL);
+INSERT INTO `idx_banner` (`id`, `site`, `image`, `link_type`, `link`, `created_at`, `updated_at`, `deleted_at`) VALUES (8, '首页', 'http://local.arc-admin.test/uploads/images/e8be01faa9b63576e788c876b4f98307.jpg', 'internal_link', '/page/page/index', '2025-01-25 09:18:08', '2025-01-25 09:18:08', NULL);
+INSERT INTO `idx_banner` (`id`, `site`, `image`, `link_type`, `link`, `created_at`, `updated_at`, `deleted_at`) VALUES (9, '首页', 'http://local.arc-admin.test/uploads/images/5a626ec456fdd1ab9d9cadadf3f23f82.jpg', 'article_id', '1', '2025-01-25 09:18:43', '2025-01-25 09:36:47', NULL);
+INSERT INTO `idx_banner` (`id`, `site`, `image`, `link_type`, `link`, `created_at`, `updated_at`, `deleted_at`) VALUES (10, '测试页', 'http://local.arc-admin.test/uploads/images/b588c41ab4a302e020121e298ae3590d.jpg', 'article_id', '1', '2025-01-25 09:37:05', '2025-01-25 09:37:05', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -612,7 +619,7 @@ CREATE TABLE `log_users_fund` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='会员资金记录';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='会员资金记录';
 
 -- ----------------------------
 -- Records of log_users_fund
@@ -624,6 +631,8 @@ INSERT INTO `log_users_fund` (`id`, `user_id`, `coin_type`, `fund_type`, `releva
 INSERT INTO `log_users_fund` (`id`, `user_id`, `coin_type`, `fund_type`, `relevance`, `remark`, `amount`, `before_money`, `after_money`, `created_at`, `updated_at`, `deleted_at`) VALUES (4, 4, 'money', '提现申请', '2', '', -101.00, 500.00, 601.00, '2023-11-07 10:39:48', '2023-11-07 10:39:48', NULL);
 INSERT INTO `log_users_fund` (`id`, `user_id`, `coin_type`, `fund_type`, `relevance`, `remark`, `amount`, `before_money`, `after_money`, `created_at`, `updated_at`, `deleted_at`) VALUES (5, 4, 'money', '提现申请', '3', '', -102.00, 601.00, 703.00, '2023-11-07 10:39:52', '2023-11-07 10:39:52', NULL);
 INSERT INTO `log_users_fund` (`id`, `user_id`, `coin_type`, `fund_type`, `relevance`, `remark`, `amount`, `before_money`, `after_money`, `created_at`, `updated_at`, `deleted_at`) VALUES (9, 4, 'money', '提现申请驳回', '3', '', 102.00, 703.00, 805.00, '2023-11-07 10:46:58', '2023-11-07 10:46:58', NULL);
+INSERT INTO `log_users_fund` (`id`, `user_id`, `coin_type`, `fund_type`, `relevance`, `remark`, `amount`, `before_money`, `after_money`, `created_at`, `updated_at`, `deleted_at`) VALUES (10, 7, 'money', '管理员更新', '', '管理员更新', 2000.00, 1000.00, 3000.00, '2025-01-24 17:20:52', '2025-01-24 17:20:52', NULL);
+INSERT INTO `log_users_fund` (`id`, `user_id`, `coin_type`, `fund_type`, `relevance`, `remark`, `amount`, `before_money`, `after_money`, `created_at`, `updated_at`, `deleted_at`) VALUES (11, 7, 'integral', '管理员更新', '', '管理员更新', 2000.00, 2000.00, 4000.00, '2025-01-24 17:20:52', '2025-01-24 17:20:52', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -794,16 +803,17 @@ CREATE TABLE `users` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='会员表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='会员表';
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` (`id`, `avatar`, `nickname`, `account`, `phone`, `email`, `password`, `parent_user_id`, `unionid`, `openid`, `login_status`, `created_at`, `updated_at`, `deleted_at`) VALUES (3, 'http://localhost/uploads/images/a44988c4d0613843ad1c971e80d5bf3d.jpg', '测试001', '13939390001', '13939390001', '', '$2y$10$SsPpG4PiTuQWt18Am/.kVuFh9khHUq6zV9uWy/KSVtav5ZzU5zz2G', 0, '', '', 1, '2023-11-06 16:25:25', '2023-10-31 16:30:29', NULL);
-INSERT INTO `users` (`id`, `avatar`, `nickname`, `account`, `phone`, `email`, `password`, `parent_user_id`, `unionid`, `openid`, `login_status`, `created_at`, `updated_at`, `deleted_at`) VALUES (4, 'https://qiniu.tbq11.com/images/aa1a08ba1eeac3bfabfdf405b22c68fb.jpg', 'testtest', 'testtest', '', '', '$2y$10$mliww4ufYBg67OOizWP3sueAuJ9gxW.MhhoWNZgq5e9cFFobcQNxu', 0, '', '', 0, '2023-11-07 15:27:26', '2023-11-17 10:40:52', NULL);
-INSERT INTO `users` (`id`, `avatar`, `nickname`, `account`, `phone`, `email`, `password`, `parent_user_id`, `unionid`, `openid`, `login_status`, `created_at`, `updated_at`, `deleted_at`) VALUES (5, 'https://qiniu.tbq11.com/images/8755b2af58875b1fb128193235413dd3.jpg', '13939390002', '', '13939390002', '', '$2y$10$crycFHX2aq1HoRtm9g0ujOwjdv8xbIpxqwA6Y4qitMiceGKcmH4Zu', 0, '', '', 1, '2023-11-07 15:29:03', '2023-11-09 10:41:05', NULL);
-INSERT INTO `users` (`id`, `avatar`, `nickname`, `account`, `phone`, `email`, `password`, `parent_user_id`, `unionid`, `openid`, `login_status`, `created_at`, `updated_at`, `deleted_at`) VALUES (6, 'https://qiniu.tbq11.com/images/c1863ff9aaaccd3f2c25a7375753dbfe.jpg', '13939390003', '', '13939390003', '', '$2y$10$TOrNKWL0AHKlXdMy3iNJb.H/SQzbOQXDtR4BQ1dU1wqEfO9a4OKaC', 0, '', '', 0, '2023-11-08 15:34:15', '2023-11-09 10:46:19', NULL);
+INSERT INTO `users` (`id`, `avatar`, `nickname`, `account`, `phone`, `email`, `password`, `parent_user_id`, `unionid`, `openid`, `login_status`, `created_at`, `updated_at`, `deleted_at`) VALUES (3, 'http://localhost/uploads/images/a44988c4d0613843ad1c971e80d5bf3d.jpg', '测试001', '13939390001', '13939390001', '', '$2y$10$SsPpG4PiTuQWt18Am/.kVuFh9khHUq6zV9uWy/KSVtav5ZzU5zz2G', 0, '', '', 1, '2023-11-06 16:25:25', '2025-01-24 17:19:58', '2025-01-24 17:19:58');
+INSERT INTO `users` (`id`, `avatar`, `nickname`, `account`, `phone`, `email`, `password`, `parent_user_id`, `unionid`, `openid`, `login_status`, `created_at`, `updated_at`, `deleted_at`) VALUES (4, 'https://qiniu.tbq11.com/images/aa1a08ba1eeac3bfabfdf405b22c68fb.jpg', 'testtest', 'testtest', '', '', '$2y$10$mliww4ufYBg67OOizWP3sueAuJ9gxW.MhhoWNZgq5e9cFFobcQNxu', 0, '', '', 0, '2023-11-07 15:27:26', '2025-01-14 11:27:50', '2025-01-14 11:27:50');
+INSERT INTO `users` (`id`, `avatar`, `nickname`, `account`, `phone`, `email`, `password`, `parent_user_id`, `unionid`, `openid`, `login_status`, `created_at`, `updated_at`, `deleted_at`) VALUES (5, 'https://qiniu.tbq11.com/images/8755b2af58875b1fb128193235413dd3.jpg', '13939390002', '', '13939390002', '', '$2y$10$crycFHX2aq1HoRtm9g0ujOwjdv8xbIpxqwA6Y4qitMiceGKcmH4Zu', 0, '', '', 1, '2023-11-07 15:29:03', '2025-01-14 11:27:46', '2025-01-14 11:27:46');
+INSERT INTO `users` (`id`, `avatar`, `nickname`, `account`, `phone`, `email`, `password`, `parent_user_id`, `unionid`, `openid`, `login_status`, `created_at`, `updated_at`, `deleted_at`) VALUES (6, 'https://qiniu.tbq11.com/images/c1863ff9aaaccd3f2c25a7375753dbfe.jpg', '13939390003', '', '13939390003', '', '$2y$10$TOrNKWL0AHKlXdMy3iNJb.H/SQzbOQXDtR4BQ1dU1wqEfO9a4OKaC', 0, '', '', 0, '2023-11-08 15:34:15', '2025-01-14 11:27:41', '2025-01-14 11:27:41');
+INSERT INTO `users` (`id`, `avatar`, `nickname`, `account`, `phone`, `email`, `password`, `parent_user_id`, `unionid`, `openid`, `login_status`, `created_at`, `updated_at`, `deleted_at`) VALUES (7, 'http://local.arc-admin.test/uploads/images/8da2ce32e08ec78f4cbc7f0365972fe4.jpg', '暗语寒飞', '13939391111', '13939391111', '', '$2y$12$/mulklWvPnxQyphivRR4/uclwF54ZoiQCzZob8Rf7MT88hm8JvViS', 3, '', '', 0, '2025-01-14 11:27:38', '2025-01-14 11:41:56', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -825,6 +835,7 @@ INSERT INTO `users_detail` (`id`, `sex`, `birthday`) VALUES (3, '未知', NULL);
 INSERT INTO `users_detail` (`id`, `sex`, `birthday`) VALUES (4, '未知', NULL);
 INSERT INTO `users_detail` (`id`, `sex`, `birthday`) VALUES (5, '未知', NULL);
 INSERT INTO `users_detail` (`id`, `sex`, `birthday`) VALUES (6, '未知', NULL);
+INSERT INTO `users_detail` (`id`, `sex`, `birthday`) VALUES (7, '未知', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -846,6 +857,7 @@ INSERT INTO `users_fund` (`id`, `money`, `integral`) VALUES (3, 10000.00, 1000.0
 INSERT INTO `users_fund` (`id`, `money`, `integral`) VALUES (4, 805.00, 0.00);
 INSERT INTO `users_fund` (`id`, `money`, `integral`) VALUES (5, 0.00, 0.00);
 INSERT INTO `users_fund` (`id`, `money`, `integral`) VALUES (6, 0.00, 0.00);
+INSERT INTO `users_fund` (`id`, `money`, `integral`) VALUES (7, 3000.00, 4000.00);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
