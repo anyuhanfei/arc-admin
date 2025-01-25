@@ -34,4 +34,5 @@ Route::group([
     'namespace'  => config('admin.route.namespace'),
 ], function (Router $router) {
     Route::get("captcha/image", "AuthController@captcha_image");
+    Route::get("/get/article/list", "Article\ArticleController@get_article_list");
 });

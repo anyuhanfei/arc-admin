@@ -6,12 +6,17 @@ use App\Models\Article\Article as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 文章表数据仓库
  */
 class Article extends EloquentRepository{
     protected $eloquentClass = Model::class;
+
+    public function admin_use_category_get_list(int $category_id){
+        return $this->eloquentClass::categoryId($category_id)->get(['id', DB::raw("title as text")]);
+    }
 
     /**
      * 获取指定分类id的文章列表

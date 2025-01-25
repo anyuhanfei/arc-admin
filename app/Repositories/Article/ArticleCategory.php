@@ -33,4 +33,5 @@ class ArticleCategory extends EloquentRepository{
     public function get_all_data():Collection{
         return $this->eloquentClass::select('id', 'name', 'image')->get();
     }
+
 }

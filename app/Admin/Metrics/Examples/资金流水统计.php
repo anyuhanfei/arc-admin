@@ -18,7 +18,18 @@ class 资金流水统计 extends Donut{
         $color = Admin::color();
         $this->colors = [
             $color->alpha('blue2', 0.8),$color->alpha('blue2', 0.4),
-            $color->alpha('red', 0.8)
+            $color->alpha('red', 0.8), $color->alpha('red', 0.4),
+            $color->alpha('green', 0.8), $color->alpha('green', 0.4),
+            $color->alpha('yellow', 0.8), $color->alpha('yellow', 0.4),
+            $color->alpha('purple', 0.8), $color->alpha('purple', 0.4),
+            $color->alpha('orange', 0.8), $color->alpha('orange', 0.4),
+            $color->alpha('cyan', 0.8), $color->alpha('cyan', 0.4),
+            $color->alpha('indigo', 0.8), $color->alpha('indigo', 0.4),
+            $color->alpha('teal', 0.8), $color->alpha('teal', 0.4),
+            $color->alpha('pink', 0.8), $color->alpha('pink', 0.4),
+            $color->alpha('lime', 0.8), $color->alpha('lime', 0.4),
+            $color->alpha('gray', 0.8), $color->alpha('gray', 0.4),
+            $color->alpha('brown', 0.8), $color->alpha('brown', 0.4),
         ];
 
         $this->title('资金流水统计');

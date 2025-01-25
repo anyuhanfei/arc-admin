@@ -23,6 +23,24 @@ class IdxBanner extends EloquentRepository{
     }
 
     /**
+     * 链接类型集
+     *
+     * @return array
+     */
+    public function link_type_array():array{
+        return (new $this->eloquentClass())->link_type_array();
+    }
+
+    /**
+     * 内链集
+     *
+     * @return array
+     */
+    public function internal_link_array():array{
+        return (new $this->eloquentClass())->internal_link_array();
+    }
+
+    /**
      * 获取指定位置的轮播图列表
      *
      * @param string $site

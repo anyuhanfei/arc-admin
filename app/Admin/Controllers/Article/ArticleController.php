@@ -10,6 +10,7 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 use Dcat\Admin\Widgets\Metrics\Card;
+use Illuminate\Http\Request;
 
 /**
  * 文章模块控制器
@@ -101,5 +102,10 @@ class ArticleController extends AdminController{
                 $form->image = $form->image ?? '';
             });
         });
+    }
+
+    public function get_article_list(Request $request){
+        $category_id = $request->get('q', 0);
+        return (new Article())->admin_use_category_get_list($category_id);
     }
 }
