@@ -6,6 +6,7 @@ use App\Models\Sys\SysNotice as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Redis;
 
 /**
@@ -53,7 +54,7 @@ class SysNotice extends EloquentRepository{
      * @param int $id
      * @return EloquentModel
      */
-    public function use_id_get_data(int $id):EloquentModel|null{
+    public function get_data_by_id(int $id):EloquentModel|null{
         return $this->eloquentClass::id($id)->first();
     }
 
@@ -62,19 +63,18 @@ class SysNotice extends EloquentRepository{
      *
      * @return \Illuminate\Support\Collection
      */
-    public function get_all_notice_id():\Illuminate\Support\Collection{
+    public function get_ids():\Illuminate\Support\Collection{
         return $this->eloquentClass::pluck("id");
     }
 
     /**
      * 获取公告列表
      *
-     * @param integer $page
      * @param integer $limit
      * @return void
      */
-    public function get_list(int $page = 1, int $limit = 10):Collection{
-        return $this->eloquentClass::select("id", "title", 'top_status', 'created_at')->orderby("top_status", "desc")->orderby("id", 'desc')->page($page, $limit)->get();
+    public function get_list(int $limit = 10):LengthAwarePaginator{
+        return $this->eloquentClass::orderby("id", 'desc')->paginate($limit);
     }
 
     /**
@@ -84,7 +84,7 @@ class SysNotice extends EloquentRepository{
      * @param integer $id
      * @return void
      */
-    public function set_read_status(int $user_id, int $id){
+    public function set_read_status_by_id_user(int $user_id, int $id){
         Redis::sadd("snread:{$user_id}", $id);
     }
 
@@ -94,7 +94,7 @@ class SysNotice extends EloquentRepository{
      * @param integer $user_id
      * @return void
      */
-    public function get_read_notice_id(int $user_id){
+    public function get_read_ids_by_user(int $user_id){
         return Redis::smembers("snread:{$user_id}") ?? [];
     }
 
@@ -105,7 +105,7 @@ class SysNotice extends EloquentRepository{
      * @param integer $id
      * @return void
      */
-    public function get_notice_read_status(int $user_id, int $id){
+    public function get_read_status_by_id_user(int $user_id, int $id){
         return Redis::sismember("snread:{$user_id}", $id);
     }
 }

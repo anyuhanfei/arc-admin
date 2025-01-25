@@ -32,7 +32,7 @@ class SysSettingController extends AdminController{
             foreach(array_keys($list) as $category){
                 $form->tab($category, function(Form $form) use($list, $category){
                     foreach($list[$category] as $key=> $value_arr){
-                        $set_obj = (new SysSetting())->use_key_get_data($key);
+                        $set_obj = (new SysSetting())->get_data_by_key($key);
                         if(!$set_obj){
                             $set_obj = (new SysSetting())->create_data($key);
                         }
@@ -113,7 +113,7 @@ class SysSettingController extends AdminController{
                         if($value == '' || $value == null){
                             continue;
                         }
-                        (new SysSetting())->use_key_update_value($key, $value);
+                        (new SysSetting())->update_value_by_key($key, $value);
                     }
                     return $form->response()->success("配置成功");
                 }

@@ -20,7 +20,7 @@ class ArticleCategory extends EloquentRepository{
      * @param string $name
      * @return void
      */
-    public function admin_get_categories(string|null $name = ''){
+    public function admin_get_datas_by_name(string|null $name = ''){
         $name = $name ?? '';
         return $this->eloquentClass::name($name)->get(['id', DB::raw("name as text")]);
     }
@@ -30,7 +30,7 @@ class ArticleCategory extends EloquentRepository{
      *
      * @return Collection
      */
-    public function get_all_data():Collection{
+    public function get_datas():Collection{
         return $this->eloquentClass::select('id', 'name', 'image')->get();
     }
 

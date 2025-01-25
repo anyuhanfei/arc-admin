@@ -18,7 +18,7 @@ class AccountExistVerify implements Rule, DataAwareRule{
     }
 
     public function passes($attribute, $value){
-        $data = (new Users())->use_account_get_data($value);
+        $data = (new Users())->get_data_by_account($value);
         return !boolval($data);
     }
 

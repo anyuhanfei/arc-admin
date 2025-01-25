@@ -1,6 +1,9 @@
 <?php
 
 # 自定义返回代码
+
+use Illuminate\Pagination\LengthAwarePaginator;
+
 const SUCCESS_CODE = 200;
 const ERROR_CODE = 500;
 
@@ -28,7 +31,7 @@ function error(string $msg, string $error = ''){
  * @param array $data 返回数据
  * @return void
  */
-function success(string $msg, null|array|Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model $data = []){
+function success(string $msg, null|array|Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|LengthAwarePaginator $data = []){
     return return_data(SUCCESS_CODE, $msg, $data);
 }
 
@@ -51,7 +54,7 @@ function throwBusinessException(string $msg, string $error = ''){
  * @param string $error 特殊错误码
  * @return void
  */
-function return_data(int $code, string $msg, null|array|Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model $data, string $error = ''){
+function return_data(int $code, string $msg, null|array|Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|LengthAwarePaginator $data, string $error = ''){
     return response()->json(['code'=> $code, 'msg'=> $msg, 'data'=> $data, 'error'=> $error], 200); # 此 200 为真正的 http 状态码
 }
 
@@ -184,4 +187,23 @@ function admin_show_user_data($user_data, $default = '已注销'){
  */
 function admin_image_field($image_obj){
     return $image_obj->autoUpload()->uniqueName()->saveFullUrl()->removable(false)->retainable();
+}
+
+/**
+ * 整合分页的统计数据
+ *
+ * @param LengthAwarePaginator $datas
+ * @return void
+ */
+function format_paginated_datas(LengthAwarePaginator $datas, array $visible = ['*']){
+    return [
+        'total'=> $datas->total(),  // 总条数
+        'count'=> $datas->count(),  // 当页总数
+        'perPage'=> $datas->perPage(),  // 每页应展示数量
+        'currentPage'=> $datas->currentPage(),  // 当前页码
+        'lastPage'=> $datas->lastPage(),  // 最后一页页码
+        'firstItem'=> $datas->firstItem(),  // 当页第一条数据的编号(id)
+        'lastItem'=> $datas->lastItem(),  // 当页最后一条数据的编号(id)
+        'datas'=> $datas->setVisible($visible),
+    ];
 }

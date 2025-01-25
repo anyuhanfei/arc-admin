@@ -41,7 +41,7 @@ class LogUsersPay extends EloquentRepository{
      * @param string $out_trade_no
      * @return EloquentModel|null
      */
-    public function use_no_get_data(string $out_trade_no):EloquentModel|null{
+    public function get_data_by_no(string $out_trade_no):EloquentModel|null{
         return $this->eloquentClass::outTradeNo($out_trade_no)->first();
     }
 
@@ -53,7 +53,7 @@ class LogUsersPay extends EloquentRepository{
      * @param integer $status
      * @return integer
      */
-    public function use_no_update_status(string $out_trade_no, int $status):int{
+    public function update_status_by_no(string $out_trade_no, int $status):int{
         return $this->eloquentClass::outTradeNo($out_trade_no)->update([
             'status'=> $status
         ]);

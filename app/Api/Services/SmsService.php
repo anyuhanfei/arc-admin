@@ -15,7 +15,7 @@ class SmsService{
      */
     public function send_sms_code_operation(int|string $phone, int $user_id){
         if($phone == ''){
-            $user = (new Users())->use_id_get_data($user_id);
+            $user = (new Users())->get_data_by_id($user_id);
             if(!$user){
                 throwBusinessException("请填写手机号");
             }

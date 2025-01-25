@@ -46,7 +46,7 @@ class ArticleCategoryController extends AdminController{
 
     public function get_categories(Request $request){
         $name = $request->get('q');
-        return (new ArticleCategory())->admin_get_categories($name);
+        return (new ArticleCategory())->admin_get_datas_by_name($name);
     }
 
 

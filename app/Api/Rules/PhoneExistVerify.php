@@ -17,7 +17,7 @@ class PhoneExistVerify implements Rule, DataAwareRule{
     }
 
     public function passes($attribute, $value){
-        $data = (new Users())->use_phone_get_data($value);
+        $data = (new Users())->get_data_by_phone($value);
         return !boolval($data);
     }
 

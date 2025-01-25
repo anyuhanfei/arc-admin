@@ -14,6 +14,13 @@ use App\Repositories\Users\UsersDetail;
 use App\Repositories\Users\UsersFund;
 
 class UserService{
+    protected $user_id;
+
+    public function __construct(int $user_id = 0){
+        $this->user_id = $user_id;
+    }
+
+
     /**
      * 通过token获取到会员id
      *
@@ -30,19 +37,18 @@ class UserService{
      * @param string $token
      * @return void
      */
-    public function logout_operation(int $user_id, string $token){
-        (new Users())->delete_token($user_id, $token);
+    public function logout_operation(string $token){
+        (new Users())->delete_token($this->user_id, $token);
     }
 
     /**
      * 获取会员详情
      *
-     * @param int $user_id 会员id
      * @return array
      */
-    public function get_user_detail(int $user_id):array{
-        $data = (new Users())->use_id_get_data($user_id);
-        (new Users())->验证会员状态($data);
+    public function get_user_detail():array{
+        $data = (new Users())->get_data_by_id($this->user_id);
+        (new Users())->verify_status_by_user($data);
         return [
             'id'=> $data->id,
             'phone'=> $data->phone,
@@ -64,17 +70,19 @@ class UserService{
      *  逻辑上，会员的数据只能存放在 user 表和 user_detail 表中，如果有存放在其他表中的数据无法使用此方法修改
      *  注:密码不能在此修改
      *
-     * @param int $user_id 会员id
      * @param array $params
      * @return bool
      */
-    public function update_datas_operation(int $user_id, array $params = []):bool{
-        $user_data = (new Users())->use_id_get_data($user_id)->toArray();
+    public function update_datas_operation(array $params = []):bool{
+        $user_data = (new Users())->get_data_by_id($this->user_id)->toArray();
         DB::beginTransaction();
         try{
             $update_user_data = [];
             $update_detail_data = [];
             foreach($params as $key=> $value){
+                if($value == '' || $value == null || $value == false){
+                    continue;
+                }
                 // 不是会员主表的数据就是会员详情数据
                 if(array_key_exists($key, $user_data)){
                     $update_user_data[$key] = $value;
@@ -82,8 +90,12 @@ class UserService{
                     $update_detail_data[$key] = $value;
                 }
             }
-            (new Users())->update_user_data($user_id, $update_user_data);
-            (new UsersDetail())->update_user_data($user_id, $update_detail_data);
+            if(count($update_user_data) >= 1){
+                (new Users())->update_datas_by_user($this->user_id, $update_user_data);
+            }
+            if(count($update_detail_data) >= 1){
+                (new UsersDetail())->update_datas_by_user($this->user_id, $update_detail_data);
+            }
             DB::commit();
         }catch(\Exception $e){
             DB::rollBack();
@@ -95,70 +107,69 @@ class UserService{
     /**
      * 获取微信绑定的手机号并保存手机号
      *
-     * @param integer $user_id
      * @param string $iv
      * @param string $encryptedData
      * @return void
      */
-    public function bind_wxmini_phone_operation(int $user_id, string $iv, string $encryptedData):string{
-        $user_data = (new Users())->use_id_get_data($user_id);
+    public function bind_wxmini_phone_operation(string $iv, string $encryptedData):string{
+        $user_data = (new Users())->get_data_by_id($this->user_id);
         $phone = (new \App\Tools\Wx\WxminiLoginTool())->get_wx_phone($user_data->openid, $iv, $encryptedData);
-        $res = $this->update_datas_operation($user_id, ['phone'=> $phone]);
+        $res = $this->update_datas_operation($this->user_id, ['phone'=> $phone]);
         return $phone;
     }
 
     /**
      * 获取会员资金流水记录
      *
-     * @param integer $user_id
      * @param integer $page
      * @param integer $limit
      * @param array $search
      * @return void
      */
-    public function get_user_fund_list(int $user_id, int $page, int $limit, array $search):Collection{
+    public function get_user_fund_list(int $limit, array $search):array{
         $_search = [];
         foreach($search as $key=> $value){
             if(!in_array($value, ['', '0', 'undefined', null])){
                 $_search[$key] = $value;
             }
         }
-        $log_list = (new LogUsersFund())->get_user_fund_list($user_id, $page, $limit, $_search);
-        return $log_list;
+        $datas = (new LogUsersFund())->get_list_by_user($this->user_id, $limit, $_search);
+        $datas = format_paginated_datas($datas, ["id", "coin_type", "fund_type", "amount", "before_money", "after_money", "relevance", "remark", "created_at"]);
+
+        return $datas;
     }
 
     /**
      * 获取会员的消息列表
      *
-     * @param integer $user_id
      * @param integer $page
      * @param integer $limit
      * @return void
      */
-    public function get_sys_message_list(int $user_id, int $page, int $limit):Collection{
+    public function get_sys_message_list(int $limit){
         $log_sys_message_repository = new LogSysMessage();
-        $message_list = $log_sys_message_repository->get_user_message_list($user_id, $page, $limit);
-        foreach($message_list as &$message){
-            $message->read_status = $log_sys_message_repository->get_user_read_status($user_id, $message->id);
+        $datas = $log_sys_message_repository->get_list_by_user($this->user_id, $limit);
+
+        foreach($datas as &$message){
+            $message->read_status = $log_sys_message_repository->get_read_status_by_id($this->user_id, $message->id);
             unset($message->updated_at, $message->deleted_at, $message->user_ids);
         }
-        return $message_list;
+        $datas = format_paginated_datas($datas, ['id', 'title', 'image', 'content', 'created_at', 'read_status']);
+        return $datas;
     }
 
     /**
      * 获取会员的系统消息详情
      *
-     * @param integer $user_id
      * @param integer $message_id
      * @return Model
      */
-    public function get_sys_message_detail(int $user_id, int $message_id):Model{
-        $log_sys_message_repository = new LogSysMessage();
-        $message = $log_sys_message_repository->get_user_message_detail($user_id, $message_id);
+    public function get_sys_message_detail(int $message_id):Model{
+        $message = (new LogSysMessage())->get_data_by_id($this->user_id, $message_id);
         if(!$message){
             throwBusinessException("消息不存在");
         }
-        $log_sys_message_repository->set_user_read_status($user_id, $message->id);
+        (new LogSysMessage())->get_read_status_by_id($this->user_id, $message->id);
         unset($message->updated_at, $message->deleted_at, $message->user_ids);
         return $message;
     }
@@ -166,7 +177,6 @@ class UserService{
     /**
      * 会员提现申请操作
      *
-     * @param integer $user_id
      * @param integer|float $amount
      * @param string $account_type
      * @param string $coin_type
@@ -174,9 +184,9 @@ class UserService{
      * @param string $remark
      * @return bool
      */
-    public function user_withdraw_operation(int $user_id, int|float $amount, string $account_type, string $coin_type, array $accounts, string $remark = ''):bool{
-        $user_data = (new Users())->use_id_get_data($user_id);
-        (new Users())->验证会员状态($user_data);
+    public function user_withdraw_operation(int|float $amount, string $account_type, string $coin_type, array $accounts, string $remark = ''):bool{
+        $user_data = (new Users())->get_data_by_id($this->user_id);
+        (new Users())->verify_status_by_user($user_data);
         switch($account_type){
             case "微信":  // 情况分支：openid、绑定数据、传参 (正式项目需要将除业务逻辑外的分支判断代码都删除/注释)
                 // 系统自动转账：微信直接获取openid即可。（如果不是自动转账，则需要将此判断删除）
@@ -212,12 +222,12 @@ class UserService{
                 }
                 break;
         }
-        $withdraw_fee_rate_set = floatval((new SysSetting())->use_key_get_value("withdraw_fee_rate")) ?? 0;
+        $withdraw_fee_rate_set = floatval((new SysSetting())->get_data_by_key("withdraw_fee_rate")) ?? 0;
         $fee = $amount * $withdraw_fee_rate_set * 0.01;
         DB::beginTransaction();
         try{
-            $withdraw_log = (new LogUserWithdraw())->create_data($user_id, $amount, $fee, $coin_type, $accounts, '资金提现', $remark);
-            $money = (new UsersFund())->update_fund($user_id, $coin_type, $amount * -1, "提现申请", $withdraw_log->id, '');
+            $withdraw_log = (new LogUserWithdraw())->create_data($this->user_id, $amount, $fee, $coin_type, $accounts, '资金提现', $remark);
+            $money = (new UsersFund())->update_fund($this->user_id, $coin_type, $amount * -1, "提现申请", $withdraw_log->id, '');
             if($money < 0){
                 throwBusinessException("提现失败, 当前余额不足");
             }
@@ -232,14 +242,14 @@ class UserService{
     /**
      * 会员提现列表
      *
-     * @param integer $user_id
      * @param integer $page
      * @param integer $limit
      * @return Collection
      */
-    public function get_withdraw_list(int $user_id, int $page, int $limit):Collection{
-        $log_list = (new LogUserWithdraw())->get_user_withdraw_list($user_id, $page, $limit);
-        return $log_list;
+    public function get_withdraw_list(int $limit):array{
+        $datas = (new LogUserWithdraw())->get_list_by_user($this->user_id, $limit);
+        $datas = format_paginated_datas($datas, ["id", "amount", "fee", "content", "remark", "status", "created_at"]);
+        return $datas;
     }
 
 }

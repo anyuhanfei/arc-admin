@@ -47,7 +47,7 @@ class IdxBannerController extends AdminController{
                         case "internal_link":
                             return (new IdxBanner())->internal_link_array()[$this->link];
                         case 'article_id':
-                            $article = (new Article())->use_id_get_data($this->link);
+                            $article = (new Article())->get_data_by_id($this->link);
                             return $article ? $article->title : '文章已删除';
                             break;
                         case "external_link":
@@ -101,7 +101,7 @@ class IdxBannerController extends AdminController{
                 })->when(['article_id'], function(Form $form){
                     $category_id = 0;
                     if($form->isEditing() && $form->model()->link_type == 'article_id'){
-                        $article = (new Article())->use_id_get_data($form->model()->link);
+                        $article = (new Article())->get_data_by_id($form->model()->link);
                         $category_id = $article ? $article->category_id : 0;
                     }
                     $form->select('category_id', '选择文章分类')

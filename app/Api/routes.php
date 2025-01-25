@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 
 // 上传文件
@@ -43,7 +44,7 @@ Route::group([
 ], function(Router $router){
     // 会员详情
     $router->post('user/detail', [\App\Api\Controllers\UserController::class, 'user_detail']);
-    $router->post('user/update/data', [\App\Api\Controllers\UserController::class, 'update_data']);
+    $router->post('user/update/data', [\App\Api\Controllers\UserController::class, 'update_basic_detail']);
 
     // 会员资产记录、系统消息、提现记录
     $router->post('user/sys/sysmessage/list', [\App\Api\Controllers\UserController::class, 'sys_message_list']);

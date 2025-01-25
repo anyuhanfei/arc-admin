@@ -28,7 +28,7 @@ class SmsCodeEnterVerify implements Rule, DataAwareRule{
             if($this->data['user_id'] == 0){
                 return false;
             }
-            $user = (new Users())->use_id_get_data($this->data['user_id']);
+            $user = (new Users())->get_data_by_id($this->data['user_id']);
             if(!$user){
                 return false;
             }

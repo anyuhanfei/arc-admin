@@ -6,6 +6,7 @@ use App\Models\Article\Article as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 class Article extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
-    public function admin_use_category_get_list(int $category_id){
+    public function admin_get_datas_by_category(int $category_id){
         return $this->eloquentClass::categoryId($category_id)->get(['id', DB::raw("title as text")]);
     }
 
@@ -26,8 +27,8 @@ class Article extends EloquentRepository{
      * @param integer $limit
      * @return Collection
      */
-    public function use_category_get_list(int $category_id, int $page, int $limit):Collection{
-        return $this->eloquentClass::categoryId($category_id)->page($page, $limit)->get();
+    public function get_list_by_category(int $category_id, int $limit):Collection{
+        return $this->eloquentClass::categoryId($category_id)->paginate($limit);
     }
 
     /**
@@ -37,8 +38,8 @@ class Article extends EloquentRepository{
      * @param integer $limit
      * @return Collection
      */
-    public function get_all_data(int $page, int $limit):Collection{
-        return $this->eloquentClass::page($page, $limit)->get();
+    public function get_list(int $limit):LengthAwarePaginator{
+        return $this->eloquentClass::paginate($limit);
     }
 
     /**
@@ -47,7 +48,7 @@ class Article extends EloquentRepository{
      * @param integer $id
      * @return EloquentModel|null
      */
-    public function use_id_get_data(int $id):EloquentModel|null{
+    public function get_data_by_id(int $id):EloquentModel|null{
         return $this->eloquentClass::id($id)->first();
     }
 }

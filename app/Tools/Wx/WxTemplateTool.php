@@ -18,7 +18,7 @@ class WxTemplateTool{
     }
 
     public function index(int $user_id, int $template_id, array $data, string $url = ""):bool{
-        $openid = (new UsersRepository())->use_id_get_openid($user_id, "微信公众号");
+        $openid = (new UsersRepository())->get_openid_by_id($user_id, "微信公众号");
         if($openid == ''){
             return false;
         }

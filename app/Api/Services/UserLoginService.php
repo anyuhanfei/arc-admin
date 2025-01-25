@@ -37,7 +37,7 @@ class UserLoginService{
      * @return void
      */
     public function account_login_operation(string $account, string $password){
-        $data = $this->repository->use_account_get_data($account);
+        $data = $this->repository->get_data_by_account($account);
         if(!$data || $this->repository->verify_user_password($data->password, $password) == false){
             throwBusinessException("账号或密码错误");
         }
@@ -68,7 +68,7 @@ class UserLoginService{
      * @return void
      */
     public function phone_password_login_operation(string $phone, string $password){
-        $data = $this->repository->use_phone_get_data($phone);
+        $data = $this->repository->get_data_by_phone($phone);
         if(!$data || $this->repository->verify_user_password($data->password, $password) == false){
             throwBusinessException("手机号或密码错误");
         }
@@ -83,7 +83,7 @@ class UserLoginService{
      * @return void
      */
     public function phone_smscode_login_operation(string $phone){
-        $data = $this->repository->use_phone_get_data($phone);
+        $data = $this->repository->get_data_by_phone($phone);
         if(!$data){
             // 走注册流程
             $data = $this->repository->create_data([
@@ -108,7 +108,7 @@ class UserLoginService{
         }catch(\Exception $e){
             throwBusinessException("获取手机号失败，原因为:{$e->getMessage()}");
         }
-        $data = $this->repository->use_phone_get_data($phone);
+        $data = $this->repository->get_data_by_phone($phone);
         if(!$data){
             // 走注册流程
             $data = $this->repository->create_data([
@@ -130,7 +130,7 @@ class UserLoginService{
         if($wx_data['openid'] == ''){
             throwBusinessException("登录失败");
         }
-        $data = $this->repository->use_openid_get_data($wx_data['openid']);
+        $data = $this->repository->get_data_by_openid($wx_data['openid']);
         if(!$data){
             // 走注册流程
             $data = $this->repository->create_data([
@@ -154,7 +154,7 @@ class UserLoginService{
      */
     public function wxmini_oauth_login_operation(string $code, string $iv, string $encryptedData){
         $wx_data = (new WxminiLoginTool())->oauth($code, $iv, $encryptedData);
-        $data = $this->repository->use_openid_get_data($wx_data['openid']);
+        $data = $this->repository->get_data_by_openid($wx_data['openid']);
         if(!$data){
             // 走注册流程
             $data = $this->repository->create_data([

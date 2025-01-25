@@ -13,9 +13,9 @@ use App\Api\Services\UserService;
 class UserController extends BaseController{
     protected $service;
 
-    public function __construct(Request $request, UserService $UserService){
+    public function __construct(Request $request){
         parent::__construct($request);
-        $this->service = $UserService;
+        $this->service = new UserService($this->user_id);
     }
 
     /**
@@ -24,7 +24,7 @@ class UserController extends BaseController{
      * @return void
      */
     public function user_detail(){
-        $data = $this->service->get_user_detail($this->user_id);
+        $data = $this->service->get_user_detail();
         return success("会员信息", $data);
     }
 
@@ -37,9 +37,9 @@ class UserController extends BaseController{
     public function update_basic_detail(Request $request){
         $params['nickname'] = $request->input("nickname", '') ?? '';
         $params['avatar'] = $request->input("avatar", '') ?? '';
-        $params['sex'] = $request->input("sex", 0) ?? 0;
+        $params['sex'] = $request->input("sex", '') ?? '';
         $params['birthday'] = $request->input("birthday", '') ?? '';
-        $res = $this->service->update_datas_operation($this->user_id, $params);
+        $res = $this->service->update_datas_operation($params);
         return success("修改成功");
     }
 
@@ -52,7 +52,7 @@ class UserController extends BaseController{
     public function bind_wxmini_phone(Request $request){
         $iv = $request->input('iv');
         $encryptedData = $request->input('encryptedData');
-        $phone = $this->service->bind_wxmini_phone_operation($this->user_id, $iv, $encryptedData);
+        $phone = $this->service->bind_wxmini_phone_operation($iv, $encryptedData);
         return success("绑定成功", ['phone'=> $phone]);
     }
 
@@ -65,7 +65,7 @@ class UserController extends BaseController{
     public function sys_message_list(\App\Api\Requests\PageRequest $request){
         $page = $request->input("page");
         $limit = $request->input("limit");
-        $data = $this->service->get_sys_message_list($this->user_id, $page, $limit);
+        $data = $this->service->get_sys_message_list($limit);
         return success("系统消息列表", $data);
     }
 
@@ -77,7 +77,7 @@ class UserController extends BaseController{
      */
     public function sys_message_detail(Request $request){
         $id = $request->input("id");
-        $data = $this->service->get_sys_message_detail($this->user_id, $id);
+        $data = $this->service->get_sys_message_detail($id);
         return success("系统消息详情", $data);
     }
 
@@ -92,7 +92,7 @@ class UserController extends BaseController{
         $limit = $request->input("limit");
         $search['coin_type'] = $request->input("coin_type", '') ?? '';
         $search['fund_type'] = $request->input("fund_type", '') ?? '';
-        $data = $this->service->get_user_fund_list($this->user_id, $page, $limit, $search);
+        $data = $this->service->get_user_fund_list($limit, $search);
         return success("会员资金列表", $data);
     }
 
@@ -115,7 +115,7 @@ class UserController extends BaseController{
         $accounts['bank_card_username'] = $request->input("bank_card_username", '') ?? '';
         $accounts['bank_card_bank'] = $request->input("bank_card_bank", '') ?? '';
         $accounts['bank_card_sub_bank'] = $request->input("bank_card_sub_bank", '') ?? '';
-        $res = $this->service->user_withdraw_operation($this->user_id, $amount, $account_type, $coin_type, $accounts, $remark);
+        $res = $this->service->user_withdraw_operation($amount, $account_type, $coin_type, $accounts, $remark);
         return success("提现申请成功");
     }
 
@@ -128,7 +128,7 @@ class UserController extends BaseController{
     public function withdraw_list(\App\Api\Requests\PageRequest $request){
         $page = $request->input("page");
         $limit = $request->input("limit");
-        $data = $this->service->get_withdraw_list($this->user_id, $page, $limit);
+        $data = $this->service->get_withdraw_list($limit);
         return success("提现列表", $data);
     }
 
@@ -139,7 +139,7 @@ class UserController extends BaseController{
      * @return void
      */
     public function logout(Request $request){
-        $this->service->logout_operation($this->user_id, $this->token);
+        $this->service->logout_operation($this->token);
         return success("退出成功");
     }
 }

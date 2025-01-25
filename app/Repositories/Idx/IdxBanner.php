@@ -46,7 +46,7 @@ class IdxBanner extends EloquentRepository{
      * @param string $site
      * @return Collection
      */
-    public function use_site_get_list(string $site):Collection{
-        return $this->eloquentClass::site($site)->select('id', 'image', 'url')->get();
+    public function get_datas_by_site(string $site):Collection{
+        return $this->eloquentClass::site($site)->get();
     }
 }

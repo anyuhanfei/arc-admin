@@ -6,6 +6,7 @@ use App\Models\Log\LogUsersFund as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * 会员资金记录表数据仓库
@@ -66,8 +67,8 @@ class LogUsersFund extends EloquentRepository{
      * @param array $search
      * @return Collection
      */
-    public function get_user_fund_list(int $user_id, int $page, int $limit, array $search):Collection{
-        return $this->eloquentClass::userId($user_id)->apply($search)->page($page, $limit)->select("id", "coin_type", "fund_type", "amount", "before_money", "after_money", "relevance", "remark", "created_at")->get();
+    public function get_list_by_user(int $user_id, int $limit, array $search):LengthAwarePaginator{
+        return $this->eloquentClass::userId($user_id)->apply($search)->paginate($limit);
     }
 
 
@@ -77,7 +78,7 @@ class LogUsersFund extends EloquentRepository{
      * @param string $fund_type
      * @return integer|float
      */
-    public function count_fund_type_sum(string $fund_type):int|float{
+    public function count_sum_by_fund_type(string $fund_type):int|float{
         return $this->eloquentClass::fundType($fund_type)->sum("amount");
     }
 }

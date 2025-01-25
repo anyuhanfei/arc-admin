@@ -186,7 +186,7 @@ class UsersController extends AdminController{
 
     public function get_users(Request $request){
         $account = $request->get('q');
-        return (new Users())->admin_get_users($account);
+        return (new Users())->admin_get_datas_by_account($account);
     }
 
 

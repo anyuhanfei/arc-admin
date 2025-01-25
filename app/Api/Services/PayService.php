@@ -17,7 +17,7 @@ class PayService{
         // 创建、使用支付记录
         $pay_log = false;
         if($out_trade_no != ''){
-            $pay_log = (new LogUsersPay())->use_no_get_data($out_trade_no);
+            $pay_log = (new LogUsersPay())->get_data_by_no($out_trade_no);
         }
         if(!$pay_log){
             $out_trade_no = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
@@ -35,14 +35,14 @@ class PayService{
                 return ((new WxPayTool()))->app_pay($subject, $out_trade_no, $amount);
                 break;
             case "h5微信":
-                $openid = (new Users())->use_id_get_openid($user_id);
+                $openid = (new Users())->get_openid_by_id($user_id);
                 if($openid == ''){
                     throwBusinessException("您尚未绑定微信公众号");
                 }
                 return ((new WxPayTool()))->jsapi_pay($openid, $subject, $out_trade_no, $amount);
                 break;
             case "小程序微信":
-                $openid = (new Users())->use_id_get_openid($user_id);
+                $openid = (new Users())->get_openid_by_id($user_id);
                 if($openid == ''){
                     throwBusinessException("您尚未绑定微信小程序");
                 }
@@ -91,7 +91,7 @@ class PayService{
      */
     protected function notify_execute(string $out_trade_no):bool{
         // 获取支付记录
-        $pay_log = (new LogUsersPay())->use_no_get_data($out_trade_no);
+        $pay_log = (new LogUsersPay())->get_data_by_no($out_trade_no);
         if(!$pay_log || $pay_log->status != 0){
             return true;
         }
@@ -99,7 +99,7 @@ class PayService{
         DB::beginTransaction();
         try{
             // 将支付记录修改为已处理(已回调)
-            (new LogUsersPay())->use_no_update_status($out_trade_no, 1);
+            (new LogUsersPay())->update_status_by_no($out_trade_no, 1);
             switch($pay_log->pay_type){
                 case "测试":
                     $this->测试($pay_log->relevance);

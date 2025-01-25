@@ -20,3 +20,6 @@ composer install
 php artisan admin:publish
 ```
 4. 复制 `.env.example` 文件，重命名为 `.env`，并修改配置
+
+#### TODO
+1. 公告、文章、轮播图的开关（发布）

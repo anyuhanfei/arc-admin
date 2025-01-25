@@ -37,7 +37,7 @@ class SysController extends BaseController{
     public function notice_list(\App\Api\Requests\PageRequest $request){
         $page = $request->input("page", 1) ?? 1;
         $limit = $request->input("limit", 10) ?? 10;
-        $data = $this->service->get_notice_list($page, $limit);
+        $data = $this->service->get_notice_list($limit);
         return success('公告列表', $data);
     }
 
@@ -59,8 +59,8 @@ class SysController extends BaseController{
      * @return void
      */
     public function article_category_list(){
-        $data = $this->service->get_article_category_list();
-        return success("文章分类列表", $data);
+        $datas = $this->service->get_article_category_list();
+        return success("文章分类列表", $datas);
     }
 
     /**
@@ -73,8 +73,8 @@ class SysController extends BaseController{
         $page = $request->input("page", 1) ?? 1;
         $limit = $request->input("limit", 10) ?? 10;
         $category_id = $request->input("category_id", 0) ?? 0;
-        $data = $this->service->get_article_list($category_id, $page, $limit);
-        return success("文章列表", $data);
+        $datas = $this->service->get_article_list($category_id, $limit);
+        return success("文章列表", $datas);
     }
 
     /**

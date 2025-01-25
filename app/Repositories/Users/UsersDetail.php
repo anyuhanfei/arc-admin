@@ -33,7 +33,7 @@ class UsersDetail extends EloquentRepository{
      * @param array $params
      * @return void
      */
-    public function update_user_data(int $user_id, array $params):int{
+    public function update_datas_by_user(int $user_id, array $params):int{
         return $this->eloquentClass::where("id", $user_id)->update($params);
     }
 
@@ -43,7 +43,7 @@ class UsersDetail extends EloquentRepository{
      * @param integer $user_id
      * @return EloquentModel|null
      */
-    public function use_id_get_data(int $user_id):EloquentModel|null{
+    public function get_data_by_id(int $user_id):EloquentModel|null{
         return $this->eloquentClass::id($user_id)->first();
     }
 }

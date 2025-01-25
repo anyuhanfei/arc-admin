@@ -6,6 +6,7 @@ use App\Models\Log\LogUserWithdraw as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * 会员提现表数据仓库
@@ -56,7 +57,7 @@ class LogUserWithdraw extends EloquentRepository{
      * @param integer $limit
      * @return void
      */
-    public function get_user_withdraw_list(int $user_id, int $page, int $limit):Collection{
-        return $this->eloquentClass::userId($user_id)->page($page, $limit)->select("id", "amount", "fee", "content", "remark", "status", "created_at")->get();
+    public function get_list_by_user(int $user_id, int $limit):LengthAwarePaginator{
+        return $this->eloquentClass::userId($user_id)->paginate($limit);
     }
 }

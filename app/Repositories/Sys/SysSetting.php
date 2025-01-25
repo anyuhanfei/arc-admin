@@ -60,7 +60,7 @@ class SysSetting extends EloquentRepository{
      * @param string $key
      * @return EloquentModel|null
      */
-    public function use_key_get_data(string $key):EloquentModel|null{
+    public function get_data_by_key(string $key):EloquentModel|null{
         return $this->eloquentClass::key($key)->first();
     }
 
@@ -70,7 +70,7 @@ class SysSetting extends EloquentRepository{
      * @param string $key
      * @return string
      */
-    public function use_key_get_value(string $key):string{
+    public function get_value_by_key(string $key):string{
         return $this->eloquentClass::key($key)->value("value") ?? '';
     }
 
@@ -81,7 +81,7 @@ class SysSetting extends EloquentRepository{
      * @param string|integer|float $value
      * @return int
      */
-    public function use_key_update_value(string $key, string|int|float $value):int{
+    public function update_value_by_key(string $key, string|int|float $value):int{
         return $this->eloquentClass::key($key)->update([
             'value'=> $value,
         ]);

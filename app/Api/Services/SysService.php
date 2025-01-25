@@ -7,6 +7,8 @@ use App\Repositories\Article\Article;
 use App\Repositories\Article\ArticleCategory;
 use App\Repositories\Idx\IdxBanner;
 use App\Repositories\Sys\SysNotice;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * 系统配置相关
@@ -20,7 +22,7 @@ class SysService{
      * @return void
      */
     public function get_banner_list(string $site):Collection{
-        return (new IdxBanner())->use_site_get_list($site);
+        return (new IdxBanner())->get_datas_by_site($site)->setVisible(['id', 'image', 'link_type', 'link']);
     }
 
     /**
@@ -30,15 +32,15 @@ class SysService{
      *
      * @param integer $page 页码
      * @param integer $limit 每页展示数据数量
-     * @return void
+     * @return array
      */
-    public function get_notice_list(int $page = 1, int $limit = 10):Collection{
+    public function get_notice_list(int $limit = 10):array{
         $notice_type = SysNotice::get_type();
         if($notice_type != '多条富文本' && $notice_type != '多条文字'){
             throwBusinessException('当前公告模式设置为单条，请直接使用 get_notice 接口');
         }
-        $data = (new SysNotice())->get_list($page, $limit);
-        return $data;
+        $datas = format_paginated_datas((new SysNotice())->get_list($limit), ['id', 'title', 'image', 'created_at']);
+        return $datas;
     }
 
     /**
@@ -59,7 +61,7 @@ class SysService{
                 if($id == 0){
                     throwBusinessException('当前公告模式设置为多条，请使用 get_notice_list 接口或传递 id 参数!');
                 }
-                $data = (new SysNotice())->use_id_get_data($id);
+                $data = (new SysNotice())->get_data_by_id($id);
                 unset($data->content);
                 break;
             case "单条富文本":
@@ -69,7 +71,7 @@ class SysService{
                 if($id == 0){
                     throwBusinessException('当前公告模式设置为多条，请使用 get_notice_list 接口或传递 id 参数!');
                 }
-                $data = (new SysNotice())->use_id_get_data($id);
+                $data = (new SysNotice())->get_data_by_id($id);
                 break;
             default:
                 return [];
@@ -83,7 +85,7 @@ class SysService{
      *
      */
     public function get_article_category_list(){
-        return (new ArticleCategory())->get_all_data();
+        return (new ArticleCategory())->get_datas();
     }
 
     /**
@@ -92,18 +94,21 @@ class SysService{
      * @param integer $category_id
      * @param integer $page
      * @param integer $limit
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return array
      */
-    public function get_article_list(int $category_id, int $page = 1, int $limit = 10){
+    public function get_article_list(int $category_id, int $limit = 10):array{
         if($category_id != 0){
-            $data = (new Article())->use_category_get_list($category_id, $page, $limit);
+            $datas = (new Article())->get_list_by_category($category_id, $limit);
         }else{
-            $data = (new Article())->get_all_data($page, $limit);
+            $datas = (new Article())->get_list($limit);
         }
-        foreach($data as &$v){
-            $v->keyword = comma_str_to_array($v->keyword);
+        $datas->load(['category']);
+        foreach($datas as &$item){
+            $item->keyword = comma_str_to_array($item->keyword);
+            $item->category_name = $item->category->name;
         }
-        return $data;
+        $datas = format_paginated_datas($datas, ['id', 'category_id', 'title', 'intro', 'image', 'author', 'keyword', 'created_at', 'category_name']);
+        return $datas;
     }
 
     /**
@@ -113,11 +118,12 @@ class SysService{
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function get_article_detail(int $id){
-        $data = (new Article())->use_id_get_data($id);
+        $data = (new Article())->get_data_by_id($id)->setVisible(['id', 'category_id', 'title', 'intro', 'image', 'author', 'keyword', 'content', 'created_at', 'category_name']);
         if(!$data){
             throwBusinessException('文章不存在');
         }
         $data->keyword = comma_str_to_array($data->keyword);
+        $data->category_name = $data->category->name;
         return $data;
     }
 }

@@ -34,7 +34,7 @@ class LogSysMessageController extends AdminController{
                 if($this->user_ids == 0){
                     return "所有会员";
                 }
-                $users = (new Users())->use_ids_get_data(comma_str_to_array($this->user_ids));
+                $users = (new Users())->get_datas_by_ids(comma_str_to_array($this->user_ids));
                 $str = '<span class="intro">';
                 foreach($users as $user){
                     $str .= "ID: {$user->id}&nbsp;&nbsp;昵称：{$user->nickname}&nbsp;&nbsp;账号：{$user->account}<br/>";
@@ -112,13 +112,13 @@ class LogSysMessageController extends AdminController{
                 if($form->isEditing()){
                     $message_id = $form->getKey();
                     if($form->model()->user_ids == 0){
-                        $user_ids_list = (new Users())->get_all_user_ids();
+                        $user_ids_list = (new Users())->get_ids();
                     }else{
                         $user_ids_list = comma_str_to_array($form->model()->user_ids);
                     }
                     $repository = new LogSysMessage();
                     foreach($user_ids_list as $user_id){
-                        $repository->del_user_read_status($user_id, $message_id);
+                        $repository->del_read_status_by_id($user_id, $message_id);
                     }
                 }
             });

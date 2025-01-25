@@ -55,7 +55,7 @@ class 资金流水统计 extends Donut{
     public function fill(){
         $datas = [];
         foreach($this->labels as $label){
-            $datas[] = (new LogUsersFund())->count_fund_type_sum($label);
+            $datas[] = (new LogUsersFund())->count_sum_by_fund_type($label);
         }
         $this->withContent($datas);
 

@@ -23,7 +23,7 @@ class AmountRuleVerify implements ValidationRule, DataAwareRule{
     }
 
     public function validate(string $attribute, mixed $value, Closure $fail):void{
-        $withdraw_minimum_amount_set = floatval((new SysSetting())->use_key_get_value("withdraw_minimum_amount"));
+        $withdraw_minimum_amount_set = floatval((new SysSetting())->get_value_by_key("withdraw_minimum_amount"));
         if($withdraw_minimum_amount_set > $value){
             $fail("最低提现金额为：{$withdraw_minimum_amount_set}");
             return;

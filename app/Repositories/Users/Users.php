@@ -32,11 +32,131 @@ class Users extends EloquentRepository{
      *
      * @return Collection
      */
-    public function admin_get_users(string|null $account = ''):Collection{
+    public function admin_get_datas_by_account(string|null $account = ''):Collection{
         return $this->eloquentClass::where('account', 'like', "%{$account}%")->get(['id', DB::raw("account as text")]);exit;
     }
 
-    /**************************************start password***************************************** */
+    /**
+     * 创建会员
+     *
+     * @param [type] $params
+     * @return EloquentModel
+     */
+    public function create_data(array $params):EloquentModel{
+        $password = $this->set_user_password($params['password'] ?? '');
+        DB::beginTransaction();
+        try{
+            $user_data = $this->eloquentClass::create([
+                'avatar'=> $params['avatar'] ?? '',
+                'nickname'=> $params['nickname'] ?? ($params['account'] ?? ($params['phone'] ?? '')),
+                'account'=> $params['account'] ?? '',
+                'phone'=> $params['phone'] ?? '',
+                'email'=> $params['email'] ?? '',
+                'password'=> $password,
+                'parent_user_id'=> $params['parent_user_id'] ?? 0,
+                'unionid'=> $params['unionid'] ?? '',
+                'openid'=> $params['openid'] ?? '',
+                'login_status'=> $params['login_status'] ?? 1,
+            ]);
+            (new UsersFund())->create_data($user_data->id);
+            (new UsersDetail())->create_data($user_data->id);
+            DB::commit();
+        }catch(\Exception $e) {
+            DB::rollBack();
+            throwBusinessException("注册失败");
+        }
+        return $user_data;
+    }
+
+    /**
+     * 通过账号查询一条数据
+     *
+     * @param string $account
+     * @return EloquentModel
+     */
+    public function get_data_by_account(string $account):EloquentModel{
+        return $this->eloquentClass::account($account)->first();
+    }
+
+    /**
+     * 通过手机号查询一条数据
+     *
+     * @param string $phone
+     * @return EloquentModel
+     */
+    public function get_data_by_phone(string $phone):?EloquentModel{
+        return $this->eloquentClass::phone($phone)->first();
+    }
+
+    /**
+     * 通过openid查询一条数据
+     *
+     * @param string $openid
+     * @return EloquentModel
+     */
+    public function get_data_by_openid(string $openid):EloquentModel{
+        return $this->eloquentClass::openid($openid)->first();
+    }
+
+    /**
+     * 通过id查询一条数据
+     *
+     * @param integer $id
+     * @return EloquentModel
+     */
+    public function get_data_by_id(int $id):EloquentModel{
+        return $this->eloquentClass::id($id)->first();
+    }
+
+    /**
+     * 获取指定id的openid
+     *
+     * @param integer $id
+     * @return string
+     */
+    public function get_openid_by_id(int $id):string{
+        return $this->eloquentClass::id($id)->value("openid");
+    }
+
+    /**
+     * 获取指定id的会员集
+     *
+     * @param array $ids
+     * @return Collection
+     */
+    public function get_datas_by_ids(array $ids):Collection{
+        return $this->eloquentClass::id($ids)->select("id", "nickname", "account", "phone")->get();
+    }
+
+    /**
+     * 获取全部会员的id
+     *
+     * @return Collection
+     */
+    public function get_ids():Collection{
+        return $this->eloquentClass::pluck("id");
+    }
+
+    /**
+     * 修改会员中指定的数据
+     *
+     * @param integer $user_id
+     * @param array $params
+     * @return void
+     */
+    public function update_datas_by_user(int $user_id, array $params):int{
+        return $this->eloquentClass::where("id", $user_id)->update($params);
+    }
+
+    public function verify_status_by_user(Model $user_data){
+        if(!$user_data || $user_data->login_status == 0){
+            throwBusinessException("会员不存在或已冻结", NO_LOGIN);
+        }
+    }
+
+
+
+    /****************************start password***************************** */
     /**
      * 生成密码
      *
@@ -205,121 +325,4 @@ class Users extends EloquentRepository{
     }
     /**************************************end count***************************************** */
 
-    /**
-     * 创建会员
-     *
-     * @param [type] $params
-     * @return EloquentModel
-     */
-    public function create_data(array $params):EloquentModel{
-        $password = $this->set_user_password($params['password'] ?? '');
-        DB::beginTransaction();
-        try{
-            $user_data = $this->eloquentClass::create([
-                'avatar'=> $params['avatar'] ?? '',
-                'nickname'=> $params['nickname'] ?? ($params['account'] ?? ($params['phone'] ?? '')),
-                'account'=> $params['account'] ?? '',
-                'phone'=> $params['phone'] ?? '',
-                'email'=> $params['email'] ?? '',
-                'password'=> $password,
-                'parent_user_id'=> $params['parent_user_id'] ?? 0,
-                'unionid'=> $params['unionid'] ?? '',
-                'openid'=> $params['openid'] ?? '',
-                'login_status'=> $params['login_status'] ?? 1,
-            ]);
-            (new UsersFund())->create_data($user_data->id);
-            (new UsersDetail())->create_data($user_data->id);
-            DB::commit();
-        }catch(\Exception $e) {
-            DB::rollBack();
-            throwBusinessException("注册失败");
-        }
-        return $user_data;
-    }
-
-    /**
-     * 通过账号查询一条数据
-     *
-     * @param string $account
-     * @return EloquentModel
-     */
-    public function use_account_get_data(string $account):EloquentModel{
-        return $this->eloquentClass::account($account)->first();
-    }
-
-    /**
-     * 通过手机号查询一条数据
-     *
-     * @param string $phone
-     * @return EloquentModel
-     */
-    public function use_phone_get_data(string $phone):EloquentModel{
-        return $this->eloquentClass::phone($phone)->first();
-    }
-
-    /**
-     * 通过openid查询一条数据
-     *
-     * @param string $openid
-     * @return EloquentModel
-     */
-    public function use_openid_get_data(string $openid):EloquentModel{
-        return $this->eloquentClass::openid($openid)->first();
-    }
-
-    /**
-     * 通过id查询一条数据
-     *
-     * @param integer $id
-     * @return EloquentModel
-     */
-    public function use_id_get_data(int $id):EloquentModel{
-        return $this->eloquentClass::id($id)->first();
-    }
-
-    /**
-     * 获取指定id的openid
-     *
-     * @param integer $id
-     * @return string
-     */
-    public function use_id_get_openid(int $id):string{
-        return $this->eloquentClass::id($id)->value("openid");
-    }
-
-    /**
-     * 获取指定id的会员集
-     *
-     * @param array $ids
-     * @return Collection
-     */
-    public function use_ids_get_data(array $ids):Collection{
-        return $this->eloquentClass::id($ids)->select("id", "nickname", "account", "phone")->get();
-    }
-
-    /**
-     * 获取全部会员的id
-     *
-     * @return Collection
-     */
-    public function get_all_user_ids():Collection{
-        return $this->eloquentClass::pluck("id");
-    }
-
-    /**
-     * 修改会员中指定的数据
-     *
-     * @param integer $user_id
-     * @param array $params
-     * @return void
-     */
-    public function update_user_data(int $user_id, array $params):int{
-        return $this->eloquentClass::where("id", $user_id)->update($params);
-    }
-
-    public function 验证会员状态(Model $user_data){
-        if(!$user_data || $user_data->login_status == 0){
-            throwBusinessException("会员不存在或已冻结", NO_LOGIN);
-        }
-    }
 }

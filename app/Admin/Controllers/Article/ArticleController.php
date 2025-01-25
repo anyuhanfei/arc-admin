@@ -40,7 +40,7 @@ class ArticleController extends AdminController{
             });
             $grid->column('created_at');
             $grid->selector(function (Grid\Tools\Selector $selector) {
-                $categories = (new ArticleCategory())->admin_get_categories()->toArray();
+                $categories = (new ArticleCategory())->admin_get_datas_by_name()->toArray();
                 $selector->select('category_id', '文章分类', array_combine(array_column($categories, 'id'), array_column($categories, 'text')));
             });
             $grid->filter(function (Grid\Filter $filter) {
@@ -106,6 +106,6 @@ class ArticleController extends AdminController{
 
     public function get_article_list(Request $request){
         $category_id = $request->get('q', 0);
-        return (new Article())->admin_use_category_get_list($category_id);
+        return (new Article())->admin_get_datas_by_category($category_id);
     }
 }

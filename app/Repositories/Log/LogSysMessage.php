@@ -7,6 +7,7 @@ use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * 系统消息表数据仓库
@@ -42,8 +43,8 @@ class LogSysMessage extends EloquentRepository{
      * @param integer $limit
      * @return Collection
      */
-    public function get_user_message_list(int $user_id, int $page, int $limit):Collection{
-        return $this->eloquentClass::userIds($user_id)->orderby("id", 'desc')->page($page, $limit)->get();
+    public function get_list_by_user(int $user_id, int $limit):LengthAwarePaginator{
+        return $this->eloquentClass::userIds($user_id)->orderby("id", 'desc')->paginate($limit);
     }
 
     /**
@@ -53,7 +54,7 @@ class LogSysMessage extends EloquentRepository{
      * @param integer $message_id
      * @return EloquentModel|null
      */
-    public function get_user_message_detail(int $user_id, int $message_id):EloquentModel|null{
+    public function get_data_by_id(int $user_id, int $message_id):EloquentModel|null{
         return $this->eloquentClass::userIds($user_id)->id($message_id)->first();
     }
 
@@ -67,15 +68,15 @@ class LogSysMessage extends EloquentRepository{
      * @param integer $message_id
      * @return int  0:未读 1:已读
      */
-    public function get_user_read_status(int $user_id, int $message_id):int{
+    public function get_read_status_by_id(int $user_id, int $message_id):int{
         return Redis::getbit("sysmsgrs:{$user_id}", $message_id);
     }
 
-    public function set_user_read_status(int $user_id, int $message_id){
+    public function set_read_status_by_id_user_by_id(int $user_id, int $message_id){
         Redis::setbit("sysmsgrs:{$user_id}", $message_id, 1);
     }
 
-    public function del_user_read_status(int $user_id, int $message_id){
+    public function del_read_status_by_id(int $user_id, int $message_id){
         Redis::setbit("sysmsgrs:{$user_id}", $message_id, 0);
     }
 }
