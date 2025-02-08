@@ -3,8 +3,7 @@ namespace App\Api\Services;
 
 use Illuminate\Database\Eloquent\Collection;
 
-use App\Repositories\Article\Article;
-use App\Repositories\Article\ArticleCategory;
+use App\Repositories\Article\ArticleCategories;
 use App\Repositories\Article\Articles;
 use App\Repositories\Sys\SysBanners;
 use App\Repositories\Sys\SysNotices;
@@ -83,8 +82,8 @@ class SysService{
      * 获取文章分类列表
      *
      */
-    public function get_article_category_list(){
-        return (new ArticleCategory())->get_datas();
+    public function get_article_categories_list(){
+        return (new ArticleCategories())->get_datas();
     }
 
     /**

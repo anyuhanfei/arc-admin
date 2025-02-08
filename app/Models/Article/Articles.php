@@ -26,7 +26,7 @@ class Articles extends Model{
      * @return void
      */
     public function category(){
-        return $this->hasOne(ArticleCategory::class, 'id', 'category_id')->withTrashed();
+        return $this->hasOne(ArticleCategories::class, 'id', 'category_id')->withTrashed();
     }
 
     public function scopeId(Builder $builder, int $value){

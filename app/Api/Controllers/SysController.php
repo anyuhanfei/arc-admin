@@ -58,8 +58,8 @@ class SysController extends BaseController{
      * @param Request $request
      * @return void
      */
-    public function article_category_list(){
-        $datas = $this->service->get_article_category_list();
+    public function article_categories_list(){
+        $datas = $this->service->get_article_categories_list();
         return success("文章分类列表", $datas);
     }
 

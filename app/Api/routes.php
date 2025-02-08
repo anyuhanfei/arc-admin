@@ -29,7 +29,7 @@ Route::post('sys/banners/list', [\App\Api\Controllers\SysController::class, 'ban
 Route::post('sys/notice/detail', [\App\Api\Controllers\SysController::class, 'notice_detail']);
 Route::post('sys/notices/list', [\App\Api\Controllers\SysController::class, 'notices_list']);
 // 文章
-Route::post('sys/article/category', [\App\Api\Controllers\SysController::class, 'article_category_list']);
+Route::post('sys/article/categories', [\App\Api\Controllers\SysController::class, 'article_categories_list']);
 Route::post('sys/articles/list', [\App\Api\Controllers\SysController::class, 'articles_list']);
 Route::post('sys/article/detail', [\App\Api\Controllers\SysController::class, 'article_detail']);
 

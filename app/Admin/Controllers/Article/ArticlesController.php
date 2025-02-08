@@ -3,7 +3,7 @@
 namespace App\Admin\Controllers\Article;
 
 use App\Repositories\Article\Articles;
-use App\Repositories\Article\ArticleCategory;
+use App\Repositories\Article\ArticleCategories;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -40,7 +40,7 @@ class ArticlesController extends AdminController{
             });
             $grid->column('created_at');
             $grid->selector(function (Grid\Tools\Selector $selector) {
-                $categories = (new ArticleCategory())->admin_get_datas_by_name()->toArray();
+                $categories = (new ArticleCategories())->admin_get_datas_by_name()->toArray();
                 $selector->select('category_id', '文章分类', array_combine(array_column($categories, 'id'), array_column($categories, 'text')));
             });
             $grid->filter(function (Grid\Filter $filter) {
@@ -106,6 +106,6 @@ class ArticlesController extends AdminController{
 
     public function get_article_list(Request $request){
         $category_id = $request->get('q', 0);
-        return (new Article())->admin_get_datas_by_category($category_id);
+        return (new Articles())->admin_get_datas_by_category($category_id);
     }
 }

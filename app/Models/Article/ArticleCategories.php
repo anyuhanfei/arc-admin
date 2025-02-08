@@ -12,12 +12,12 @@ use App\Models\BaseFilter;
 /**
  * 文章分类表数据模型
  */
-class ArticleCategory extends Model{
+class ArticleCategories extends Model{
 	use HasDateTimeFormatter;
     use SoftDeletes;
     use BaseFilter;
 
-    protected $table = 'article_category';
+    protected $table = 'article_categories';
     protected $guarded = [];
 
     public function scopeId(Builder $builder, int $id){

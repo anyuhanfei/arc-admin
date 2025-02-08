@@ -3,6 +3,7 @@ return [
     'labels' => [
         'Articles' => '文章管理',
         'articles' => '文章管理',
+        'article'=> '内容管理',
     ],
     'fields' => [
         'category_id' => '文章分类',

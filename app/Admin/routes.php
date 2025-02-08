@@ -25,7 +25,7 @@ Route::group([
     $router->resource('log/withdraws', 'Users\UserWithdrawLogsController');
 
     $router->resource('article/articles', 'Article\ArticlesController');
-    $router->resource('article/category', 'Article\ArticleCategoryController');
+    $router->resource('article/categories', 'Article\ArticleCategoriesController');
 
 
 });
@@ -35,6 +35,6 @@ Route::group([
 ], function (Router $router) {
     Route::get("captcha/image", "AuthController@captcha_image");
     Route::get("/get/article/list", "Article\ArticleController@get_article_list");
-    Route::get("get/article/categories", "Article\ArticleCategoryController@get_categories");
+    Route::get("get/article/categories", "Article\ArticleCategoriesController@get_categories");
     Route::get("get/users", "Users\UsersController@get_users");
 });

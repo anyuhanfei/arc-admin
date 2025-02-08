@@ -2,16 +2,15 @@
 
 namespace App\Repositories\Article;
 
-use App\Models\Article\ArticleCategory as Model;
+use App\Models\Article\ArticleCategories as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 /**
  * 文章分类表数据仓库
  */
-class ArticleCategory extends EloquentRepository{
+class ArticleCategories extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**
