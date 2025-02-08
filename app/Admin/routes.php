@@ -21,11 +21,11 @@ Route::group([
     $router->resource('sys/message/Log', "Sys\SysMessageLogController");
 
     $router->resource('users/users', 'Users\UsersController');
+    $router->resource('log/balances', 'Users\UserBalanceLogsController');
 
     $router->resource('article/article', 'Article\ArticleController');
     $router->resource('article/category', 'Article\ArticleCategoryController');
 
-    $router->resource('log/userfund', 'Log\LogUsersFundController');
     $router->resource('log/userswithdraw', 'Log\LogUsersWithdrawController');
 
 });

@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Admin\Controllers\Log;
+namespace App\Admin\Controllers\Users;
 
-use App\Repositories\Log\LogUsersFund;
-use Dcat\Admin\Form;
+use App\Repositories\Users\UserBalanceLogs;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
@@ -11,11 +10,11 @@ use Dcat\Admin\Http\Controllers\AdminController;
 /**
  * 会员资金管理模块控制器
  */
-class LogUsersFundController extends AdminController{
+class UserBalanceLogsController extends AdminController{
 
     protected function grid(){
-        $coin_array = LogUsersFund::coin_array();
-        return Grid::make(new LogUsersFund(['user']), function (Grid $grid) use($coin_array){
+        $coin_array = UserBalanceLogs::coin_array();
+        return Grid::make(new UserBalanceLogs(['user']), function (Grid $grid) use($coin_array){
             $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             $grid->column("user", '会员信息')->width("370px")->display(function(){
@@ -34,7 +33,7 @@ class LogUsersFundController extends AdminController{
                 $filter->equal('user_id');
                 $filter->equal('user.account', '会员账号');
                 $filter->equal('user.phone', '会员手机号');
-                $fund_type_array = LogUsersFund::fund_type_array();
+                $fund_type_array = UserBalanceLogs::fund_type_array();
                 $filter->equal('fund_type')->select(array_combine($fund_type_array, $fund_type_array));
                 $filter->between('created_at')->datetime();
             });
@@ -49,8 +48,8 @@ class LogUsersFundController extends AdminController{
     }
 
     protected function detail($id){
-        $coin_array = LogUsersFund::coin_array();
-        return Show::make($id, new LogUsersFund(['user']), function (Show $show) use($coin_array){
+        $coin_array = UserBalanceLogs::coin_array();
+        return Show::make($id, new UserBalanceLogs(['user']), function (Show $show) use($coin_array){
             $show->field('id');
             $show->field('user_id');
             $show->field('user.account', '会员账号');

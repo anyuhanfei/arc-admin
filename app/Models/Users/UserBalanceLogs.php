@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Log;
+namespace App\Models\Users;
 
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -8,19 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
 use App\Models\Users\Users;
-use App\Models\Users\UsersFund;
 use App\Models\BaseFilter;
 
 
 /**
  * 会员资金记录表数据模型
  */
-class LogUsersFund extends Model{
+class UserBalanceLogs extends Model{
 	use HasDateTimeFormatter;
     use SoftDeletes;
     use BaseFilter;
 
-    protected $table = 'log_users_fund';
+    protected $table = 'user_balance_logs';
     protected $guarded = [];
 
     /**
@@ -29,7 +28,7 @@ class LogUsersFund extends Model{
      * @return void
      */
     public static function coin_array(){
-        return UsersFund::fund_type_array();
+        return UserBalances::fund_type_array();
     }
 
     public function user(){

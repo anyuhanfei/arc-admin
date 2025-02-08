@@ -1,8 +1,10 @@
 <?php 
 return [
     'labels' => [
-        'LogUsersFund' => '会员资金记录',
-        'log-users-fund' => '会员资金记录',
+        'UserBalanceLogs' => '会员资金记录',
+        'user-balance-logs' => '会员资金记录',
+        'log'=> '财务管理',
+        'balances'=> '会员资金记录'
     ],
     'fields' => [
         'user_id' => '会员id',

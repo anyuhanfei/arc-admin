@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Repositories\Log;
+namespace App\Repositories\Users;
 
-use App\Models\Log\LogUsersFund as Model;
+use App\Models\Users\UserBalanceLogs as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * 会员资金记录表数据仓库
  */
-class LogUsersFund extends EloquentRepository{
+class UserBalanceLogs extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**

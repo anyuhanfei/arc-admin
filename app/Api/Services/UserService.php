@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Repositories\Users\Users;
 use App\Repositories\Log\LogSysMessage;
-use App\Repositories\Log\LogUsersFund;
+use App\Repositories\Users\UserBalanceLogs;
 use App\Repositories\Log\LogUserWithdraw;
 use App\Repositories\Sys\SysSettings;
 use App\Repositories\Users\UserDetails;
@@ -131,7 +131,7 @@ class UserService{
                 $_search[$key] = $value;
             }
         }
-        $datas = (new LogUsersFund())->get_list_by_user($this->user_id, $limit, $_search);
+        $datas = (new UserBalanceLogs())->get_list_by_user($this->user_id, $limit, $_search);
         $datas = format_paginated_datas($datas, ["id", "coin_type", "fund_type", "amount", "before_money", "after_money", "relevance", "remark", "created_at"]);
 
         return $datas;

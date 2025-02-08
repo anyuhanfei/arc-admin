@@ -3,7 +3,7 @@
 namespace App\Repositories\Users;
 
 use App\Models\Users\UserBalances as Model;
-use App\Repositories\Log\LogUsersFund;
+use App\Repositories\Users\UserBalanceLogs;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
@@ -55,7 +55,7 @@ class UserBalances extends EloquentRepository{
         $after_money = floatval($user_fund->$coin_type);
         $user_fund->save();
         // 添加资产记录
-        (new LogUsersFund())->created_data($user_id, $coin_type, $fund_type, $money, $before_money, $after_money, $relevance, $remark);
+        (new UserBalanceLogs())->created_data($user_id, $coin_type, $fund_type, $money, $before_money, $after_money, $relevance, $remark);
         return $user_fund->$coin_type;
     }
 

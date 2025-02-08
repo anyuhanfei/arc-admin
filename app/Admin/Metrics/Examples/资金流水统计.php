@@ -5,7 +5,7 @@ namespace App\Admin\Metrics\Examples;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Widgets\Metrics\Donut;
 
-use App\Repositories\Log\LogUsersFund;
+use App\Repositories\Users\UserBalanceLogs;
 
 
 class 资金流水统计 extends Donut{
@@ -33,7 +33,7 @@ class 资金流水统计 extends Donut{
         ];
 
         $this->title('资金流水统计');
-        $this->labels = LogUsersFund::fund_type_array();
+        $this->labels = UserBalanceLogs::fund_type_array();
         $this->chartLabels($this->labels);
         // 设置图表颜色
         $this->chartColors($this->colors);
@@ -55,7 +55,7 @@ class 资金流水统计 extends Donut{
     public function fill(){
         $datas = [];
         foreach($this->labels as $label){
-            $datas[] = (new LogUsersFund())->count_sum_by_fund_type($label);
+            $datas[] = (new UserBalanceLogs())->count_sum_by_fund_type($label);
         }
         $this->withContent($datas);
 
@@ -70,8 +70,6 @@ class 资金流水统计 extends Donut{
     }
 
     protected function withContent($datas){
-        
-
         $style = 'float: left;';
         $labelWidth = 150;
 
