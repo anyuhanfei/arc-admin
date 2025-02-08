@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * 会员资金表数据模型
  */
-class UsersFund extends Model{
+class UserBalances extends Model{
     public $timestamps = false;
-    protected $table = 'users_fund';
+    protected $table = 'user_balances';
     protected $guarded = [];
 
     /**

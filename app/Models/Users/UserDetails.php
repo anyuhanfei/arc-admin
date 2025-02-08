@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * 会员详情表数据模型
  */
-class UsersDetail extends Model{
+class UserDetails extends Model{
     public $timestamps = false;
-    protected $table = 'users_detail';
+    protected $table = 'user_details';
     protected $guarded = [];
 
     public function user(){

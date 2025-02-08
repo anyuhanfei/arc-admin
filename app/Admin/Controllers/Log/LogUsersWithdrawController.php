@@ -4,7 +4,7 @@ namespace App\Admin\Controllers\Log;
 
 use App\Repositories\Log\LogSysMessage;
 use App\Repositories\Log\LogUsersWithdraw;
-use App\Repositories\Users\UsersFund;
+use App\Repositories\Users\UserBalances;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -22,7 +22,7 @@ class LogUsersWithdrawController extends AdminController{
             $grid->column("user", '会员信息')->width("270px")->display(function(){
                 return admin_show_user_data($this->user);
             });
-            $grid->column('coin_type')->using(UsersFund::fund_type_array());
+            $grid->column('coin_type')->using(UserBalances::fund_type_array());
             $grid->column('amount')->display(function(){
                 return '提现金额: ¥' . $this->amount . "<br/>手续费: ¥" . $this->fee . "<br/>应发金额: <span  class='label' style='background:#586cb1'>¥ " . ($this->amount - $this->fee) . '</span>';
             });
@@ -46,17 +46,16 @@ class LogUsersWithdrawController extends AdminController{
                 [1 => 'success',2 => 'success',3 => 'danger',], 'primary'
             );
             $grid->column('created_at');
-        
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->equal('user_id');
                 $filter->like('user.account', '会员账号');
                 $filter->like('user.nickname', '会员昵称');
                 $filter->like('user.phone', '会员手机号');
-                
             });
             $grid->selector(function (Grid\Tools\Selector $selector) {
-                $selector->select("coin_type", "币种", UsersFund::fund_type_array());
+                $selector->select("coin_type", "币种", UserBalances::fund_type_array());
                 $selector->select("status", "状态", LogUsersWithdraw::status_array());
             });
             $grid->disableRowSelector();
@@ -117,7 +116,7 @@ class LogUsersWithdrawController extends AdminController{
                 }elseif($form->status == 3){  // 驳回的处理操作, 退回金额，发送驳回消息
                     DB::beginTransaction();
                     try{
-                        (new UsersFund())->update_fund($form->model()->user_id, $form->model()->coin_type, $form->model()->amount, '提现申请驳回', $form->model()->id);
+                        (new UserBalances())->update_fund($form->model()->user_id, $form->model()->coin_type, $form->model()->amount, '提现申请驳回', $form->model()->id);
                         (new LogSysMessage())->send_message($form->model()->user_id, "您的提现申请已被驳回", "提现申请被驳回，原因：{$form->reject_cause}，请重新提交申请。", '', "withdraw:{$form->model()->id}");
                         DB::commit();
                     }catch(\Exception $e){

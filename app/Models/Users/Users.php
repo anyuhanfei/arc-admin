@@ -24,12 +24,12 @@ class Users extends Model{
         return ['0'=> '冻结', '1'=> '正常'];
     }
 
-    public function funds(){
-        return $this->hasOne(UsersFund::class, 'id', 'id');
+    public function balances(){
+        return $this->hasOne(UserBalances::class, 'id', 'id');
     }
 
-    public function detail(){
-        return $this->hasOne(UsersDetail::class, 'id', 'id');
+    public function details(){
+        return $this->hasOne(UserDetails::class, 'id', 'id');
     }
 
     public function parentUser(){

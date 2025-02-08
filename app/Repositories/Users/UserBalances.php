@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Users;
 
-use App\Models\Users\UsersFund as Model;
+use App\Models\Users\UserBalances as Model;
 use App\Repositories\Log\LogUsersFund;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model as EloquentModel;
 /**
  * 会员资产表数据仓库
  */
-class UsersFund extends EloquentRepository{
+class UserBalances extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**

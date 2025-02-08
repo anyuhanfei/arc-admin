@@ -58,8 +58,8 @@ class Users extends EloquentRepository{
                 'openid'=> $params['openid'] ?? '',
                 'login_status'=> $params['login_status'] ?? 1,
             ]);
-            (new UsersFund())->create_data($user_data->id);
-            (new UsersDetail())->create_data($user_data->id);
+            (new UserBalances())->create_data($user_data->id);
+            (new UserDetails())->create_data($user_data->id);
             DB::commit();
         }catch(\Exception $e) {
             DB::rollBack();

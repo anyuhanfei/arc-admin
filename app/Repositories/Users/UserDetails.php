@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Users;
 
-use App\Models\Users\UsersDetail as Model;
+use App\Models\Users\UserDetails as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model as EloquentModel;
 /**
  * 会员详情表数据仓库
  */
-class UsersDetail extends EloquentRepository{
+class UserDetails extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**

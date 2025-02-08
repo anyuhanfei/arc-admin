@@ -10,8 +10,8 @@ use App\Repositories\Log\LogSysMessage;
 use App\Repositories\Log\LogUsersFund;
 use App\Repositories\Log\LogUserWithdraw;
 use App\Repositories\Sys\SysSettings;
-use App\Repositories\Users\UsersDetail;
-use App\Repositories\Users\UsersFund;
+use App\Repositories\Users\UserDetails;
+use App\Repositories\Users\UserBalances;
 
 class UserService{
     protected $user_id;
@@ -54,13 +54,11 @@ class UserService{
             'phone'=> $data->phone,
             'avatar'=> $data->avatar,
             'nickname'=> $data->nickname,
-            'detail'=> [
-                'sex'=> $data->detail->sex,
-                'birthday'=> $data->detail->birthday,
-            ],
-            'funds'=> [
-                'money'=> $data->funds->money,
-                'integral'=> $data->funds->integral,
+            'sex'=> $data->details->sex,
+            'birthday'=> $data->details->birthday,
+            'balances'=> [
+                'money'=> $data->balances->money,
+                'integral'=> $data->balances->integral,
             ]
         ];
     }
@@ -94,7 +92,7 @@ class UserService{
                 (new Users())->update_datas_by_user($this->user_id, $update_user_data);
             }
             if(count($update_detail_data) >= 1){
-                (new UsersDetail())->update_datas_by_user($this->user_id, $update_detail_data);
+                (new UserDetails())->update_datas_by_user($this->user_id, $update_detail_data);
             }
             DB::commit();
         }catch(\Exception $e){
@@ -126,7 +124,7 @@ class UserService{
      * @param array $search
      * @return void
      */
-    public function get_user_fund_list(int $limit, array $search):array{
+    public function get_user_balances_log_list(int $limit, array $search):array{
         $_search = [];
         foreach($search as $key=> $value){
             if(!in_array($value, ['', '0', 'undefined', null])){
@@ -206,7 +204,7 @@ class UserService{
                 break;
             case "支付宝":   // 情况分支：绑定数据、传参 (正式项目需要将除业务逻辑外的分支判断代码都删除/注释)
                 // 手动转账、提前绑定支付宝账号信息：需要获取支付宝账号、实名信息（如果不是提前绑定，则需要将此判断删除）
-                if($user_data->detail->alipay_account == '' || $user_data->detail->alipay_username == ''){
+                if($user_data->details->alipay_account == '' || $user_data->details->alipay_username == ''){
                     throwBusinessException("请先绑定支付宝", NO_BIND_WX);
                 }
                 $accounts['alipay_account'] = $user_data->detail->alipay_account;
@@ -227,7 +225,7 @@ class UserService{
         DB::beginTransaction();
         try{
             $withdraw_log = (new LogUserWithdraw())->create_data($this->user_id, $amount, $fee, $coin_type, $accounts, '资金提现', $remark);
-            $money = (new UsersFund())->update_fund($this->user_id, $coin_type, $amount * -1, "提现申请", $withdraw_log->id, '');
+            $money = (new UserBalances())->update_fund($this->user_id, $coin_type, $amount * -1, "提现申请", $withdraw_log->id, '');
             if($money < 0){
                 throwBusinessException("提现失败, 当前余额不足");
             }

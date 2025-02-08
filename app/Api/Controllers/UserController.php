@@ -87,12 +87,12 @@ class UserController extends BaseController{
      * @param Request $request
      * @return void
      */
-    public function user_fund_list(Request $request){
+    public function user_balances_log_list(Request $request){
         $page = $request->input("page");
         $limit = $request->input("limit");
         $search['coin_type'] = $request->input("coin_type", '') ?? '';
         $search['fund_type'] = $request->input("fund_type", '') ?? '';
-        $data = $this->service->get_user_fund_list($limit, $search);
+        $data = $this->service->get_user_balances_log_list($limit, $search);
         return success("会员资金列表", $data);
     }
 

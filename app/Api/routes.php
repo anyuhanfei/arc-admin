@@ -49,7 +49,7 @@ Route::group([
     // 会员资产记录、系统消息、提现记录
     $router->post('user/sys/sysmessage/list', [\App\Api\Controllers\UserController::class, 'sys_message_list']);
     $router->post('user/sys/sysmessage/detail', [\App\Api\Controllers\UserController::class, 'sys_message_detail']);
-    $router->post('user/fund/list', [\App\Api\Controllers\UserController::class, 'user_fund_list']);
+    $router->post('user/balances/list', [\App\Api\Controllers\UserController::class, 'user_balances_log_list']);
     $router->post('user/withdraw', [\App\Api\Controllers\UserController::class, 'withdraw']);
     $router->post('user/withdraw/list', [\App\Api\Controllers\UserController::class, 'withdraw_list']);
 

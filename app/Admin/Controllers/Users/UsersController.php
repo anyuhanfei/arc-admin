@@ -3,7 +3,7 @@
 namespace App\Admin\Controllers\Users;
 
 use App\Repositories\Users\Users;
-use App\Repositories\Users\UsersFund;
+use App\Repositories\Users\UserBalances;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -21,7 +21,7 @@ class UsersController extends AdminController{
     protected bool $field_parent_enable = true;
 
     protected function grid(){
-        $fund_types = UsersFund::fund_type_array();
+        $fund_types = UserBalances::fund_type_array();
         return Grid::make(new Users(['parentUser']), function (Grid $grid) use($fund_types){
             $grid->showColumnSelector();
             $grid->model()->orderby("id", 'desc');
@@ -34,7 +34,7 @@ class UsersController extends AdminController{
             $grid->column('fund')->display(function() use($fund_types){
                 $str = '';
                 foreach($fund_types as $key=>$value){
-                    $str .= $value . ': ' . $this->funds->$key . '<br/>';
+                    $str .= $value . ': ' . $this->balances->$key . '<br/>';
                 }
                 return $str;
             });
@@ -74,7 +74,7 @@ class UsersController extends AdminController{
                 foreach($rows as $index=> &$row){
                     $row['parentUser.phone'] = $row['parentUser'] == null ? '' : $row['parentUser']['phone'];
                     foreach($fund_types as $key=>$value){
-                        $row[$key] = $row->funds->$key;
+                        $row[$key] = $row->balances->$key;
                     }
                     $row['login_status'] = $row->login_status == 1 ? '正常' : '冻结';
                 }
@@ -84,7 +84,7 @@ class UsersController extends AdminController{
     }
 
     protected function detail($id){
-        return Show::make($id, new Users(['parentUser']), function (Show $show) {
+        return Show::make($id, new Users(['details', 'balances', 'parentUser']), function (Show $show) {
             $show->field('id');
             $show->field('avatar')->image("", 60, 60);
             $show->field('nickname');
@@ -95,6 +95,15 @@ class UsersController extends AdminController{
             $show->field('parent_user_id');
             $show->field('parentUser.phone', '上级手机号');
             $show->divider();
+            $fund_types = UserBalances::fund_type_array();
+            foreach($fund_types as $key=>$value){
+                $show->field('balances.'.$key, $value);
+            }
+            $show->divider();
+            // TODO::项目中需要什么详情信息需要手动添加
+            $show->field('details.sex', '性别');
+            $show->field('details.birthday', '出生日期');
+            $show->divider();
             $show->field('login_status')->as(function($value){
                 return $value == 1 ? '正常' : '冻结';
             });
@@ -103,7 +112,7 @@ class UsersController extends AdminController{
     }
 
     protected function form(){
-        return Form::make(new Users(["funds", "detail"]), function (Form $form) {
+        return Form::make(new Users(["balances", "details"]), function (Form $form) {
             $form->hidden('login_status');
             if($form->isCreating()){  // 添加
                 admin_image_field($form->image('avatar')->required());
@@ -128,8 +137,8 @@ class UsersController extends AdminController{
                 });
                 // 同步创建资产表与详情表
                 $form->saved(function (Form $form, $result) {
-                    (new \App\Repositories\Users\UsersFund())->create_data($result);
-                    (new \App\Repositories\Users\UsersDetail())->create_data($result);
+                    (new \App\Repositories\Users\UserBalances())->create_data($result);
+                    (new \App\Repositories\Users\UserDetails())->create_data($result);
                 });
             }else{  // 修改
                 $form->tab('基本信息', function(Form $form){
@@ -148,13 +157,17 @@ class UsersController extends AdminController{
                 });
                 // 资产管理
                 $form->tab('资产', function(Form $form){
-                    $fund_types = UsersFund::fund_type_array();
+                    $fund_types = UserBalances::fund_type_array();
                     foreach($fund_types as $key=>$value){
-                        $form->number('funds.'.$key, $value);
+                        $form->number('balances.'.$key, $value);
                     }
                 });
-                // 详情信息
+                // TODO::项目中需要什么详情信息需要手动添加
                 $form->tab('详细信息', function(Form $form){
+                    $form->radio("details.sex", "性别")->options([
+                        '未知'=> "未知", '男'=> "男", '女'=> "女"
+                    ])->default('0');
+                    $form->date("details.birthday", "出生日期");
                 });
                 $form->saving(function (Form $form) {
                     $form->avatar = $form->avatar ?? $form->model()->avatar;
@@ -170,10 +183,10 @@ class UsersController extends AdminController{
                     }else{
                         $form->password = (new Users())->set_user_password($form->password ?? '');
                     }
-                    $fund_types = UsersFund::fund_type_array();
+                    $fund_types = UserBalances::fund_type_array();
                     foreach($fund_types as $key=>$value){
-                        if($form->model()->funds->$key != $form->funds[$key]){
-                            (new UsersFund())->update_fund($form->model()->id, $key, $form->funds[$key] - $form->model()->funds->$key, '管理员更新', '', '管理员更新');
+                        if($form->model()->balances->$key != $form->balances[$key]){
+                            (new UserBalances())->update_fund($form->model()->id, $key, $form->balances[$key] - $form->model()->balances->$key, '管理员更新', '', '管理员更新');
                         }
                     }
                 });
