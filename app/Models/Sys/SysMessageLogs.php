@@ -13,12 +13,12 @@ use App\Models\BaseFilter;
 /**
  * 系统消息表数据模型
  */
-class SysMessageLog extends Model{
+class SysMessageLogs extends Model{
 	use HasDateTimeFormatter;
     use SoftDeletes;
     use BaseFilter;
 
-    protected $table = 'sys_message_log';
+    protected $table = 'sys_message_logs';
     protected $guarded = [];
 
     public function user(){

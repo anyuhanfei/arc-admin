@@ -104,7 +104,7 @@ class ArticlesController extends AdminController{
         });
     }
 
-    public function get_article_list(Request $request){
+    public function get_articles_list(Request $request){
         $category_id = $request->get('q', 0);
         return (new Articles())->admin_get_datas_by_category($category_id);
     }

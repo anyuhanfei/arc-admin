@@ -3,7 +3,7 @@ return [
     'labels' => [
         'SysSetting' => '系统设置管理',
         'sys-setting' => '系统设置管理',
-        'sys'=> '网站设置',
+        'sys'=> '客户端设置',
         'settings'=> '系统设置管理',
         'set'=> '设置',
     ],

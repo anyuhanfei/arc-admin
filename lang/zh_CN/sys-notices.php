@@ -3,7 +3,7 @@ return [
     'labels' => [
         'SysNotices' => '公告管理',
         'sys-notices' => '公告管理',
-        'sys'=> '网站设置',
+        'sys'=> '客户端设置',
         'notices' => '公告管理',
     ],
     'fields' => [

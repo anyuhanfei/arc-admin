@@ -2,8 +2,8 @@
 
 namespace App\Admin\Controllers\Sys;
 
-use App\Repositories\Article\Article;
-use App\Repositories\Article\ArticleCategory;
+use App\Repositories\Article\Articles;
+use App\Repositories\Article\ArticleCategories;
 use App\Repositories\Sys\SysBanners;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -47,7 +47,7 @@ class SysBannersController extends AdminController{
                         case "internal_link":
                             return (new SysBanners())->internal_link_array()[$this->link];
                         case 'article_id':
-                            $article = (new Article())->get_data_by_id($this->link);
+                            $article = (new Articles())->get_data_by_id($this->link);
                             return $article ? $article->title : '文章已删除';
                             break;
                         case "external_link":
@@ -101,12 +101,12 @@ class SysBannersController extends AdminController{
                 })->when(['article_id'], function(Form $form){
                     $category_id = 0;
                     if($form->isEditing() && $form->model()->link_type == 'article_id'){
-                        $article = (new Article())->get_data_by_id($form->model()->link);
+                        $article = (new Articles())->get_data_by_id($form->model()->link);
                         $category_id = $article ? $article->category_id : 0;
                     }
                     $form->select('category_id', '选择文章分类')
                          ->options("get/article/categories")
-                         ->load("article_id", '/get/article/list')
+                         ->load("article_id", '/get/articles/list')
                          ->rules('required_if:link_type,article_id')
                          ->value($category_id);
                     $form->select("article_id", '选择文章')

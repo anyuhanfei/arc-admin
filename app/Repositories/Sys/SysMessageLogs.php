@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Sys;
 
-use App\Models\Sys\SysMessageLog as Model;
+use App\Models\Sys\SysMessageLogs as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Database\Eloquent\Collection;
@@ -12,7 +12,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 /**
  * 系统消息表数据仓库
  */
-class SysMessageLog extends EloquentRepository{
+class SysMessageLogs extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**

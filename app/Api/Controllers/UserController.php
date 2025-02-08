@@ -62,10 +62,10 @@ class UserController extends BaseController{
      * @param \App\Api\Requests\PageRequest $request
      * @return void
      */
-    public function sys_message_list(\App\Api\Requests\PageRequest $request){
+    public function sys_messages_list(\App\Api\Requests\PageRequest $request){
         $page = $request->input("page");
         $limit = $request->input("limit");
-        $data = $this->service->get_sys_message_list($limit);
+        $data = $this->service->get_sys_messages_list($limit);
         return success("系统消息列表", $data);
     }
 

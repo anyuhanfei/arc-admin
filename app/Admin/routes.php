@@ -18,7 +18,7 @@ Route::group([
     $router->resource('sys/settings/set', 'Sys\SysSettingsController');
     $router->resource('sys/settings', 'Sys\SysSettingsController');
     $router->resource('sys/notices', 'Sys\SysNoticesController');
-    $router->resource('sys/message/Log', "Sys\SysMessageLogController");
+    $router->resource('sys/messages', "Sys\SysMessageLogsController");
 
     $router->resource('users/users', 'Users\UsersController');
     $router->resource('log/balances', 'Users\UserBalanceLogsController');
@@ -34,7 +34,7 @@ Route::group([
     'namespace'  => config('admin.route.namespace'),
 ], function (Router $router) {
     Route::get("captcha/image", "AuthController@captcha_image");
-    Route::get("/get/article/list", "Article\ArticleController@get_article_list");
+    Route::get("/get/articles/list", "Article\ArticlesController@get_articles_list");
     Route::get("get/article/categories", "Article\ArticleCategoriesController@get_categories");
     Route::get("get/users", "Users\UsersController@get_users");
 });

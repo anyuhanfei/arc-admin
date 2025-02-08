@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 use App\Repositories\Users\Users;
-use App\Repositories\Log\LogSysMessage;
+use App\Repositories\Sys\SysMessageLogs;
 use App\Repositories\Users\UserBalanceLogs;
 use App\Repositories\Sys\SysSettings;
 use App\Repositories\Users\UserDetails;
@@ -144,8 +144,8 @@ class UserService{
      * @param integer $limit
      * @return void
      */
-    public function get_sys_message_list(int $limit){
-        $log_sys_message_repository = new LogSysMessage();
+    public function get_sys_messages_list(int $limit){
+        $log_sys_message_repository = new SysMessageLogs();
         $datas = $log_sys_message_repository->get_list_by_user($this->user_id, $limit);
 
         foreach($datas as &$message){
@@ -163,11 +163,11 @@ class UserService{
      * @return Model
      */
     public function get_sys_message_detail(int $message_id):Model{
-        $message = (new LogSysMessage())->get_data_by_id($this->user_id, $message_id);
+        $message = (new SysMessageLogs())->get_data_by_id($this->user_id, $message_id);
         if(!$message){
             throwBusinessException("消息不存在");
         }
-        (new LogSysMessage())->get_read_status_by_id($this->user_id, $message->id);
+        (new SysMessageLogs())->get_read_status_by_id($this->user_id, $message->id);
         unset($message->updated_at, $message->deleted_at, $message->user_ids);
         return $message;
     }

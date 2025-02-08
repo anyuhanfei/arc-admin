@@ -1,8 +1,10 @@
-<?php 
+<?php
 return [
     'labels' => [
-        'LogSysMessage' => '系统消息管理',
-        'log-sys-message' => '系统消息管理',
+        'SysMessageLogs' => '系统消息管理',
+        'sys-message-logs' => '系统消息管理',
+        'sys'=> '客户端设置',
+        'messages'=> "系统消息管理"
     ],
     'fields' => [
         'user_ids' => '会员id集',

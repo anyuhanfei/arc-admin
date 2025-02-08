@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers\Sys;
 
-use App\Repositories\Sys\SysMessageLog;
+use App\Repositories\Sys\SysMessageLogs;
 use App\Repositories\Users\Users;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
@@ -18,7 +18,7 @@ use Dcat\Admin\Widgets\Metrics\Card;
  *    短消息类：使用 title 字段作为内容
  *    文章类：使用 title 字段作为标题，使用 content 字段作为内容
  */
-class SysMessageLogController extends AdminController{
+class SysMessageLogsController extends AdminController{
     // 字段标题、图片是否使用
     protected bool $field_title_enable = false;
     protected bool $field_image_enable = false;
@@ -27,7 +27,7 @@ class SysMessageLogController extends AdminController{
 
 
     protected function grid(){
-        return Grid::make(new SysMessageLog(), function (Grid $grid) {
+        return Grid::make(new SysMessageLogs(), function (Grid $grid) {
             $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             $grid->column('user_ids', '发送会员')->width('30%')->display(function(){
@@ -84,7 +84,7 @@ class SysMessageLogController extends AdminController{
     }
 
     protected function detail($id){
-        return Show::make($id, new SysMessageLog(), function (Show $show) {
+        return Show::make($id, new SysMessageLogs(), function (Show $show) {
             $show->field('id');
             $show->field('user_ids');
             $show->field('title');
@@ -96,7 +96,7 @@ class SysMessageLogController extends AdminController{
     }
 
     protected function form(){
-        return Form::make(new SysMessageLog(), function (Form $form) {
+        return Form::make(new SysMessageLogs(), function (Form $form) {
             $form->multipleSelect('user_ids', '选择会员')->options("get/users")->help('不选择表示所有会员')->saving(function ($value) {
                 return $value ? implode(',', $value) : '0';
             });
@@ -116,7 +116,7 @@ class SysMessageLogController extends AdminController{
                     }else{
                         $user_ids_list = comma_str_to_array($form->model()->user_ids);
                     }
-                    $repository = new SysMessageLog();
+                    $repository = new SysMessageLogs();
                     foreach($user_ids_list as $user_id){
                         $repository->del_read_status_by_id($user_id, $message_id);
                     }
