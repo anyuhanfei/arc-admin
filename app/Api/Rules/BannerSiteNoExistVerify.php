@@ -4,7 +4,7 @@ namespace App\Api\Rules;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\DataAwareRule;
 
-use App\Repositories\Idx\IdxBanner;
+use App\Repositories\Sys\SysBanners;
 
 /**
  * 判断传入的位置参数是否正确（不正确不能通过验证）
@@ -21,7 +21,7 @@ class BannerSiteNoExistVerify implements Rule, DataAwareRule{
         if($value == '' || $value == null){
             return true;
         }else{
-            $site_array = (new IdxBanner())->site_array();
+            $site_array = (new SysBanners())->site_array();
             return in_array($value, $site_array);
         }
     }

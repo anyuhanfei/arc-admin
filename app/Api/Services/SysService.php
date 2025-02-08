@@ -5,10 +5,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 use App\Repositories\Article\Article;
 use App\Repositories\Article\ArticleCategory;
-use App\Repositories\Idx\IdxBanner;
+use App\Repositories\Sys\SysBanners;
 use App\Repositories\Sys\SysNotice;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 /**
  * 系统配置相关
@@ -21,8 +19,8 @@ class SysService{
      * @param string $site 位置
      * @return void
      */
-    public function get_banner_list(string $site):Collection{
-        return (new IdxBanner())->get_datas_by_site($site)->setVisible(['id', 'image', 'link_type', 'link']);
+    public function get_banners_list(string $site):Collection{
+        return (new SysBanners())->get_datas_by_site($site)->setVisible(['id', 'image', 'link_type', 'link']);
     }
 
     /**

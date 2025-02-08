@@ -24,7 +24,7 @@ Route::post('login/wx_oauth', [\App\Api\Controllers\UserLoginController::class, 
 Route::post('login/wxmini_oauth', [\App\Api\Controllers\UserLoginController::class, 'wxmini_oauth_login']);
 
 // 系统设置
-Route::post('sys/banner', [\App\Api\Controllers\SysController::class, 'banner_list']);
+Route::post('sys/banners/list', [\App\Api\Controllers\SysController::class, 'banners_list']);
 // 系统公告
 Route::post('sys/notice', [\App\Api\Controllers\SysController::class, 'notice']);
 Route::post('sys/notice/list', [\App\Api\Controllers\SysController::class, 'notice_list']);

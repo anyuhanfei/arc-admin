@@ -1,10 +1,10 @@
 <?php 
 return [
     'labels' => [
-        'SysBanner' => '轮播图管理',
-        'sys-banner' => '轮播图管理',
+        'SysBanners' => '轮播图管理',
+        'sys-banners' => '轮播图管理',
         'sys'=> "应用设置",
-        'banner'=> "轮播图管理"
+        'banners'=> "轮播图管理"
     ],
     'fields' => [
         'site' => '位置',
