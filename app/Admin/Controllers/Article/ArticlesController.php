@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers\Article;
 
-use App\Repositories\Article\Article;
+use App\Repositories\Article\Articles;
 use App\Repositories\Article\ArticleCategory;
 use Dcat\Admin\Admin;
 use Dcat\Admin\Form;
@@ -15,14 +15,14 @@ use Illuminate\Http\Request;
 /**
  * 文章模块控制器
  */
-class ArticleController extends AdminController{
+class ArticlesController extends AdminController{
     // 图片、简介、关键词字段是否使用
     protected bool $field_image_enable = true;
     protected bool $field_intro_enable = true;
     protected bool $field_keyword_enable = true;
 
     protected function grid(){
-        return Grid::make(new Article(['category']), function (Grid $grid) {
+        return Grid::make(new Articles(['category']), function (Grid $grid) {
             $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             $grid->column('category.name', '文章分类')->width("10%");
@@ -71,7 +71,7 @@ class ArticleController extends AdminController{
     }
 
     protected function detail($id){
-        return Show::make($id, new Article(['category']), function (Show $show) {
+        return Show::make($id, new Articles(['category']), function (Show $show) {
             $show->field('id');
             $show->field('category_id', '文章分类id');
             $show->field('category.name', '文章分类名称');
@@ -87,7 +87,7 @@ class ArticleController extends AdminController{
     }
 
     protected function form(){
-        return Form::make(new Article(), function (Form $form) {
+        return Form::make(new Articles(), function (Form $form) {
             $form->display('id');
             $form->select('category_id')->options("get/article/categories")->required();
             $form->text('title')->required();

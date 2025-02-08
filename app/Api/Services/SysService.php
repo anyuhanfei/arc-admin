@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 use App\Repositories\Article\Article;
 use App\Repositories\Article\ArticleCategory;
+use App\Repositories\Article\Articles;
 use App\Repositories\Sys\SysBanners;
 use App\Repositories\Sys\SysNotices;
 
@@ -94,11 +95,11 @@ class SysService{
      * @param integer $limit
      * @return array
      */
-    public function get_article_list(int $category_id, int $limit = 10):array{
+    public function get_articles_list(int $category_id, int $limit = 10):array{
         if($category_id != 0){
-            $datas = (new Article())->get_list_by_category($category_id, $limit);
+            $datas = (new Articles())->get_list_by_category($category_id, $limit);
         }else{
-            $datas = (new Article())->get_list($limit);
+            $datas = (new Articles())->get_list($limit);
         }
         $datas->load(['category']);
         foreach($datas as &$item){
@@ -116,7 +117,7 @@ class SysService{
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function get_article_detail(int $id){
-        $data = (new Article())->get_data_by_id($id)->setVisible(['id', 'category_id', 'title', 'intro', 'image', 'author', 'keyword', 'content', 'created_at', 'category_name']);
+        $data = (new Articles())->get_data_by_id($id)->setVisible(['id', 'category_id', 'title', 'intro', 'image', 'author', 'keyword', 'content', 'created_at', 'category_name']);
         if(!$data){
             throwBusinessException('文章不存在');
         }

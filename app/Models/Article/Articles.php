@@ -12,12 +12,12 @@ use App\Models\BaseFilter;
 /**
  * 文章表数据模型
  */
-class Article extends Model{
+class Articles extends Model{
 	use HasDateTimeFormatter;
     use SoftDeletes;
     use BaseFilter;
 
-    protected $table = 'article';
+    protected $table = 'articles';
     protected $guarded = [];
 
     /**

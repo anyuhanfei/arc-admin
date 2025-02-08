@@ -30,7 +30,7 @@ Route::post('sys/notice/detail', [\App\Api\Controllers\SysController::class, 'no
 Route::post('sys/notices/list', [\App\Api\Controllers\SysController::class, 'notices_list']);
 // 文章
 Route::post('sys/article/category', [\App\Api\Controllers\SysController::class, 'article_category_list']);
-Route::post('sys/article/list', [\App\Api\Controllers\SysController::class, 'article_list']);
+Route::post('sys/articles/list', [\App\Api\Controllers\SysController::class, 'articles_list']);
 Route::post('sys/article/detail', [\App\Api\Controllers\SysController::class, 'article_detail']);
 
 // 第三方支付的回调接口

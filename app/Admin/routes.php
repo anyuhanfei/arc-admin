@@ -24,7 +24,7 @@ Route::group([
     $router->resource('log/balances', 'Users\UserBalanceLogsController');
     $router->resource('log/withdraws', 'Users\UserWithdrawLogsController');
 
-    $router->resource('article/article', 'Article\ArticleController');
+    $router->resource('article/articles', 'Article\ArticlesController');
     $router->resource('article/category', 'Article\ArticleCategoryController');
 
 

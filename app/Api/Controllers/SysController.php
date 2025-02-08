@@ -69,11 +69,11 @@ class SysController extends BaseController{
      * @param \App\Api\Requests\PageRequest $request
      * @return void
      */
-    public function article_list(\App\Api\Requests\PageRequest $request){
+    public function articles_list(\App\Api\Requests\PageRequest $request){
         $page = $request->input("page", 1) ?? 1;
         $limit = $request->input("limit", 10) ?? 10;
         $category_id = $request->input("category_id", 0) ?? 0;
-        $datas = $this->service->get_article_list($category_id, $limit);
+        $datas = $this->service->get_articles_list($category_id, $limit);
         return success("文章列表", $datas);
     }
 

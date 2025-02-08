@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Article;
 
-use App\Models\Article\Article as Model;
+use App\Models\Article\Articles as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * 文章表数据仓库
  */
-class Article extends EloquentRepository{
+class Articles extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     public function admin_get_datas_by_category(int $category_id){
