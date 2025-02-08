@@ -12,21 +12,21 @@ use App\Models\BaseFilter;
 /**
  * 系统配置表数据模型
  */
-class SysSetting extends Model{
+class SysSettings extends Model{
 	use HasDateTimeFormatter;
     use SoftDeletes;
     use BaseFilter;
 
-    protected $table = 'sys_setting';
+    protected $table = 'sys_settings';
     protected $guarded = [];
     protected $primaryKey = 'key';
 
     public function parent(){
-        return $this->hasOne(SysSetting::class, 'id', 'parent_id');
+        return $this->hasOne(SysSettings::class, 'id', 'parent_id');
     }
 
     public function children(){
-        return $this->hasMany(SysSetting::class, 'parent_id', 'id');
+        return $this->hasMany(SysSettings::class, 'parent_id', 'id');
     }
 
     public function scopeParentId(Builder $builder, int $value){

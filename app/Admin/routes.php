@@ -15,8 +15,8 @@ Route::group([
     $router->get('/', 'HomeController@index');
 
     $router->resource('sys/banners', 'Sys\SysBannersController');
-    $router->resource('sys/setting/set', 'Sys\SysSettingController');
-    $router->resource('sys/setting', 'Sys\SysSettingController');
+    $router->resource('sys/settings/set', 'Sys\SysSettingsController');
+    $router->resource('sys/settings', 'Sys\SysSettingsController');
     $router->resource('sys/notice', 'Sys\SysNoticeController');
     $router->resource('sys/message/Log', "Sys\SysMessageLogController");
 

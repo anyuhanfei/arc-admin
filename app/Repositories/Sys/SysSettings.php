@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Sys;
 
-use App\Models\Sys\SysSetting as Model;
+use App\Models\Sys\SysSettings as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model as EloquentModel;
 /**
  * 系统配置表数据仓库
  */
-class SysSetting extends EloquentRepository{
+class SysSettings extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**

@@ -9,7 +9,7 @@ use App\Repositories\Users\Users;
 use App\Repositories\Log\LogSysMessage;
 use App\Repositories\Log\LogUsersFund;
 use App\Repositories\Log\LogUserWithdraw;
-use App\Repositories\Sys\SysSetting;
+use App\Repositories\Sys\SysSettings;
 use App\Repositories\Users\UsersDetail;
 use App\Repositories\Users\UsersFund;
 
@@ -222,7 +222,7 @@ class UserService{
                 }
                 break;
         }
-        $withdraw_fee_rate_set = floatval((new SysSetting())->get_data_by_key("withdraw_fee_rate")) ?? 0;
+        $withdraw_fee_rate_set = floatval((new SysSettings())->get_data_by_key("withdraw_fee_rate")) ?? 0;
         $fee = $amount * $withdraw_fee_rate_set * 0.01;
         DB::beginTransaction();
         try{

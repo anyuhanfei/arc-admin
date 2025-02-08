@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers\Sys;
 
-use App\Repositories\Sys\SysSetting;
+use App\Repositories\Sys\SysSettings;
 use Dcat\Admin\Form;
 use Dcat\Admin\Layout\Content;
 use Dcat\Admin\Http\Controllers\AdminController;
@@ -10,11 +10,11 @@ use Dcat\Admin\Http\Controllers\AdminController;
 /**
  * 系统设置模块控制器
  */
-class SysSettingController extends AdminController{
+class SysSettingsController extends AdminController{
     protected $list;
 
     public function __construct(){
-        $this->list = (new SysSetting())->set_list();
+        $this->list = (new SysSettings())->set_list();
     }
 
     public function index(Content $content){
@@ -22,7 +22,7 @@ class SysSettingController extends AdminController{
     }
 
     protected function grid(){
-        return Form::make(new SysSetting(), function (Form $form) {
+        return Form::make(new SysSettings(), function (Form $form) {
             $form->tools(function (Form\Tools $tools) {
                 $tools->disableView();
                 $tools->disableDelete();
@@ -32,9 +32,9 @@ class SysSettingController extends AdminController{
             foreach(array_keys($list) as $category){
                 $form->tab($category, function(Form $form) use($list, $category){
                     foreach($list[$category] as $key=> $value_arr){
-                        $set_obj = (new SysSetting())->get_data_by_key($key);
+                        $set_obj = (new SysSettings())->get_data_by_key($key);
                         if(!$set_obj){
-                            $set_obj = (new SysSetting())->create_data($key);
+                            $set_obj = (new SysSettings())->create_data($key);
                         }
                         $field_key = "sys.{$key}";
                         switch($value_arr['type']){
@@ -84,7 +84,7 @@ class SysSettingController extends AdminController{
     }
 
     protected function form(){
-        return Form::make(new SysSetting(), function (Form $form) {
+        return Form::make(new SysSettings(), function (Form $form) {
             $form->tools(function (Form\Tools $tools) {
                 $tools->disableView();
                 $tools->disableDelete();
@@ -113,7 +113,7 @@ class SysSettingController extends AdminController{
                         if($value == '' || $value == null){
                             continue;
                         }
-                        (new SysSetting())->update_value_by_key($key, $value);
+                        (new SysSettings())->update_value_by_key($key, $value);
                     }
                     return $form->response()->success("配置成功");
                 }
