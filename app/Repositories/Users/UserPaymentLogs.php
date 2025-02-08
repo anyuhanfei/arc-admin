@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Repositories\Log;
+namespace App\Repositories\Users;
 
-use App\Models\Log\LogUsersPay as Model;
+use App\Models\Users\UserPaymentLogs as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 /**
  * 会员支付记录表数据仓库
  */
-class LogUsersPay extends EloquentRepository{
+class UserPaymentLogs extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**

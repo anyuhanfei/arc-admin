@@ -4,7 +4,7 @@ namespace App\Api\Services;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-use App\Repositories\Log\LogUsersPay;
+use App\Repositories\Users\UserPaymentLogs;
 use App\Repositories\Users\Users;
 
 use App\Tools\Aliyun\AliyunPayTool;
@@ -17,11 +17,11 @@ class PayService{
         // 创建、使用支付记录
         $pay_log = false;
         if($out_trade_no != ''){
-            $pay_log = (new LogUsersPay())->get_data_by_no($out_trade_no);
+            $pay_log = (new UserPaymentLogs())->get_data_by_no($out_trade_no);
         }
         if(!$pay_log){
             $out_trade_no = date('Ymd').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))), 0, 8);
-            $pay_log = (new LogUsersPay())->create_data($user_id, $out_trade_no, $pay_method, $pay_type, $amount, $relevance);
+            $pay_log = (new UserPaymentLogs())->create_data($user_id, $out_trade_no, $pay_method, $pay_type, $amount, $relevance);
         }
         // 调用第三方支付
         switch($pay_method){
@@ -91,7 +91,7 @@ class PayService{
      */
     protected function notify_execute(string $out_trade_no):bool{
         // 获取支付记录
-        $pay_log = (new LogUsersPay())->get_data_by_no($out_trade_no);
+        $pay_log = (new UserPaymentLogs())->get_data_by_no($out_trade_no);
         if(!$pay_log || $pay_log->status != 0){
             return true;
         }
@@ -99,7 +99,7 @@ class PayService{
         DB::beginTransaction();
         try{
             // 将支付记录修改为已处理(已回调)
-            (new LogUsersPay())->update_status_by_no($out_trade_no, 1);
+            (new UserPaymentLogs())->update_status_by_no($out_trade_no, 1);
             switch($pay_log->pay_type){
                 case "测试":
                     $this->测试($pay_log->relevance);

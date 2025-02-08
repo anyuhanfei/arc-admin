@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Log;
+namespace App\Models\Users;
 
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,11 +12,11 @@ use App\Models\Users\Users;
 /**
  * 会员支付记录表数据模型
  */
-class LogUsersPay extends Model{
+class UserPaymentLogs extends Model{
 	use HasDateTimeFormatter;
     use SoftDeletes;
 
-    protected $table = 'log_users_pay';
+    protected $table = 'user_payment_logs';
     protected $guarded = [];
 
 
