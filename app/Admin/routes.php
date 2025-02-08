@@ -26,6 +26,8 @@ Route::group([
 
     $router->resource('article/articles', 'Article\ArticlesController');
     $router->resource('article/categories', 'Article\ArticleCategoriesController');
+    $router->resource('feedback/types', 'Feedback\FeedbackTypesController');
+    $router->resource('feedback/feedbacks', 'Feedback\FeedbacksController');
 
 
 });

@@ -59,4 +59,9 @@ Route::group([
 
     // 会员退出登录
     $router->post('user/logout', [\App\Api\Controllers\UserController::class, 'logout']);
+
+    // 意见反馈
+    $router->post('feedback/types', [\App\Api\Controllers\SysController::class, 'feedback_types_list']);
+    $router->post('feedback/apply', [\App\Api\Controllers\SysController::class, 'feedback']);
+
 });

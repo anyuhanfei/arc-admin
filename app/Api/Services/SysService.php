@@ -5,6 +5,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 use App\Repositories\Article\ArticleCategories;
 use App\Repositories\Article\Articles;
+use App\Repositories\Feedback\Feedbacks;
+use App\Repositories\Feedback\FeedbackTypes;
 use App\Repositories\Sys\SysBanners;
 use App\Repositories\Sys\SysNotices;
 
@@ -122,6 +124,16 @@ class SysService{
         }
         $data->keyword = comma_str_to_array($data->keyword);
         $data->category_name = $data->category->name;
+        return $data;
+    }
+
+    public function get_feedback_types_list(){
+        $names = (new FeedbackTypes())->get_names();
+        return $names;
+    }
+
+    public function apply_feedback_operation(int $user_id, string $type, string $content, string $contact, array $images){
+        $data = (new Feedbacks())->create_data($user_id, $type, $content, $contact, $images);
         return $data;
     }
 }

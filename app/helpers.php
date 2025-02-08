@@ -31,7 +31,7 @@ function error(string $msg, string $error = ''){
  * @param array $data 返回数据
  * @return void
  */
-function success(string $msg, null|array|Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|LengthAwarePaginator $data = []){
+function success(string $msg, null|array|Illuminate\Support\Collection|Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|LengthAwarePaginator $data = []){
     return return_data(SUCCESS_CODE, $msg, $data);
 }
 
@@ -54,7 +54,7 @@ function throwBusinessException(string $msg, string $error = ''){
  * @param string $error 特殊错误码
  * @return void
  */
-function return_data(int $code, string $msg, null|array|Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|LengthAwarePaginator $data, string $error = ''){
+function return_data(int $code, string $msg, null|array|Illuminate\Support\Collection|Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|LengthAwarePaginator $data, string $error = ''){
     return response()->json(['code'=> $code, 'msg'=> $msg, 'data'=> $data, 'error'=> $error], 200); # 此 200 为真正的 http 状态码
 }
 

@@ -88,4 +88,23 @@ class SysController extends BaseController{
         $data = $this->service->get_article_detail($id);
         return success("文章详情", $data);
     }
+
+    /**
+     * 获取意见反馈类型列表
+     *
+     * @return void
+     */
+    public function feedback_types_list(){
+        $data = $this->service->get_feedback_types_list();
+        return success("意见反馈类型列表", $data);
+    }
+
+    public function feedback(Request $request){
+        $type = $request->input('type');
+        $content = $request->input('content');
+        $contact = $request->input('contact', '') ?? '';
+        $images = $request->input('images', []) ?? [];
+        $this->service->apply_feedback_operation($this->user_id, $type, $content, $contact, $images);
+        return success("提交成功");
+    }
 }
