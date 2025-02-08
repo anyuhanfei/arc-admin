@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Log;
+namespace App\Models\Users;
 
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,12 +13,12 @@ use App\Models\Users\Users;
 /**
  * 会员提现表数据模型
  */
-class LogUsersWithdraw extends Model{
+class UserWithdrawLogs extends Model{
 	use HasDateTimeFormatter;
     use SoftDeletes;
     use BaseFilter;
 
-    protected $table = 'log_users_withdraw';
+    protected $table = 'user_withdraw_logs';
     protected $guarded = [];
 
     public static function status_array(){

@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Repositories\Log;
+namespace App\Repositories\Users;
 
-use App\Models\Log\LogUsersWithdraw as Model;
+use App\Models\Users\UserWithdrawLogs as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
  * 会员提现表数据仓库
  */
-class LogUsersWithdraw extends EloquentRepository{
+class UserWithdrawLogs extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     public static function status_array():array{

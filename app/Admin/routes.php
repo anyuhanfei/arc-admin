@@ -22,11 +22,11 @@ Route::group([
 
     $router->resource('users/users', 'Users\UsersController');
     $router->resource('log/balances', 'Users\UserBalanceLogsController');
+    $router->resource('log/withdraws', 'Users\UserWithdrawLogsController');
 
     $router->resource('article/article', 'Article\ArticleController');
     $router->resource('article/category', 'Article\ArticleCategoryController');
 
-    $router->resource('log/userswithdraw', 'Log\LogUsersWithdrawController');
 
 });
 Route::group([

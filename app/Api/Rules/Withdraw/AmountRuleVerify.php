@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\DataAwareRule;
 
 use App\Repositories\Sys\SysSettings;
-use App\Repositories\Users\UsersFund;
+use App\Repositories\Users\UserBalances;
 
 
 /**
@@ -28,7 +28,7 @@ class AmountRuleVerify implements ValidationRule, DataAwareRule{
             $fail("最低提现金额为：{$withdraw_minimum_amount_set}");
             return;
         }
-        $user_fund = (new UsersFund())->get_user_fund($this->data['user_id']);
+        $user_fund = (new UserBalances())->get_data_by_user($this->data['user_id']);
         if(!$user_fund){
             $fail("系统异常");
             return;

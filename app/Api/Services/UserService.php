@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\Users\Users;
 use App\Repositories\Log\LogSysMessage;
 use App\Repositories\Users\UserBalanceLogs;
-use App\Repositories\Log\LogUserWithdraw;
 use App\Repositories\Sys\SysSettings;
 use App\Repositories\Users\UserDetails;
 use App\Repositories\Users\UserBalances;
+use App\Repositories\Users\UserWithdrawLogs;
 
 class UserService{
     protected $user_id;
@@ -224,7 +224,7 @@ class UserService{
         $fee = $amount * $withdraw_fee_rate_set * 0.01;
         DB::beginTransaction();
         try{
-            $withdraw_log = (new LogUserWithdraw())->create_data($this->user_id, $amount, $fee, $coin_type, $accounts, '资金提现', $remark);
+            $withdraw_log = (new UserWithdrawLogs())->create_data($this->user_id, $amount, $fee, $coin_type, $accounts, '资金提现', $remark);
             $money = (new UserBalances())->update_fund($this->user_id, $coin_type, $amount * -1, "提现申请", $withdraw_log->id, '');
             if($money < 0){
                 throwBusinessException("提现失败, 当前余额不足");
@@ -244,8 +244,8 @@ class UserService{
      * @param integer $limit
      * @return Collection
      */
-    public function get_withdraw_list(int $limit):array{
-        $datas = (new LogUserWithdraw())->get_list_by_user($this->user_id, $limit);
+    public function get_withdraws_list(int $limit):array{
+        $datas = (new UserWithdrawLogs())->get_list_by_user($this->user_id, $limit);
         $datas = format_paginated_datas($datas, ["id", "amount", "fee", "content", "remark", "status", "created_at"]);
         return $datas;
     }

@@ -65,7 +65,7 @@ class UserBalances extends EloquentRepository{
      * @param integer $user_id
      * @return EloquentModel|null
      */
-    public function get_user_fund(int $user_id):EloquentModel|null{
+    public function get_data_by_user(int $user_id):EloquentModel|null{
         return $this->eloquentClass::id($user_id)->first();
     }
 

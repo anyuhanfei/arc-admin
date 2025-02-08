@@ -51,7 +51,7 @@ Route::group([
     $router->post('user/sys/sysmessage/detail', [\App\Api\Controllers\UserController::class, 'sys_message_detail']);
     $router->post('user/balances/list', [\App\Api\Controllers\UserController::class, 'user_balances_log_list']);
     $router->post('user/withdraw', [\App\Api\Controllers\UserController::class, 'withdraw']);
-    $router->post('user/withdraw/list', [\App\Api\Controllers\UserController::class, 'withdraw_list']);
+    $router->post('user/withdraws/list', [\App\Api\Controllers\UserController::class, 'withdraws_list']);
 
     // 会员密码
     $router->post('user/update_password', [\App\Api\Controllers\UserController::class, 'update_password']);

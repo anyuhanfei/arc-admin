@@ -567,8 +567,8 @@ COMMIT;
 -- ----------------------------
 -- Table structure for log_user_withdraw
 -- ----------------------------
-DROP TABLE IF EXISTS `log_user_withdraw`;
-CREATE TABLE `log_user_withdraw` (
+DROP TABLE IF EXISTS `user_withdraw_logs`;
+CREATE TABLE `user_withdraw_logs` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL COMMENT '会员id',
   `coin_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '币种',
@@ -596,9 +596,9 @@ CREATE TABLE `log_user_withdraw` (
 -- Records of log_user_withdraw
 -- ----------------------------
 BEGIN;
-INSERT INTO `log_user_withdraw` (`id`, `user_id`, `coin_type`, `amount`, `fee`, `content`, `remark`, `status`, `alipay_account`, `alipay_username`, `wx_account`, `wx_username`, `wx_openid`, `bank_card_code`, `bank_card_username`, `bank_card_bank`, `bank_card_sub_bank`, `created_at`, `updated_at`, `deleted_at`) VALUES (1, 4, 'money', 100.00, 0.00, '', '', 2, '', '', '13939390001', '张三', '', '', '', '', '', '2023-11-06 14:21:48', '2023-11-07 10:30:48', NULL);
-INSERT INTO `log_user_withdraw` (`id`, `user_id`, `coin_type`, `amount`, `fee`, `content`, `remark`, `status`, `alipay_account`, `alipay_username`, `wx_account`, `wx_username`, `wx_openid`, `bank_card_code`, `bank_card_username`, `bank_card_bank`, `bank_card_sub_bank`, `created_at`, `updated_at`, `deleted_at`) VALUES (2, 4, 'money', 101.00, 0.00, '资金提现', '', 2, '', '', '13939390001', '张三', '', '', '', '', '', '2023-11-07 10:39:48', '2023-11-07 10:45:43', NULL);
-INSERT INTO `log_user_withdraw` (`id`, `user_id`, `coin_type`, `amount`, `fee`, `content`, `remark`, `status`, `alipay_account`, `alipay_username`, `wx_account`, `wx_username`, `wx_openid`, `bank_card_code`, `bank_card_username`, `bank_card_bank`, `bank_card_sub_bank`, `created_at`, `updated_at`, `deleted_at`) VALUES (3, 4, 'money', 102.00, 0.00, '资金提现', '', 3, '', '', '13939390001', '张三', '', '', '', '', '', '2023-11-07 10:39:52', '2023-11-07 10:46:58', NULL);
+INSERT INTO `user_withdraw_logs` (`id`, `user_id`, `coin_type`, `amount`, `fee`, `content`, `remark`, `status`, `alipay_account`, `alipay_username`, `wx_account`, `wx_username`, `wx_openid`, `bank_card_code`, `bank_card_username`, `bank_card_bank`, `bank_card_sub_bank`, `created_at`, `updated_at`, `deleted_at`) VALUES (1, 4, 'money', 100.00, 0.00, '', '', 2, '', '', '13939390001', '张三', '', '', '', '', '', '2023-11-06 14:21:48', '2023-11-07 10:30:48', NULL);
+INSERT INTO `user_withdraw_logs` (`id`, `user_id`, `coin_type`, `amount`, `fee`, `content`, `remark`, `status`, `alipay_account`, `alipay_username`, `wx_account`, `wx_username`, `wx_openid`, `bank_card_code`, `bank_card_username`, `bank_card_bank`, `bank_card_sub_bank`, `created_at`, `updated_at`, `deleted_at`) VALUES (2, 4, 'money', 101.00, 0.00, '资金提现', '', 2, '', '', '13939390001', '张三', '', '', '', '', '', '2023-11-07 10:39:48', '2023-11-07 10:45:43', NULL);
+INSERT INTO `user_withdraw_logs` (`id`, `user_id`, `coin_type`, `amount`, `fee`, `content`, `remark`, `status`, `alipay_account`, `alipay_username`, `wx_account`, `wx_username`, `wx_openid`, `bank_card_code`, `bank_card_username`, `bank_card_bank`, `bank_card_sub_bank`, `created_at`, `updated_at`, `deleted_at`) VALUES (3, 4, 'money', 102.00, 0.00, '资金提现', '', 3, '', '', '13939390001', '张三', '', '', '', '', '', '2023-11-07 10:39:52', '2023-11-07 10:46:58', NULL);
 COMMIT;
 
 -- ----------------------------

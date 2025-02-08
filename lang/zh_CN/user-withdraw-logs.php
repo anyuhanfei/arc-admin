@@ -1,11 +1,10 @@
-<?php 
+<?php
 return [
     'labels' => [
-        'LogUsersWithdraw' => '会员提现管理',
-        'log-users-withdraw' => '会员提现管理',
+        'UserWithdrawLogs' => '会员提现管理',
+        'user-withdraw-logs' => '会员提现管理',
         'log'=> '财务管理',
-        'userswithdraw'=> '会员提现管理',
-        'Userswithdraw'=> '会员提现管理',
+        'withdraws'=> '会员提现管理',
     ],
     'fields' => [
         'user_id' => '会员id',

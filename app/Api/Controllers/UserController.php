@@ -125,10 +125,10 @@ class UserController extends BaseController{
      * @param \App\Api\Requests\PageRequest $request
      * @return void
      */
-    public function withdraw_list(\App\Api\Requests\PageRequest $request){
+    public function withdraws_list(\App\Api\Requests\PageRequest $request){
         $page = $request->input("page");
         $limit = $request->input("limit");
-        $data = $this->service->get_withdraw_list($limit);
+        $data = $this->service->get_withdraws_list($limit);
         return success("提现列表", $data);
     }
 
