@@ -13,20 +13,20 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index');
-    $router->resource('idx/banner', 'Idx\IdxBannerController');
+
+    $router->resource('sys/banners', 'Sys\SysBannersController');
     $router->resource('sys/setting/set', 'Sys\SysSettingController');
     $router->resource('sys/setting', 'Sys\SysSettingController');
     $router->resource('sys/notice', 'Sys\SysNoticeController');
+    $router->resource('sys/message/Log', "Sys\SysMessageLogController");
+
     $router->resource('users/users', 'Users\UsersController');
-    $router->get("get/users", "Users\UsersController@get_users");
 
     $router->resource('article/article', 'Article\ArticleController');
     $router->resource('article/category', 'Article\ArticleCategoryController');
-    $router->get("get/article/categories", "Article\ArticleCategoryController@get_categories");
 
     $router->resource('log/userfund', 'Log\LogUsersFundController');
-    $router->resource('log/sysmessage', 'Log\LogSysMessageController');
-    $router->resource('log/userwithdraw', 'Log\LogUserWithdrawController');
+    $router->resource('log/userswithdraw', 'Log\LogUsersWithdrawController');
 
 });
 Route::group([
@@ -35,4 +35,6 @@ Route::group([
 ], function (Router $router) {
     Route::get("captcha/image", "AuthController@captcha_image");
     Route::get("/get/article/list", "Article\ArticleController@get_article_list");
+    Route::get("get/article/categories", "Article\ArticleCategoryController@get_categories");
+    Route::get("get/users", "Users\UsersController@get_users");
 });

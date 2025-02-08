@@ -3,7 +3,7 @@
 namespace App\Admin\Controllers\Log;
 
 use App\Repositories\Log\LogSysMessage;
-use App\Repositories\Log\LogUserWithdraw;
+use App\Repositories\Log\LogUsersWithdraw;
 use App\Repositories\Users\UsersFund;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\DB;
 /**
  * 会员提现记录控制器
  */
-class LogUserWithdrawController extends AdminController{
+class LogUsersWithdrawController extends AdminController{
     protected function grid(){
-        return Grid::make(new LogUserWithdraw(['user']), function (Grid $grid) {
+        return Grid::make(new LogUsersWithdraw(['user']), function (Grid $grid) {
             $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             $grid->column("user", '会员信息')->width("270px")->display(function(){
@@ -42,7 +42,7 @@ class LogUserWithdrawController extends AdminController{
             });
             $grid->column('content');
             $grid->column('remark');
-            $grid->column('status')->using(LogUserWithdraw::status_array())->dot(
+            $grid->column('status')->using(LogUsersWithdraw::status_array())->dot(
                 [1 => 'success',2 => 'success',3 => 'danger',], 'primary'
             );
             $grid->column('created_at');
@@ -57,7 +57,7 @@ class LogUserWithdrawController extends AdminController{
             });
             $grid->selector(function (Grid\Tools\Selector $selector) {
                 $selector->select("coin_type", "币种", UsersFund::fund_type_array());
-                $selector->select("status", "状态", LogUserWithdraw::status_array());
+                $selector->select("status", "状态", LogUsersWithdraw::status_array());
             });
             $grid->disableRowSelector();
             $grid->disableCreateButton();
@@ -67,7 +67,7 @@ class LogUserWithdrawController extends AdminController{
     }
 
     protected function form(){
-        return Form::make(new LogUserWithdraw(), function (Form $form) {
+        return Form::make(new LogUsersWithdraw(), function (Form $form) {
             $form->display('id');
             $form->display('user_id');
             // $form->display('amount');

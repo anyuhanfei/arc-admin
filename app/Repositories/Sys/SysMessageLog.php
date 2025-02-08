@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories\Log;
+namespace App\Repositories\Sys;
 
-use App\Models\Log\LogSysMessage as Model;
+use App\Models\Sys\SysMessageLog as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Database\Eloquent\Collection;
@@ -12,7 +12,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 /**
  * 系统消息表数据仓库
  */
-class LogSysMessage extends EloquentRepository{
+class SysMessageLog extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**

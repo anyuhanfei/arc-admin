@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Log;
+namespace App\Models\Sys;
 
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,12 +13,12 @@ use App\Models\BaseFilter;
 /**
  * 系统消息表数据模型
  */
-class LogSysMessage extends Model{
+class SysMessageLog extends Model{
 	use HasDateTimeFormatter;
     use SoftDeletes;
     use BaseFilter;
 
-    protected $table = 'log_sys_message';
+    protected $table = 'sys_message_log';
     protected $guarded = [];
 
     public function user(){

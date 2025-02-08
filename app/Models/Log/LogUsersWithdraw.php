@@ -13,12 +13,12 @@ use App\Models\Users\Users;
 /**
  * 会员提现表数据模型
  */
-class LogUserWithdraw extends Model{
+class LogUsersWithdraw extends Model{
 	use HasDateTimeFormatter;
     use SoftDeletes;
     use BaseFilter;
 
-    protected $table = 'log_user_withdraw';
+    protected $table = 'log_users_withdraw';
     protected $guarded = [];
 
     public static function status_array(){

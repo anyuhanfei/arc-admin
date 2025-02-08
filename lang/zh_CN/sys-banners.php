@@ -1,8 +1,10 @@
 <?php 
 return [
     'labels' => [
-        'IdxBanner' => '轮播图管理',
-        'idx-banner' => '轮播图管理',
+        'SysBanner' => '轮播图管理',
+        'sys-banner' => '轮播图管理',
+        'sys'=> "应用设置",
+        'banner'=> "轮播图管理"
     ],
     'fields' => [
         'site' => '位置',

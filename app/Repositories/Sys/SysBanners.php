@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Repositories\Idx;
+namespace App\Repositories\Sys;
 
-use App\Models\Idx\IdxBanner as Model;
+use App\Models\Sys\SysBanners as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 /**
  * 轮播图表数据仓库
  */
-class IdxBanner extends EloquentRepository{
+class SysBanners extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**
