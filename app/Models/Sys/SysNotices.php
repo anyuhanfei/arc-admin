@@ -12,12 +12,12 @@ use App\Models\BaseFilter;
 /**
  * 系统公告表数据模型
  */
-class SysNotice extends Model{
+class SysNotices extends Model{
 	use HasDateTimeFormatter;
     use SoftDeletes;
     use BaseFilter;
 
-    protected $table = 'sys_notice';
+    protected $table = 'sys_notices';
     protected $guarded = [];
 
     // 项目中公告的类型，可选项有：

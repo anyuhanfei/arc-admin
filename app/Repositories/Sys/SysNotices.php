@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Sys;
 
-use App\Models\Sys\SysNotice as Model;
+use App\Models\Sys\SysNotices as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Redis;
 /**
  * 系统公告表数据仓库
  */
-class SysNotice extends EloquentRepository{
+class SysNotices extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**

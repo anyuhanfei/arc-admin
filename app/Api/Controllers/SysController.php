@@ -34,10 +34,10 @@ class SysController extends BaseController{
      * @param Request $request
      * @return void
      */
-    public function notice_list(\App\Api\Requests\PageRequest $request){
+    public function notices_list(\App\Api\Requests\PageRequest $request){
         $page = $request->input("page", 1) ?? 1;
         $limit = $request->input("limit", 10) ?? 10;
-        $data = $this->service->get_notice_list($limit);
+        $data = $this->service->get_notices_list($limit);
         return success('公告列表', $data);
     }
 
@@ -47,9 +47,9 @@ class SysController extends BaseController{
      * @param Request $request
      * @return void
      */
-    public function notice(Request $request){
+    public function notice_detail(Request $request){
         $id = $request->input('id', 0) ?? 0;
-        return success('公告', $this->service->get_notice($this->user_id, $id));
+        return success('公告', $this->service->get_notice_detail($this->user_id, $id));
     }
 
     /**

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 use App\Repositories\Article\Article;
 use App\Repositories\Article\ArticleCategory;
 use App\Repositories\Sys\SysBanners;
-use App\Repositories\Sys\SysNotice;
+use App\Repositories\Sys\SysNotices;
 
 /**
  * 系统配置相关
@@ -32,12 +32,12 @@ class SysService{
      * @param integer $limit 每页展示数据数量
      * @return array
      */
-    public function get_notice_list(int $limit = 10):array{
-        $notice_type = SysNotice::get_type();
+    public function get_notices_list(int $limit = 10):array{
+        $notice_type = SysNotices::get_type();
         if($notice_type != '多条富文本' && $notice_type != '多条文字'){
             throwBusinessException('当前公告模式设置为单条，请直接使用 get_notice 接口');
         }
-        $datas = format_paginated_datas((new SysNotice())->get_list($limit), ['id', 'title', 'image', 'created_at']);
+        $datas = format_paginated_datas((new SysNotices())->get_list($limit), ['id', 'title', 'image', 'created_at']);
         return $datas;
     }
 
@@ -49,27 +49,27 @@ class SysService{
      * @param integer $id
      * @return void 单条的公告信息
      */
-    public function get_notice(int $user_id = 0, int $id = 0){
-        switch(SysNotice::get_type()){
+    public function get_notice_detail(int $user_id = 0, int $id = 0){
+        switch(SysNotices::get_type()){
             case '单条文字':
-                $data = (new SysNotice())->get_first_data();
+                $data = (new SysNotices())->get_first_data();
                 unset($data->content);
                 break;
             case "多条文字":
                 if($id == 0){
                     throwBusinessException('当前公告模式设置为多条，请使用 get_notice_list 接口或传递 id 参数!');
                 }
-                $data = (new SysNotice())->get_data_by_id($id);
+                $data = (new SysNotices())->get_data_by_id($id);
                 unset($data->content);
                 break;
             case "单条富文本":
-                $data = ((new SysNotice()))->get_first_data();
+                $data = ((new SysNotices()))->get_first_data();
                 break;
             case "多条富文本":
                 if($id == 0){
                     throwBusinessException('当前公告模式设置为多条，请使用 get_notice_list 接口或传递 id 参数!');
                 }
-                $data = (new SysNotice())->get_data_by_id($id);
+                $data = (new SysNotices())->get_data_by_id($id);
                 break;
             default:
                 return [];

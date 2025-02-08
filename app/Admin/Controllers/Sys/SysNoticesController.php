@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers\Sys;
 
-use App\Repositories\Sys\SysNotice;
+use App\Repositories\Sys\SysNotices;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -12,7 +12,7 @@ use Dcat\Admin\Widgets\Metrics\Card;
 /**
  * 系统公告模块控制器
  */
-class SysNoticeController extends AdminController{
+class SysNoticesController extends AdminController{
     // 模块是否启用
     protected bool $module_enable = true;
     // 字段image是否启用
@@ -21,18 +21,18 @@ class SysNoticeController extends AdminController{
     protected string $type;
 
     public function __construct(){
-        $this->type = SysNotice::get_type();
+        $this->type = SysNotices::get_type();
     }
 
     protected function grid(){
         if($this->module_enable == false){
             return admin_error('error', '当前已关闭公告功能，请删除此目录或联系管理员打开公告功能');
         }
-        return Grid::make(new SysNotice(), function (Grid $grid) {
+        return Grid::make(new SysNotices(), function (Grid $grid) {
             $grid->model()->orderBy('id', 'desc');
             switch($this->type) {
                 case '单条富文本':
-                    (new SysNotice())->init();
+                    (new SysNotices())->init();
                     $grid->column('');
                     $grid->column('title');
                     $grid->column('content')->width('15%')->display('')->modal(function ($modal) {
@@ -61,7 +61,7 @@ class SysNoticeController extends AdminController{
                     });
                     break;
                 default:
-                    (new SysNotice())->init();
+                    (new SysNotices())->init();
                     $grid->column('');
                     $grid->column('title', '内容')->width("60%");
                     $grid->disableViewButton();
@@ -98,7 +98,7 @@ class SysNoticeController extends AdminController{
     }
 
     protected function form(){
-        return Form::make(new SysNotice(), function (Form $form) {
+        return Form::make(new SysNotices(), function (Form $form) {
             $form->hidden('id');
             switch($this->type) {
                 case '单条富文本':
