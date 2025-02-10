@@ -181,6 +181,7 @@ class AdminPermissionMenuTableSeeder extends Seeder
             ['permission_id' => 59, 'menu_id' => 20, 'created_at' => '2023-10-30 08:41:34', 'updated_at' => '2023-10-30 08:41:34']
         ];
 
+        DB::table('admin_permission_menu')->truncate();  // 清空表
         DB::table('admin_permission_menu')->insert($permission_menus);
     }
 }

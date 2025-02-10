@@ -264,6 +264,7 @@ class AdminMenuTableSeeder extends Seeder
             ],
         ];
 
+        DB::table('admin_menu')->truncate();  // 清空表
         DB::table('admin_menu')->insert($menus);
     }
 }

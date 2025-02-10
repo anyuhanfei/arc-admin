@@ -57,6 +57,7 @@ class AdminRolePermissionsTableSeeder extends Seeder
             ['role_id' => 1, 'permission_id' => 59, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
         ];
 
+        DB::table('admin_role_permissions')->truncate();  // 清空表
         DB::table('admin_role_permissions')->insert($rolePermissions);
     }
 }

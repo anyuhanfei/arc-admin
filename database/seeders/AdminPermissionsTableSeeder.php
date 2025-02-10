@@ -650,6 +650,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
         ];
 
+        DB::table('admin_permissions')->truncate();  // 清空表
         DB::table('admin_permissions')->insert($permissions);
     }
 }

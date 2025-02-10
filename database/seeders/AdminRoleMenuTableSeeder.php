@@ -33,6 +33,7 @@ class AdminRoleMenuTableSeeder extends Seeder
             ['role_id' => 1, 'menu_id' => 22, 'created_at' => '2025-02-08 16:36:45', 'updated_at' => '2025-02-08 16:36:45'],
         ];
 
+        DB::table('admin_role_menu')->truncate();  // 清空表
         DB::table('admin_role_menu')->insert($role_menus);
     }
 }
