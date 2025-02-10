@@ -19,7 +19,16 @@ composer install
 ```bash
 php artisan admin:publish
 ```
-4. 复制 `.env.example` 文件，重命名为 `.env`，并修改配置
+4. 复制 `.env.example` 文件，重命名为 `.env`，并修改配置，此步骤一定要配置数据库
+5. 运行以下命令完成数据库迁移
+```bash
+php artisan migrate
+```
+6. 按顺序运行以下命令生成基础数据
+```bash
+php artisan admin:install
+php artisan db:seed
+```
 
 #### TODO
 1. 公告、文章、轮播图的开关（发布、隐藏）
