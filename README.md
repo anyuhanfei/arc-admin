@@ -29,6 +29,11 @@ php artisan migrate
 php artisan admin:install
 php artisan db:seed
 ```
+7. 初始超级管理员账号密码为：
+```
+账号：admin
+密码：admin
+```
 
 #### TODO
 1. 公告、文章、轮播图的开关（发布、隐藏）
