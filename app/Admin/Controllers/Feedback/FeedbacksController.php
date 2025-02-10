@@ -36,7 +36,6 @@ class FeedbacksController extends AdminController{
                 $filter->equal('id');
             });
             $grid->disableCreateButton();
-            $grid->disableViewButton();
         });
     }
 
@@ -48,14 +47,18 @@ class FeedbacksController extends AdminController{
      * @return Show
      */
     protected function detail($id){
-        return Show::make($id, new Feedbacks(), function (Show $show) {
+        return Show::make($id, new Feedbacks(['user']), function (Show $show) {
             $show->field('id');
             $show->field('user_id');
+            $show->field('user.nickname', '会员昵称');
+            $show->field('user.avatar', '会员头像')->image("", 60, 60);
             $show->field('type');
             $show->field('content');
             $show->field('contact');
-            $show->field('images');
-            $show->field('status');
+            $show->field('images')->as(function(){
+                return json_decode($this->images, true);
+            })->image('', 80, 80);
+            $show->field('status')->using((new Feedbacks())->status_array());
             $show->field('admin_remark');
             $show->field('created_at');
             $show->field('updated_at');

@@ -84,7 +84,7 @@ class SysNoticesController extends AdminController{
     }
 
     protected function detail($id){
-        return Show::make($id, new SysNotice(), function (Show $show) {
+        return Show::make($id, new SysNotices(), function (Show $show) {
             $show->field('id');
             $show->field('title');
             $show->field('content')->unescape();

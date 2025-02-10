@@ -30,6 +30,12 @@ return [
         'create'   => '创建',
         'root'     => '顶级',
         'scaffold' => '代码生成器',
+        'auth'=> "后台系统管理",
+        "users"=> "管理员管理",
+        "roles"=> "角色管理",
+        "permissions"=> "权限管理",
+        "menu"=>     "菜单管理",
+        "extensions"=> "扩展管理",
     ],
     'options' => [
         //

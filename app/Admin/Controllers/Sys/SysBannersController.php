@@ -129,6 +129,9 @@ class SysBannersController extends AdminController{
                     $form->deleteInput("internal_link");
                     $form->deleteInput("category_id");
                     $form->deleteInput("article_id");
+                    if($form->link == null){
+                        $form->link = "";
+                    }
                 });
             }
             $form->disableViewCheck();

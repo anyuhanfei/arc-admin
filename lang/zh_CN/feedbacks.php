@@ -3,6 +3,7 @@ return [
     'labels' => [
         'Feedbacks' => '意见反馈管理',
         'feedbacks' => '意见反馈管理',
+        'feedback'=> "内容管理"
     ],
     'fields' => [
         'user_id' => '会员ID',
