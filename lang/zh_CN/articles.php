@@ -1,4 +1,4 @@
-<?php 
+<?php
 return [
     'labels' => [
         'Articles' => '文章管理',
@@ -13,6 +13,7 @@ return [
         'author' => '作者',
         'keyword' => '关键词',
         'content' => '内容',
+        'status'=> "状态",
     ],
     'options' => [
     ],
