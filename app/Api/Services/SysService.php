@@ -118,7 +118,11 @@ class SysService{
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function get_article_detail(int $id){
-        $data = (new Articles())->get_data_by_id($id)->setVisible(['id', 'category_id', 'title', 'intro', 'image', 'author', 'keyword', 'content', 'created_at', 'category_name']);
+        $data = (new Articles())->get_data_by_id($id);
+        if(!$data || $data->status != 'normal'){
+            throwBusinessException('文章未发布');
+        }
+        $data = $data->setVisible(['id', 'category_id', 'title', 'intro', 'image', 'author', 'keyword', 'content', 'created_at', 'category_name']);
         if(!$data){
             throwBusinessException('文章不存在');
         }

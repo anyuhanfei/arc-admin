@@ -15,6 +15,14 @@ use Illuminate\Support\Facades\DB;
 class Articles extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
+    public function status_array(){
+        return (new $this->eloquentClass())->status_array();
+    }
+
+    public function status_color_array(){
+        return (new $this->eloquentClass())->status_color_array();
+    }
+
     public function admin_get_datas_by_category(int $category_id){
         return $this->eloquentClass::categoryId($category_id)->get(['id', DB::raw("title as text")]);
     }
@@ -28,7 +36,7 @@ class Articles extends EloquentRepository{
      * @return Collection
      */
     public function get_list_by_category(int $category_id, int $limit):Collection{
-        return $this->eloquentClass::categoryId($category_id)->paginate($limit);
+        return $this->eloquentClass::categoryId($category_id)->status('normal')->paginate($limit);
     }
 
     /**
@@ -39,7 +47,7 @@ class Articles extends EloquentRepository{
      * @return Collection
      */
     public function get_list(int $limit):LengthAwarePaginator{
-        return $this->eloquentClass::paginate($limit);
+        return $this->eloquentClass::status('normal')->paginate($limit);
     }
 
     /**

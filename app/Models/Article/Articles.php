@@ -17,6 +17,14 @@ class Articles extends Model{
     use SoftDeletes;
     use BaseFilter;
 
+    public function status_array(){
+        return ['normal'=> '发布', 'hidden'=> '隐藏'];
+    }
+
+    public function status_color_array(){
+        return ['normal'=> 'success', 'hidden'=> 'danger'];
+    }
+
     protected $table = 'articles';
     protected $guarded = [];
 
@@ -39,5 +47,9 @@ class Articles extends Model{
 
     public function scopeTitle(Builder $builder, string $value){
         return $builder->where("title", 'like', '%'.$value.'%');
+    }
+
+    public function scopeStatus(Builder $builder, string $value){
+        return $builder->where('status', $value);
     }
 }

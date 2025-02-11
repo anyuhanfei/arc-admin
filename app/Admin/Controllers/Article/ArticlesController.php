@@ -22,7 +22,9 @@ class ArticlesController extends AdminController{
     protected bool $field_keyword_enable = true;
 
     protected function grid(){
-        return Grid::make(new Articles(['category']), function (Grid $grid) {
+        $status_array = (new Articles())->status_array();
+        $status_color_array = (new Articles())->status_color_array();
+        return Grid::make(new Articles(['category']), function (Grid $grid) use($status_array, $status_color_array){
             $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             $grid->column('category.name', '文章分类')->width("10%");
@@ -38,6 +40,7 @@ class ArticlesController extends AdminController{
                 $card = (new Card(null, ''))->header($this->content);
                 return "<div style='padding:10px 10px 0'>$card</div>";
             });
+            $grid->column('status')->using($status_array)->label($status_color_array);
             $grid->column('created_at');
             $grid->selector(function (Grid\Tools\Selector $selector) {
                 $categories = (new ArticleCategories())->admin_get_datas_by_name()->toArray();
@@ -95,6 +98,7 @@ class ArticlesController extends AdminController{
             $this->field_image_enable ? admin_image_field($form->image('image')->required()) : '';
             $form->text('author')->required();
             $this->field_keyword_enable ? $form->tags('keyword')->help("输入一个关键词后，按下空格键，再按下回车键，即成功添加一个关键词。")->saving(function ($value) {return is_array($value) ? implode(',', $value) : '';}) : '';
+            $form->radio("status")->options((new Articles())->status_array())->default("hidden")->required();
             $form->editor('content')->height('600')->required();
             $form->saving(function(Form $form){
                 $form->intro = $form->intro ?? '';
