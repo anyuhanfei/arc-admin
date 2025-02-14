@@ -131,11 +131,26 @@ class SysService{
         return $data;
     }
 
+    /**
+     * 获取意见反馈类型列表
+     *
+     * @return void
+     */
     public function get_feedback_types_list(){
         $names = (new FeedbackTypes())->get_names();
         return $names;
     }
 
+    /**
+     * 提交意见反馈信息
+     *
+     * @param integer $user_id
+     * @param string $type
+     * @param string $content
+     * @param string $contact
+     * @param array $images
+     * @return void
+     */
     public function apply_feedback_operation(int $user_id, string $type, string $content, string $contact, array $images){
         $data = (new Feedbacks())->create_data($user_id, $type, $content, $contact, $images);
         return $data;

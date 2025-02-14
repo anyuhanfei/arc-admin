@@ -99,6 +99,12 @@ class SysController extends BaseController{
         return success("意见反馈类型列表", $data);
     }
 
+    /**
+     * 提交意见反馈
+     *
+     * @param Request $request
+     * @return void
+     */
     public function feedback(Request $request){
         $type = $request->input('type');
         $content = $request->input('content');

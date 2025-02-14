@@ -11,6 +11,11 @@ use Dcat\Admin\Repositories\EloquentRepository;
 class FeedbackTypes extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
+    /**
+     * 获取类型名称列表
+     *
+     * @return void
+     */
     public function get_names(){
         return $this->eloquentClass::pluck("name");
     }
