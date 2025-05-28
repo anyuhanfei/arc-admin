@@ -5,7 +5,7 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "dcat/easy-excel": "^1.1",
         "dcat/laravel-admin": "2.0.x-dev",
         "guzzlehttp/guzzle": "^7.2",
@@ -13,7 +13,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",
         "overtrue/laravel-filesystem-qiniu": "^2.2",
-        "qiniu/php-sdk": "^7.11",
+        "qiniu/php-sdk": "^7.14",
         "yansongda/pay": "~3.7.0"
     },
     "require-dev": {
@@ -23,7 +23,8 @@
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^8.1",
-        "phpunit/phpunit": "^10.1",
+        "phpunit/phpunit": "^11.0",
+        "pestphp/pest": "^3.0",
         "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
