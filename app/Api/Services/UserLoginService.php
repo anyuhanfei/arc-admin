@@ -185,7 +185,7 @@ class UserLoginService{
      */
     private function 返回登录数据($user_data){
         $data = [
-            'uid'=> $user_data->id,
+            'user_id'=> $user_data->id,
             'avatar'=> $user_data->avatar,
             'phone'=> $user_data->phone,
             'token'=> $this->repository->set_token($user_data->id),

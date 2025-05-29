@@ -117,12 +117,12 @@ class WxPayTool{
      * 转账
      *
      * @param string $openid
-     * @param integer $uid
+     * @param integer $user_id
      * @param integer|float $money
      * @param string $title
      * @return void
      */
-    public function transfer(string $openid, int $uid, int|float $money, string $title){
+    public function transfer(string $openid, int $user_id, int|float $money, string $title){
         Pay::config($this->config);
         $out_batch_no = time().'';
         $order = [
