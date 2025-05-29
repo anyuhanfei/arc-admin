@@ -51,7 +51,7 @@ class SysSettingsController extends AdminController{
                                 $field = admin_form_image_field($form->image($field_key, $value_arr['title']));
                                 break;
                             case "number":
-                                $field = $form->number($field_key, $value_arr['title']);
+                                $field = admin_form_number_field($form->text($field_key, $value_arr['title']), empty($value_arr['step']) ? '1' : $value_arr['step']);
                                 break;
                             case "textarea":
                                 $field = $form->textarea($field_key, $value_arr['title'])->rows(5);

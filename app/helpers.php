@@ -172,17 +172,6 @@ function admin_grid_user_field($user_data, $default = '已注销'){
 }
 
 /**
- * 后台图片上传
- *  使用方法，将 form() 中的图片表单对象传入此方法
- *
- * @param [type] $image_obj
- * @return void
- */
-function admin_form_image_field($image_obj){
-    return $image_obj->autoUpload()->uniqueName()->removable(false)->retainable();
-}
-
-/**
  * 后台富文本展示
  *  使用方法，将 grid() 中的富文本字段列表对象传入此方法
  *
@@ -196,6 +185,29 @@ function admin_grid_content($content_obj){
         $card = (new Card(null, ''))->header($this->content);
         return "<div style='padding:10px 10px 0'>$card</div>";
     });
+}
+
+/**
+ * 后台图片表单上传处理
+ *  使用方法，将 form() 中的图片表单对象传入此方法
+ *
+ * @param [type] $image_obj
+ * @return void
+ */
+function admin_form_image_field($image_obj){
+    return $image_obj->autoUpload()->uniqueName()->removable(false)->retainable();
+}
+
+/**
+ * 后台数字表单输入限制
+ *  使用方法，将 form() 中的数字表单对象传入此方法
+ *
+ * @param [type] $number_obj
+ * @param string $step
+ * @return void
+ */
+function admin_form_number_field($number_obj, $step = '0.01'){
+    return $number_obj->attribute('type', 'number')->attribute('step', $step);
 }
 
 /**

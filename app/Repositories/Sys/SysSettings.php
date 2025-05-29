@@ -23,7 +23,7 @@ class SysSettings extends EloquentRepository{
         return [
             '测试设置'=> [
                 'test_text'=> ['type'=> 'text', 'title'=> "测试文本"],
-                'test_number'=> ['type'=> 'number', 'title'=> "测试数字", 'help'=> "只能填写数字"],
+                'test_number'=> ['type'=> 'number', 'title'=> "测试数字", 'help'=> "只能填写数字", 'step'=> '0.01'],
                 'test_onoff'=> ['type'=> 'onoff', 'title'=> '测试开关'],
                 'test_select'=> ['type'=> 'select', 'title'=> "测试选项", 'options'=> [
                     '选项1', '选项2', '选项3'
@@ -36,7 +36,7 @@ class SysSettings extends EloquentRepository{
                 'test_eidt'=> ['type'=> "edit", "title"=> "测试富文本"],
             ],
             '应用设置'=> [
-                'withdraw_minimum_amount'=> ['type'=> 'number', 'title'=> "最低提现金额"],
+                'withdraw_minimum_amount'=> ['type'=> 'number', 'title'=> "最低提现金额", 'step'=> '0.01'],
             ],
         ];
     }

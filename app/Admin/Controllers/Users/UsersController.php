@@ -152,12 +152,12 @@ class UsersController extends AdminController{
                     $form->text('password')->customFormat(function(){
                         return '';
                     })->help('不填写则不修改');
-                    $form->select('login_status', '登录状态')->options(StatusEnum::getDescriptions());
+                    $form->hidden('login_status', '登录状态')->options(StatusEnum::getDescriptions());
                 });
                 // 资产管理
                 $form->tab('资产', function(Form $form){
                     foreach(CoinEnum::getDescriptions() as $key=>$value){
-                        $form->number('balances.'.$key, $value);
+                        admin_form_number_field($form->text('balances.'.$key, $value), '0.01');
                     }
                 });
                 // TODO::项目中需要什么详情信息需要手动添加
