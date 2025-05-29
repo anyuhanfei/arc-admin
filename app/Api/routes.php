@@ -36,6 +36,8 @@ Route::post('sys/articles/list', [\App\Api\Controllers\SysController::class, 'ar
 Route::post('sys/article/detail', [\App\Api\Controllers\SysController::class, 'article_detail']);
 // 常见问题
 Route::post('sys/faqs/list', [\App\Api\Controllers\SysController::class, 'faqs_list']);
+// 版本控制
+Route::post('sys/app/version/check', [\App\Api\Controllers\SysController::class, 'app_version_check']);
 
 // 第三方支付的回调接口
 Route::match(['get', 'post'], 'wxpay/notify', [\App\Api\Controllers\PayController::class, 'wxpay_notify']);

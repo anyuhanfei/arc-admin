@@ -128,4 +128,9 @@ class SysController extends BaseController{
         $data = $this->service->get_sys_data();
         return success("系统设置", $data);
     }
+
+    public function app_version_check(Request $request){
+        $data = $this->service->get_app_version_check();
+        return success("版本信息", $data);
+    }
 }

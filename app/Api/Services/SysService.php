@@ -4,6 +4,7 @@ namespace App\Api\Services;
 use App\Admin\Controllers\Sys\SysBannersController;
 use App\Admin\Controllers\Sys\SysNoticesController;
 use App\Enums\StatusEnum;
+use App\Repositories\AppVersions;
 use Illuminate\Database\Eloquent\Collection;
 
 use App\Repositories\Article\ArticleCategories;
@@ -202,6 +203,26 @@ class SysService{
         $sys_setting_repository = new SysSettings();
         return [
             'withdraw_minimum_amount' => $sys_setting_repository->get_value_by_key("withdraw_minimum_amount"),
+        ];
+    }
+
+    public function get_app_version_check(){
+        $latestVersion = (new AppVersions())->get_latest_version();
+        if(!$latestVersion){
+            throwBusinessException("暂无版本信息", 'no_version');
+        }
+        $latestVersion->a_app_url = $latestVersion->a_app_url ? full_url($latestVersion->a_app_url) : null;
+        $latestVersion->wgt_url = full_url($latestVersion->wgt_url);
+        return [
+            'isForce' => boolval($latestVersion->is_force),
+            'wgtUrl' => $latestVersion->wgt_url,
+            'iAppUrl' => $latestVersion->i_app_url,
+            'aAppUrl' => $latestVersion->a_app_url,
+            'isComplete' => boolval($latestVersion->is_complete),
+            'version' => $latestVersion->version,
+            'versionName' => $latestVersion->version_name,
+            'size' => $latestVersion->size,
+            'content' => $latestVersion->content
         ];
     }
 }

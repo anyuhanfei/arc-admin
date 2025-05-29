@@ -1,5 +1,6 @@
 <?php
 
+use App\Admin\Controllers\AppVersionsController;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Dcat\Admin\Admin;
@@ -37,7 +38,7 @@ Route::group([
     $router->resource('feedback/feedbacks', Feedback\FeedbacksController::class);
     $router->resource('faqs/types', Faqs\FaqTypesController::class);
     $router->resource('faqs/faqs', Faqs\FaqsController::class);
-
+    $router->resource('app/versions', AppVersionsController::class);
 
 });
 Route::group([
