@@ -125,7 +125,7 @@ class UsersController extends AdminController{
                 // 密码加密、数据添加默认值
                 $form->saving(function (Form $form) {
                     $form->password = (new Users())->set_user_password($form->password ?? '');
-                    $form->avatar = $form->avatar ?? '';
+                    $form->avatar = $form->avatar ?? 'avatar.jpeg';
                     $form->nickname = $form->nickname ?? '';
                     $form->account = $form->account ?? '';
                     $form->phone = $form->phone ?? '';

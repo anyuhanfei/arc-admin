@@ -6,6 +6,9 @@ use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\BaseFilter;
 
@@ -19,6 +22,13 @@ class Users extends Model{
 
     protected $table = 'users';
     protected $guarded = [];
+    protected $appends = ['full_avatar'];
+
+    public function fullAvatar(): Attribute{
+        return Attribute::make(
+            get: fn(string|null $value, array $data) => Str::contains($data['avatar'], '//') ? $data['avatar'] : Storage::disk('admin')->url($data['avatar']),
+        );
+    }
 
     public function balances(){
         return $this->hasOne(UserBalances::class, 'id', 'id');

@@ -38,7 +38,7 @@ class Users extends EloquentRepository{
         DB::beginTransaction();
         try{
             $user_data = $this->eloquentClass::create([
-                'avatar'=> $params['avatar'] ?? '',
+                'avatar'=> $params['avatar'] ?? "avatar.jpeg",
                 'nickname'=> $params['nickname'] ?? ($params['account'] ?? ($params['phone'] ?? '')),
                 'account'=> $params['account'] ?? '',
                 'phone'=> $params['phone'] ?? '',
