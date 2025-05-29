@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers\Users;
 
+use App\Enums\Users\CoinEnum;
 use App\Repositories\Users\UserBalanceLogs;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
@@ -13,19 +14,18 @@ use Dcat\Admin\Http\Controllers\AdminController;
 class UserBalanceLogsController extends AdminController{
 
     protected function grid(){
-        $coin_array = UserBalanceLogs::coin_array();
-        return Grid::make(new UserBalanceLogs(['user']), function (Grid $grid) use($coin_array){
+        return Grid::make(new UserBalanceLogs(['user']), function (Grid $grid){
             $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
-            $grid->column("user", '会员信息')->width("370px")->display(function(){
-                return admin_grid_user_field($this->user);
+            $grid->column("user", '会员信息')->display(function($value){
+                return admin_grid_user_field($value);
             });
             $grid->column('fund_type');
-            $grid->column('coin_type')->display(function() use($coin_array){
-                return $coin_array[$this->coin_type] ?? '未知币种';
+            $grid->column('coin_type')->display(function($value){
+                return CoinEnum::getDescription($value) ?? "";
             });
-            $grid->column('amount')->display(function(){
-                return "<span class='label' style='background:#586cb1;padding-bottom: 2px;'>{$this->amount}</span><br/><span>操作前金额: {$this->before_money}</span><br/><span>操作后金额: {$this->after_money}</span>";
+            $grid->column('amount')->display(function($value){
+                return "<span class='label' style='background:#586cb1;padding-bottom: 2px;'>{$value}</span><br/><span>操作前金额: {$this->before_money}</span><br/><span>操作后金额: {$this->after_money}</span>";
             });
             $grid->column('created_at');
             $grid->filter(function (Grid\Filter $filter){
@@ -37,8 +37,8 @@ class UserBalanceLogsController extends AdminController{
                 $filter->equal('fund_type')->select(array_combine($fund_type_array, $fund_type_array));
                 $filter->between('created_at')->datetime();
             });
-            $grid->selector(function (Grid\Tools\Selector $selector) use($coin_array){
-                $selector->select("coin_type", "币种", $coin_array);
+            $grid->selector(function (Grid\Tools\Selector $selector){
+                $selector->select("coin_type", "币种", CoinEnum::getDescriptions());
             });
             $grid->disableCreateButton();
             $grid->disableDeleteButton();
@@ -48,13 +48,12 @@ class UserBalanceLogsController extends AdminController{
     }
 
     protected function detail($id){
-        $coin_array = UserBalanceLogs::coin_array();
-        return Show::make($id, new UserBalanceLogs(['user']), function (Show $show) use($coin_array){
+        return Show::make($id, new UserBalanceLogs(['user']), function (Show $show){
             $show->field('id');
             $show->field('user_id');
             $show->field('user.account', '会员账号');
-            $show->field('coin_type')->as(function() use($coin_array){
-                return $coin_array[$this->coin_type] ?? '未知币种';
+            $show->field('coin_type')->as(function($value){
+                return CoinEnum::getDescription($value) ?? "";
             });
             $show->field('fund_type');
             $show->field('amount');
