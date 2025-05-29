@@ -110,16 +110,6 @@ function comma_str_to_array(string $str):Array {
     return array_filter(explode(',', $str));
 }
 
-/**
- * 将数组转换为以英文逗号隔开的字符串
- *
- * @param array $array
- * @return string
- */
-function array_to_comma_str(array $array):string {
-    return implode(',', $array);
-}
-
 
 /**
  * 从一个数据列表中获取指定字段
@@ -206,4 +196,29 @@ function format_paginated_datas(LengthAwarePaginator $datas, array $visible = ['
         'lastItem'=> $datas->lastItem(),  // 当页最后一条数据的编号(id)
         'datas'=> $datas->setVisible($visible),
     ];
+}
+
+/**
+* 获取文件的完整路径
+*  一般情况下，查询出来的图片、文件数据直接通过模型中的访问器修改为了完整路径。
+*  但可能有一些特殊情况不是由模型获取到的数据，需要手动拼接完整路径。
+*
+* @param string $file_path 文件路径
+* @param string $catelogue 文件目录
+* @return void
+*/
+function full_url($file_path, $catelogue = '/uploads/'){
+    if($file_path == '' || $file_path == null){
+        return '';
+    }
+    if(strpos($file_path, 'http') !== false){
+        return $file_path;
+    }
+    if(strpos($file_path, 'https') !== false){
+        return $file_path;
+    }
+    if(strpos($file_path, 'data:') !== false){
+        return $file_path;
+    }
+    return url($catelogue . $file_path);
 }
