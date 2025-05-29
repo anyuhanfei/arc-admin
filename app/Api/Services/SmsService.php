@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Redis;
 
 use App\Repositories\Misc;
 use App\Repositories\Users\Users;
+use App\Tools\Sms\SmsbaoTool;
 
 class SmsService{
     /**
@@ -50,5 +51,15 @@ class SmsService{
      */
     protected function send(string $type, string $phone, array $param = []){
         // TODO::这里是第三方短信的发送逻辑代码
+
+        // 短信宝
+        $smsbao = new SmsbaoTool();
+        switch($type){
+            case 'code':
+                $smsbao->send_sms_code($phone, $param['code']);
+                break;
+            default:
+                throwBusinessException('请传入正确的发送类型');
+        }
     }
 }
