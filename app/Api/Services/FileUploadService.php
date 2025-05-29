@@ -58,10 +58,11 @@ class FileUploadService{
      * @return array
      */
     private function rename($file):array{
-        if(!in_array($file->getClientOriginalExtension(), $this->allowed_ext)){
+        $client_original_extension = strtolower($file->getClientOriginalExtension());
+        if(!in_array($client_original_extension, $this->allowed_ext)){
             throwBusinessException('不支持上传此类型文件');
         }
-        $file_name = md5($file->getClientOriginalName().time().rand()).'.'.$file->getClientOriginalExtension();
+        $file_name = md5($file->getClientOriginalName().time().rand()).'.'.$client_original_extension;
         $full_path_file_name = config('app.url') . '/' . $this->real_directory . $file_name;
         return [
             'file_name'=> $file_name,  # 文件名
