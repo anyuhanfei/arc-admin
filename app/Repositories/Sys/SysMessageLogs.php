@@ -43,8 +43,8 @@ class SysMessageLogs extends EloquentRepository{
      * @param integer $limit
      * @return Collection
      */
-    public function get_list_by_user(int $user_id, int $limit):LengthAwarePaginator{
-        return $this->eloquentClass::userIds($user_id)->orderby("id", 'desc')->paginate($limit);
+    public function get_list_by_user(int $user_id, int $page, int $limit):LengthAwarePaginator{
+        return $this->eloquentClass::userIds($user_id)->orderby("id", 'desc')->paginate($limit, ['*'], 'page', $page);
     }
 
     /**

@@ -73,7 +73,7 @@ class SysController extends BaseController{
         $page = $request->input("page", 1) ?? 1;
         $limit = $request->input("limit", 10) ?? 10;
         $category_id = $request->input("category_id", 0) ?? 0;
-        $datas = $this->service->get_articles_list($category_id, $limit);
+        $datas = $this->service->get_articles_list($category_id, $page, $limit);
         return success("文章列表", $datas);
     }
 

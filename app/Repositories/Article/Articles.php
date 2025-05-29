@@ -27,8 +27,8 @@ class Articles extends EloquentRepository{
      * @param integer $limit
      * @return Collection
      */
-    public function get_list_by_category(int $category_id, int $limit):Collection{
-        return $this->eloquentClass::categoryId($category_id)->status('normal')->paginate($limit);
+    public function get_list_by_category(int $category_id, int $page, int $limit):Collection{
+        return $this->eloquentClass::categoryId($category_id)->status('normal')->paginate($limit, ['*'], 'page', $page);
     }
 
     /**
@@ -38,8 +38,8 @@ class Articles extends EloquentRepository{
      * @param integer $limit
      * @return Collection
      */
-    public function get_list(int $limit):LengthAwarePaginator{
-        return $this->eloquentClass::status('normal')->paginate($limit);
+    public function get_list(int $page, int $limit):LengthAwarePaginator{
+        return $this->eloquentClass::status('normal')->paginate($limit, ['*'], 'page', $page);
     }
 
     /**

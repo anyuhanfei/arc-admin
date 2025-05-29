@@ -65,7 +65,7 @@ class UserController extends BaseController{
     public function sys_messages_list(\App\Api\Requests\PageRequest $request){
         $page = $request->input("page");
         $limit = $request->input("limit");
-        $data = $this->service->get_sys_messages_list($limit);
+        $data = $this->service->get_sys_messages_list($page, $limit);
         return success("系统消息列表", $data);
     }
 
@@ -92,7 +92,7 @@ class UserController extends BaseController{
         $limit = $request->input("limit");
         $search['coin_type'] = $request->input("coin_type", '') ?? '';
         $search['fund_type'] = $request->input("fund_type", '') ?? '';
-        $data = $this->service->get_user_balances_log_list($limit, $search);
+        $data = $this->service->get_user_balances_log_list($page, $limit, $search);
         return success("会员资金列表", $data);
     }
 
@@ -128,7 +128,7 @@ class UserController extends BaseController{
     public function withdraws_list(\App\Api\Requests\PageRequest $request){
         $page = $request->input("page");
         $limit = $request->input("limit");
-        $data = $this->service->get_withdraws_list($limit);
+        $data = $this->service->get_withdraws_list($page, $limit);
         return success("提现列表", $data);
     }
 

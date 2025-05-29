@@ -52,7 +52,7 @@ class UserWithdrawLogs extends EloquentRepository{
      * @param integer $limit
      * @return void
      */
-    public function get_list_by_user(int $user_id, int $limit):LengthAwarePaginator{
-        return $this->eloquentClass::userId($user_id)->paginate($limit);
+    public function get_list_by_user(int $user_id, int $page, int $limit):LengthAwarePaginator{
+        return $this->eloquentClass::userId($user_id)->paginate($limit, ['*'], 'page', $page);
     }
 }

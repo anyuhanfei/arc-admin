@@ -112,11 +112,11 @@ class SysService{
      * @param integer $limit
      * @return array
      */
-    public function get_articles_list(int $category_id, int $limit = 10):array{
+    public function get_articles_list(int $category_id, int $page = 1, int $limit = 10):array{
         if($category_id != 0){
-            $datas = (new Articles())->get_list_by_category($category_id, $limit);
+            $datas = (new Articles())->get_list_by_category($category_id, $page, $limit);
         }else{
-            $datas = (new Articles())->get_list($limit);
+            $datas = (new Articles())->get_list($page, $limit);
         }
         $datas->load(['category']);
         foreach($datas as &$item){

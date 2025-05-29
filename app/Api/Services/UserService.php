@@ -124,14 +124,14 @@ class UserService{
      * @param array $search
      * @return void
      */
-    public function get_user_balances_log_list(int $limit, array $search):array{
+    public function get_user_balances_log_list(int $page, int $limit, array $search):array{
         $_search = [];
         foreach($search as $key=> $value){
             if(!in_array($value, ['', '0', 'undefined', null])){
                 $_search[$key] = $value;
             }
         }
-        $datas = (new UserBalanceLogs())->get_list_by_user($this->user_id, $limit, $_search);
+        $datas = (new UserBalanceLogs())->get_list_by_user($this->user_id, $page, $limit, $_search);
         $datas = format_paginated_datas($datas, ["id", "coin_type", "fund_type", "amount", "before_money", "after_money", "relevance", "remark", "created_at"]);
 
         return $datas;
@@ -144,9 +144,9 @@ class UserService{
      * @param integer $limit
      * @return void
      */
-    public function get_sys_messages_list(int $limit){
+    public function get_sys_messages_list(int $page, int $limit){
         $log_sys_message_repository = new SysMessageLogs();
-        $datas = $log_sys_message_repository->get_list_by_user($this->user_id, $limit);
+        $datas = $log_sys_message_repository->get_list_by_user($this->user_id, $page, $limit);
 
         foreach($datas as &$message){
             $message->read_status = $log_sys_message_repository->get_read_status_by_id($this->user_id, $message->id);
@@ -244,8 +244,8 @@ class UserService{
      * @param integer $limit
      * @return Collection
      */
-    public function get_withdraws_list(int $limit):array{
-        $datas = (new UserWithdrawLogs())->get_list_by_user($this->user_id, $limit);
+    public function get_withdraws_list(int $page, int $limit):array{
+        $datas = (new UserWithdrawLogs())->get_list_by_user($this->user_id, $page, $limit);
         $datas = format_paginated_datas($datas, ["id", "amount", "fee", "content", "remark", "status", "created_at"]);
         return $datas;
     }

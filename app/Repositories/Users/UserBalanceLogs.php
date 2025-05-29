@@ -57,8 +57,8 @@ class UserBalanceLogs extends EloquentRepository{
      * @param array $search
      * @return Collection
      */
-    public function get_list_by_user(int $user_id, int $limit, array $search):LengthAwarePaginator{
-        return $this->eloquentClass::userId($user_id)->apply($search)->paginate($limit);
+    public function get_list_by_user(int $user_id, int $page, int $limit, array $search):LengthAwarePaginator{
+        return $this->eloquentClass::userId($user_id)->apply($search)->paginate($limit, ['*'], 'page', $page);
     }
 
 

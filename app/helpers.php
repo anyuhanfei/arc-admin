@@ -216,7 +216,16 @@ function admin_form_number_field($number_obj, $step = '0.01'){
  * @param LengthAwarePaginator $datas
  * @return void
  */
-function format_paginated_datas(LengthAwarePaginator $datas, array $visible = ['*']){
+function format_paginated_datas(LengthAwarePaginator $datas, array $visible = ['*'], ?callable $func = null){
+    $data = null;
+    if($func){
+        $data = $datas->map(function($item) use ($func){
+            return $func($item);
+        });
+    }
+    if(count($visible) > 0 && $visible[0] != '*'){
+        $data = $datas->setVisible($visible);
+    }
     return [
         'total'=> $datas->total(),  // 总条数
         'count'=> $datas->count(),  // 当页总数
@@ -225,7 +234,7 @@ function format_paginated_datas(LengthAwarePaginator $datas, array $visible = ['
         'lastPage'=> $datas->lastPage(),  // 最后一页页码
         'firstItem'=> $datas->firstItem(),  // 当页第一条数据的编号(id)
         'lastItem'=> $datas->lastItem(),  // 当页最后一条数据的编号(id)
-        'datas'=> $datas->setVisible($visible),
+        'datas'=> $data ?? $datas->setVisible($visible),
     ];
 }
 
