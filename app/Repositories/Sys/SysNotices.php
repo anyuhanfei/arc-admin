@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Sys;
 
+use App\Enums\SysNotices\StatusEnum;
 use App\Models\Sys\SysNotices as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
@@ -74,7 +75,7 @@ class SysNotices extends EloquentRepository{
      * @return void
      */
     public function get_list(int $limit = 10):LengthAwarePaginator{
-        return $this->eloquentClass::orderby("id", 'desc')->paginate($limit);
+        return $this->eloquentClass::publish()->orderby("id", 'desc')->paginate($limit);
     }
 
     /**

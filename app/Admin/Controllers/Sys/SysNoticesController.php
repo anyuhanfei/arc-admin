@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers\Sys;
 
+use App\Enums\SysNotices\StatusEnum;
 use App\Repositories\Sys\SysNotices;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -62,6 +63,7 @@ class SysNoticesController extends AdminController{
             }
             $this->field_image_enable ? $grid->column('image')->image('', 40, 40)->width("15%") : '';
             if($this->type == '多条文字' || $this->type == "多条富文本"){
+                $grid->column('status', '状态')->using(StatusEnum::getDescriptions())->dot(StatusEnum::getColors());
                 $grid->column('created_at');
             }
             $grid->disableRowSelector();
@@ -79,6 +81,7 @@ class SysNoticesController extends AdminController{
             $show->field('title');
             $show->field('content')->unescape();
             $show->field('image')->image();
+            $show->field('status', '状态')->using(StatusEnum::getDescriptions())->dot(StatusEnum::getColors());
             $show->field('created_at');
             $show->field('updated_at');
             $show->panel()->tools(function ($tools) {
@@ -102,6 +105,9 @@ class SysNoticesController extends AdminController{
                     break;
             }
             $this->field_image_enable ? admin_form_image_field($form->image('image')->required()) : '';
+            if($this->type == '多条文字' || $this->type == "多条富文本"){
+                $form->radio('status', '状态')->options(StatusEnum::getDescriptions())->default(StatusEnum::NORMAL);
+            }
             $form->saving(function (Form $form) {
                 $form->content = $form->content ?? '';
             });

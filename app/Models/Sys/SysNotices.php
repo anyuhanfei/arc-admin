@@ -2,6 +2,7 @@
 
 namespace App\Models\Sys;
 
+use App\Enums\SysNotices\StatusEnum;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -37,5 +38,9 @@ class SysNotices extends Model{
 
     public function scopeTitle(Builder $builder, string $value){
         return $builder->where("title", "like", "%{$value}%");
+    }
+
+    public function scopePublish(Builder $builder){
+        return $builder->where("status", StatusEnum::NORMAL);
     }
 }
