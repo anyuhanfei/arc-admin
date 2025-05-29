@@ -2,12 +2,36 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
  * 模型搜索基类
  */
 trait BaseFilter{
+
+    public function fullImage(): Attribute{
+        return Attribute::make(
+            get: fn(string|null $value, array $data) => Str::contains($data['image'], '//') ? $data['image'] : Storage::disk('admin')->url($data['image']),
+        );
+    }
+
+    public function fullImages(): Attribute{
+        return Attribute::make(
+            get: fn (string|null $value, array $data) => array_map(function ($image) {
+                    return Str::contains($image, '//') ? $image : Storage::disk('admin')->url($image);
+                }, comma_str_to_array($data['images'])),
+        );
+    }
+
+    public function images(): Attribute{
+        return Attribute::make(
+            get: fn (string|null $value) => comma_str_to_array($value),
+        );
+    }
+
     /**
      * 用于参数不稳定的筛选情况
      *

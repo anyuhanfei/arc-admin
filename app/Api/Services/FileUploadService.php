@@ -5,12 +5,14 @@ use App\Tools\Qiniu\QiniuFileUploadTool;
 
 class FileUploadService{
     protected $allowed_ext;
-    protected $directory;
     protected $disk;
+    protected $real_directory;  // 真实目录
+    protected $save_directory;  // 保存到数据库中的目录结构（与后台保持一致）
 
     public function __construct(){
         $this->allowed_ext = ["png", "jpg", "gif", 'jpeg', 'mp4', 'mp3'];
-        $this->directory = 'uploads/images/' . date('Y-m', time()) . '/';
+        $this->real_directory = 'uploads/images/' . date('Y-m', time()) . '/';
+        $this->save_directory = 'images/' . date('Y-m', time()) . '/';
         $this->disk = config('filesystems.default');
     }
 
@@ -42,7 +44,7 @@ class FileUploadService{
      */
     private function upload2local($file, array $file_data):bool{
         try{
-            $file->move($this->directory, $file_data['file_name']);
+            $file->move($this->real_directory, $file_data['file_name']);
         }catch(\Exception $e){
             throwBusinessException("上传失败：原因为:" . $e->getMessage());
         }
@@ -60,11 +62,10 @@ class FileUploadService{
             throwBusinessException('不支持上传此类型文件');
         }
         $file_name = md5($file->getClientOriginalName().time().rand()).'.'.$file->getClientOriginalExtension();
-        $directory_file_name = $this->directory . $file_name;
-        $full_path_file_name = config('app.url') . '/' . $directory_file_name;
+        $full_path_file_name = config('app.url') . '/' . $this->real_directory . $file_name;
         return [
             'file_name'=> $file_name,  # 文件名
-            'directory_file_name'=> $directory_file_name,  # 存储路径
+            'directory_file_name'=> $this->save_directory . $file_name,  # 存储路径
             'full_path_file_name'=> $full_path_file_name   # 完整url链接
         ];
     }

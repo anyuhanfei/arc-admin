@@ -1,6 +1,7 @@
 <?php
 namespace App\Api\Services;
 
+use App\Admin\Controllers\Sys\SysBannersController;
 use Illuminate\Database\Eloquent\Collection;
 
 use App\Repositories\Article\ArticleCategories;
@@ -22,7 +23,13 @@ class SysService{
      * @return void
      */
     public function get_banners_list(string $site):Collection{
-        return (new SysBanners())->get_datas_by_site($site)->setVisible(['id', 'image', 'link_type', 'link']);
+        $admin_sys_banners = (new SysBannersController());
+        $set_visible = ['id', 'full_image'];
+        if($admin_sys_banners->field_link_enable){
+            $set_visible[] = 'link';
+            $set_visible[] = 'link_type';
+        }
+        return (new SysBanners())->get_datas_by_site($site)->setVisible($set_visible);
     }
 
     /**

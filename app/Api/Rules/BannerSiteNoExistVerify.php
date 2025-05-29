@@ -1,6 +1,7 @@
 <?php
 namespace App\Api\Rules;
 
+use App\Enums\SysBanners\SiteEnum;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\DataAwareRule;
 
@@ -21,8 +22,7 @@ class BannerSiteNoExistVerify implements Rule, DataAwareRule{
         if($value == '' || $value == null){
             return true;
         }else{
-            $site_array = (new SysBanners())->site_array();
-            return in_array($value, $site_array);
+            return in_array($value, SiteEnum::getKeys());
         }
     }
 

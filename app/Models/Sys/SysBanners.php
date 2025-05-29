@@ -12,12 +12,14 @@ use App\Models\BaseFilter;
  * 轮播图表数据模型
  */
 class SysBanners extends Model{
-	use HasDateTimeFormatter;
+    use HasDateTimeFormatter;
     use SoftDeletes;
     use BaseFilter;
 
     protected $table = 'sys_banners';
     protected $guarded = [];
+    protected $appends = ['full_image'];
+
 
     public function scopeId(Builder $builder, int $value){
         return $builder->where("id", $value);

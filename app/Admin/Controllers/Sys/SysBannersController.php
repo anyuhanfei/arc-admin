@@ -17,8 +17,8 @@ use Dcat\Admin\Http\Controllers\AdminController;
  * 轮播图模块控制器
  */
 class SysBannersController extends AdminController{
-    protected bool $module_enable;  # 模块是否启用
-    protected bool $field_link_enable;  # 字段url是否启用
+    public bool $module_enable;  # 模块是否启用
+    public bool $field_link_enable;  # 字段url是否启用
 
     public function __construct(){
         $this->module_enable = true;
