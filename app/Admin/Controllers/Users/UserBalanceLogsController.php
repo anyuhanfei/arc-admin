@@ -18,7 +18,7 @@ class UserBalanceLogsController extends AdminController{
             $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             $grid->column("user", '会员信息')->width("370px")->display(function(){
-                return admin_show_user_data($this->user);
+                return admin_grid_user_field($this->user);
             });
             $grid->column('fund_type');
             $grid->column('coin_type')->display(function() use($coin_array){

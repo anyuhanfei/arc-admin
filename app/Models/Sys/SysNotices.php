@@ -19,6 +19,7 @@ class SysNotices extends Model{
 
     protected $table = 'sys_notices';
     protected $guarded = [];
+    protected $appends = ['full_image'];
 
     // 项目中公告的类型，可选项有：
     //     单条文字:   一般用于首页轮播图下滚动播出的文字公告的使用场景

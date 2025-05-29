@@ -3,6 +3,7 @@
 # 自定义返回代码
 
 use Illuminate\Pagination\LengthAwarePaginator;
+use Dcat\Admin\Widgets\Metrics\Card;
 
 const SUCCESS_CODE = 200;
 const ERROR_CODE = 500;
@@ -150,11 +151,12 @@ function qrcode($url, $identity){
 
 /**
  * 后台会员展示优化
+ *  使用方式：在 grid() 方法中的字段列表对象中使用 display() 方法，然后使用此方法
 *
 * @param [type] $user_data
 * @return void
 */
-function admin_show_user_data($user_data, $default = '已注销'){
+function admin_grid_user_field($user_data, $default = '已注销'){
     try {
         $avatar = $user_data->avatar == '' ? config("app.url") . "/static/avatar.jpeg" : $user_data->avatar;
         $str = '<img data-action="preview-img" src="' . $avatar . '" style="margin-top: 1px;margin-right: 1px;max-height:60px;cursor:pointer;float:left;" class="img img-thumbnail">';
@@ -171,12 +173,29 @@ function admin_show_user_data($user_data, $default = '已注销'){
 
 /**
  * 后台图片上传
+ *  使用方法，将 form() 中的图片表单对象传入此方法
  *
  * @param [type] $image_obj
  * @return void
  */
-function admin_image_field($image_obj){
+function admin_form_image_field($image_obj){
     return $image_obj->autoUpload()->uniqueName()->removable(false)->retainable();
+}
+
+/**
+ * 后台富文本展示
+ *  使用方法，将 grid() 中的富文本字段列表对象传入此方法
+ *
+ * @param [type] $content_obj
+ * @return void
+ */
+function admin_grid_content($content_obj){
+    return $content_obj->width('15%')->display('')->modal(function ($modal) {
+        $modal->title($this->title);
+        $this->content == null ? $modal->icon('feather ') : $modal->icon('feather icon-eye');
+        $card = (new Card(null, ''))->header($this->content);
+        return "<div style='padding:10px 10px 0'>$card</div>";
+    });
 }
 
 /**

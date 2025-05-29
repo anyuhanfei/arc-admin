@@ -101,7 +101,7 @@ class SysMessageLogsController extends AdminController{
                 return $value ? implode(',', $value) : '0';
             });
             $this->field_title_enable ? $form->text('title')->required() : $form->hidden("title");
-            $this->field_image_enable ? admin_image_field($form->image('image')->required()) : $form->hidden("image");
+            $this->field_image_enable ? admin_form_image_field($form->image('image')->required()) : $form->hidden("image");
             $this->field_content_editor_enable ? $form->editor('content')->height('600')->required() : $form->textarea("content")->rows(5)->required();
             $form->saving(function (Form $form) {
                 $form->title = $form->title ?? '';

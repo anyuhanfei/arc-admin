@@ -40,7 +40,7 @@ class UsersController extends AdminController{
                 return $str;
             });
             $grid->column('parent_user_id', '上级会员信息')->width("300px")->display(function(){
-                return $this->parent_user_id == 0 ? '' : admin_show_user_data($this->parentUser);
+                return $this->parent_user_id == 0 ? '' : admin_grid_user_field($this->parentUser);
             });
             $grid->column('login_status')->select(StatusEnum::getDescriptions())->help('如果关闭则此会员无法登录');
             $grid->column('created_at');
@@ -113,7 +113,7 @@ class UsersController extends AdminController{
         return Form::make(new Users(["balances", "details"]), function (Form $form) {
             $form->hidden('login_status');
             if($form->isCreating()){  // 添加
-                admin_image_field($form->image('avatar')->required());
+                admin_form_image_field($form->image('avatar')->required());
                 $form->text('nickname')->required();
                 $form->text('account')->required();
                 $form->text('phone')->required();
@@ -141,7 +141,7 @@ class UsersController extends AdminController{
             }else{  // 修改
                 $form->tab('基本信息', function(Form $form){
                     $form->display('id');
-                    $this->admin_image_compress(admin_image_field($form->image('avatar')->required()));
+                    $this->admin_image_compress(admin_form_image_field($form->image('avatar')->required()));
                     $form->text('nickname');
                     $form->text('account');
                     $form->text('phone');

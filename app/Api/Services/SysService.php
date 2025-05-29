@@ -2,6 +2,7 @@
 namespace App\Api\Services;
 
 use App\Admin\Controllers\Sys\SysBannersController;
+use App\Admin\Controllers\Sys\SysNoticesController;
 use Illuminate\Database\Eloquent\Collection;
 
 use App\Repositories\Article\ArticleCategories;
@@ -46,7 +47,12 @@ class SysService{
         if($notice_type != '多条富文本' && $notice_type != '多条文字'){
             throwBusinessException('当前公告模式设置为单条，请直接使用 get_notice 接口');
         }
-        $datas = format_paginated_datas((new SysNotices())->get_list($limit), ['id', 'title', 'image', 'created_at']);
+        $set_visible = ['id', 'title', 'created_at'];
+        $admin_sys_notices = (new SysNoticesController());
+        if($admin_sys_notices->field_image_enable){
+            $set_visible[] = 'full_image';
+        }
+        $datas = format_paginated_datas((new SysNotices())->get_list($limit), $set_visible);
         return $datas;
     }
 

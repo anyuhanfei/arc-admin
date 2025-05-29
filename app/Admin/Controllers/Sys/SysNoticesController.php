@@ -14,11 +14,11 @@ use Dcat\Admin\Widgets\Metrics\Card;
  */
 class SysNoticesController extends AdminController{
     // 模块是否启用
-    protected bool $module_enable = true;
+    public bool $module_enable = true;
     // 字段image是否启用
-    protected bool $field_image_enable = true;
+    public bool $field_image_enable = true;
     // 项目中公告的类型
-    protected string $type;
+    public string $type;
 
     public function __construct(){
         $this->type = SysNotices::get_type();
@@ -35,12 +35,7 @@ class SysNoticesController extends AdminController{
                     (new SysNotices())->init();
                     $grid->column('');
                     $grid->column('title');
-                    $grid->column('content')->width('15%')->display('')->modal(function ($modal) {
-                        $modal->title($this->title);
-                        $this->content == null ? $modal->icon('feather ') : $modal->icon('feather icon-eye');
-                        $card = (new Card(null, ''))->header($this->content);
-                        return "<div style='padding:10px 10px 0'>$card</div>";
-                    });
+                    admin_grid_content($grid->column('content'));
                     $grid->disableDeleteButton();
                     $grid->disableViewButton();
                     $grid->disableCreateButton();
@@ -53,12 +48,7 @@ class SysNoticesController extends AdminController{
                 case '多条富文本':
                     $grid->column('id')->sortable();
                     $grid->column('title')->width("30%");
-                    $grid->column('content')->display('')->modal(function ($modal) {
-                        $modal->title($this->title);
-                        $this->content == null ? $modal->icon('feather ') : $modal->icon('feather icon-eye');
-                        $card = (new Card(null, ''))->header($this->content);
-                        return "<div style='padding:10px 10px 0'>$card</div>";
-                    });
+                    admin_grid_content($grid->column('content'));
                     break;
                 default:
                     (new SysNotices())->init();
@@ -111,7 +101,7 @@ class SysNoticesController extends AdminController{
                     $form->hidden('content');
                     break;
             }
-            $this->field_image_enable ? admin_image_field($form->image('image')->required()) : '';
+            $this->field_image_enable ? admin_form_image_field($form->image('image')->required()) : '';
             $form->saving(function (Form $form) {
                 $form->content = $form->content ?? '';
             });

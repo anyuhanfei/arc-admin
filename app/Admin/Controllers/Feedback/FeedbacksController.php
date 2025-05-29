@@ -19,7 +19,7 @@ class FeedbacksController extends AdminController{
         return Grid::make(new Feedbacks(), function (Grid $grid){
             $grid->column('id')->sortable();
             $grid->column("user", '会员信息')->width("370px")->display(function(){
-                return admin_show_user_data($this->user);
+                return admin_grid_user_field($this->user);
             });
             $grid->column('type');
             $grid->column('content');

@@ -22,7 +22,7 @@ class UserWithdrawLogsController extends AdminController{
             $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             $grid->column("user", '会员信息')->width("270px")->display(function(){
-                return admin_show_user_data($this->user);
+                return admin_grid_user_field($this->user);
             });
             $grid->column('coin_type')->using(CoinEnum::getDescriptions());
             $grid->column('amount')->display(function(){
