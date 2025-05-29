@@ -2,10 +2,10 @@
 
 namespace App\Admin\Metrics\Examples;
 
-use App\Repositories\Users\Users;
+use App\Models\Users\Users;
 use Dcat\Admin\Widgets\Metrics\Card;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Cache;
 
 class 总会员数统计 extends Card{
     protected $footer;
@@ -18,7 +18,7 @@ class 总会员数统计 extends Card{
     }
 
     public function handle(Request $request){
-        $user_number = (new Users())->count_users_number();
+        $user_number = $this->count_users_number();
         $this->content($user_number);
     }
 
@@ -46,5 +46,17 @@ HTML;
      */
     public function renderFooter(){
         return $this->toString($this->footer);
+    }
+
+
+    /**
+     * 统计会员总数
+     *
+     * @return integer
+     */
+    public function count_users_number():int{
+        return Cache::remember("count_users_number", 60, function(){
+            return Users::count();
+        });
     }
 }
