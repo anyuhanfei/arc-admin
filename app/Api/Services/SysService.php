@@ -13,6 +13,7 @@ use App\Repositories\Feedback\Feedbacks;
 use App\Repositories\Feedback\FeedbackTypes;
 use App\Repositories\Sys\SysBanners;
 use App\Repositories\Sys\SysNotices;
+use App\Repositories\Sys\SysSettings;
 
 /**
  * 系统配置相关
@@ -189,5 +190,18 @@ class SysService{
             return $item;
         })->setVisible(['id', 'name', 'faqs']); // 设置可见字段
         return $types;
+    }
+
+    /**
+     * 获取系统设置
+     *  TODO::新项目中，需要前端展示/使用的系统配置可在此处返回
+     *
+     * @return void
+     */
+    public function get_sys_data(){
+        $sys_setting_repository = new SysSettings();
+        return [
+            'withdraw_minimum_amount' => $sys_setting_repository->get_value_by_key("withdraw_minimum_amount"),
+        ];
     }
 }

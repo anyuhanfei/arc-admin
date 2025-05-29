@@ -114,8 +114,18 @@ class SysController extends BaseController{
         return success("提交成功");
     }
 
+    /**
+     * 获取常见问题列表
+     *
+     * @return void
+     */
     public function faqs_list(){
         $data = $this->service->get_faqs_list();
         return success("常见问题列表", $data);
+    }
+
+    public function sys_data(){
+        $data = $this->service->get_sys_data();
+        return success("系统设置", $data);
     }
 }
