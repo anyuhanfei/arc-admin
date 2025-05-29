@@ -3,10 +3,12 @@ namespace App\Api\Services;
 
 use App\Admin\Controllers\Sys\SysBannersController;
 use App\Admin\Controllers\Sys\SysNoticesController;
+use App\Enums\StatusEnum;
 use Illuminate\Database\Eloquent\Collection;
 
 use App\Repositories\Article\ArticleCategories;
 use App\Repositories\Article\Articles;
+use App\Repositories\Faqs\FaqTypes;
 use App\Repositories\Feedback\Feedbacks;
 use App\Repositories\Feedback\FeedbackTypes;
 use App\Repositories\Sys\SysBanners;
@@ -167,5 +169,25 @@ class SysService{
     public function apply_feedback_operation(int $user_id, string $type, string $content, string $contact, array $images){
         $data = (new Feedbacks())->create_data($user_id, $type, $content, $contact, $images);
         return $data;
+    }
+
+    /**
+     * 获取常见问题列表
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function get_faqs_list(){
+        // 获取所有展示状态的常见问题类型
+        $types = (new FaqTypes())->get_datas_by_publish();
+        // 处理数据
+        $types = $types->map(function($item){
+            // 只获取常见问题数据中状态为 normal 的数据
+            $item->faqs = $item->faqs->where('status', StatusEnum::NORMAL);
+            // 设置常见问题数据的可见字段
+            $item->faqs = $item->faqs->setVisible(['id', 'question', 'answer']);
+            // 处理完成数据后返回整体
+            return $item;
+        })->setVisible(['id', 'name', 'faqs']); // 设置可见字段
+        return $types;
     }
 }

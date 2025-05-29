@@ -28,8 +28,8 @@ Route::group([
     $router->resource('article/categories', 'Article\ArticleCategoriesController');
     $router->resource('feedback/types', 'Feedback\FeedbackTypesController');
     $router->resource('feedback/feedbacks', 'Feedback\FeedbacksController');
-    $router->resource('faq/types', 'Faq\FaqTypesController');
-    $router->resource('faq/faqs', 'Faq\FaqsController');
+    $router->resource('faqs/types', 'Faqs\FaqTypesController');
+    $router->resource('faqs/faqs', 'Faqs\FaqsController');
 
 
 });
@@ -41,4 +41,5 @@ Route::group([
     Route::get("/get/articles/list", "Article\ArticlesController@get_articles_list");
     Route::get("get/article/categories", "Article\ArticleCategoriesController@get_categories");
     Route::get("get/users", "Users\UsersController@get_users");
+    Route::get("get/faqs/types", "Faqs\FaqTypesController@get_types");
 });

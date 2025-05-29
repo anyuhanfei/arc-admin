@@ -113,4 +113,9 @@ class SysController extends BaseController{
         $this->service->apply_feedback_operation($this->user_id, $type, $content, $contact, $images);
         return success("提交成功");
     }
+
+    public function faqs_list(){
+        $data = $this->service->get_faqs_list();
+        return success("常见问题列表", $data);
+    }
 }
