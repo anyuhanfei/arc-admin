@@ -13,10 +13,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class UserWithdrawLogs extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
-    public static function status_array():array{
-        return Model::status_array();
-    }
-
     /**
      * 创建
      *

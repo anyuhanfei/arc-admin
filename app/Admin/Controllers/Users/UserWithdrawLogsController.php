@@ -2,6 +2,8 @@
 
 namespace App\Admin\Controllers\Users;
 
+use App\Enums\Users\CoinEnum;
+use App\Enums\UserWithdrawLogs\StatusEnum;
 use App\Repositories\Sys\SysMessageLogs;
 use App\Repositories\Users\UserWithdrawLogs;
 use App\Repositories\Users\UserBalances;
@@ -22,7 +24,7 @@ class UserWithdrawLogsController extends AdminController{
             $grid->column("user", '会员信息')->width("270px")->display(function(){
                 return admin_show_user_data($this->user);
             });
-            $grid->column('coin_type')->using(UserBalances::fund_type_array());
+            $grid->column('coin_type')->using(CoinEnum::getDescriptions());
             $grid->column('amount')->display(function(){
                 return '提现金额: ¥' . $this->amount . "<br/>手续费: ¥" . $this->fee . "<br/>应发金额: <span  class='label' style='background:#586cb1'>¥ " . ($this->amount - $this->fee) . '</span>';
             });
@@ -42,9 +44,7 @@ class UserWithdrawLogsController extends AdminController{
             });
             $grid->column('content');
             $grid->column('remark');
-            $grid->column('status')->using(UserWithdrawLogs::status_array())->dot(
-                [1 => 'success',2 => 'success',3 => 'danger',], 'primary'
-            );
+            $grid->column('status')->using(StatusEnum::getDescriptions())->dot(StatusEnum::getColors());
             $grid->column('created_at');
 
             $grid->filter(function (Grid\Filter $filter) {
@@ -55,8 +55,8 @@ class UserWithdrawLogsController extends AdminController{
                 $filter->like('user.phone', '会员手机号');
             });
             $grid->selector(function (Grid\Tools\Selector $selector) {
-                $selector->select("coin_type", "币种", UserBalances::fund_type_array());
-                $selector->select("status", "状态", UserWithdrawLogs::status_array());
+                $selector->select("coin_type", "币种", CoinEnum::getDescriptions());
+                $selector->select("status", "状态", StatusEnum::getDescriptions());
             });
             $grid->disableRowSelector();
             $grid->disableCreateButton();

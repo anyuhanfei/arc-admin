@@ -19,15 +19,6 @@ class Users extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**
-     * 登录状态集
-     *
-     * @return array
-     */
-    public static function login_status_array():array{
-        return Model::login_status_array();
-    }
-
-    /**
      * 后台接单：获取会员列表
      *
      * @return Collection

@@ -21,10 +21,6 @@ class UserWithdrawLogs extends Model{
     protected $table = 'user_withdraw_logs';
     protected $guarded = [];
 
-    public static function status_array(){
-        return ['申请中', '已通过', '已打款', '已驳回'];
-    }
-
     public function user(){
         return $this->hasOne(Users::class, "id", "user_id");
     }

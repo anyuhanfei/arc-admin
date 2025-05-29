@@ -14,15 +14,6 @@ class UserBalances extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**
-     * 获取币种类型合集
-     *
-     * @return array
-     */
-    public static function fund_type_array():array{
-        return Model::fund_type_array();
-    }
-
-    /**
      * 创建数据
      *   一般伴随创建会员是调用
      *

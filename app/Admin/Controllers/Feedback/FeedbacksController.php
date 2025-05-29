@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers\Feedback;
 
+use App\Enums\Feedback\StatusEnum;
 use App\Repositories\Feedback\Feedbacks;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -15,9 +16,7 @@ class FeedbacksController extends AdminController{
      * @return Grid
      */
     protected function grid(){
-        $status_array = (new Feedbacks())->status_array();
-        $status_color_array = (new Feedbacks())->status_color_array();
-        return Grid::make(new Feedbacks(), function (Grid $grid) use($status_array, $status_color_array){
+        return Grid::make(new Feedbacks(), function (Grid $grid){
             $grid->column('id')->sortable();
             $grid->column("user", '会员信息')->width("370px")->display(function(){
                 return admin_show_user_data($this->user);
@@ -28,7 +27,7 @@ class FeedbacksController extends AdminController{
             $grid->column('images')->display(function ($images) {
                 return json_decode($images, true);
             })->image('', 60, 60);
-            $grid->column('status')->using($status_array)->label($status_color_array);
+            $grid->column('status')->using(StatusEnum::getDescriptions())->label(StatusEnum::getColors());
             $grid->column('admin_remark');
             $grid->column('created_at');
             // $grid->column('updated_at')->sortable();
@@ -81,7 +80,7 @@ class FeedbacksController extends AdminController{
                 return json_encode($paths);
             })->disable();
             $form->divider();
-            $form->radio('status')->options((new Feedbacks())->status_array())->required();
+            $form->radio('status')->options(StatusEnum::getDescriptions())->required();
             $form->text('admin_remark');
 
             // $form->display('created_at');

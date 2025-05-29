@@ -2,6 +2,8 @@
 
 namespace App\Admin\Controllers\Users;
 
+use App\Enums\StatusEnum;
+use App\Enums\Users\CoinEnum;
 use App\Repositories\Users\Users;
 use App\Repositories\Users\UserBalances;
 use Dcat\Admin\Form;
@@ -21,8 +23,7 @@ class UsersController extends AdminController{
     protected bool $field_parent_enable = true;
 
     protected function grid(){
-        $fund_types = UserBalances::fund_type_array();
-        return Grid::make(new Users(['parentUser']), function (Grid $grid) use($fund_types){
+        return Grid::make(new Users(['parentUser', 'balances']), function (Grid $grid){
             $grid->showColumnSelector();
             $grid->model()->orderby("id", 'desc');
             $grid->column('id')->sortable();
@@ -31,9 +32,9 @@ class UsersController extends AdminController{
             $grid->column('account');
             $grid->column('phone');
             $grid->column('email');
-            $grid->column('fund')->display(function() use($fund_types){
+            $grid->column('fund')->display(function(){
                 $str = '';
-                foreach($fund_types as $key=>$value){
+                foreach(CoinEnum::getDescriptions() as $key=>$value){
                     $str .= $value . ': ' . $this->balances->$key . '<br/>';
                 }
                 return $str;
@@ -41,7 +42,7 @@ class UsersController extends AdminController{
             $grid->column('parent_user_id', '上级会员信息')->width("300px")->display(function(){
                 return $this->parent_user_id == 0 ? '' : admin_show_user_data($this->parentUser);
             });
-            $grid->column('login_status')->switch()->help('如果关闭则此会员无法登录');
+            $grid->column('login_status')->select(StatusEnum::getDescriptions())->help('如果关闭则此会员无法登录');
             $grid->column('created_at');
             $field_parent_enable = $this->field_parent_enable;
             $grid->filter(function (Grid\Filter $filter) use($field_parent_enable){
@@ -54,7 +55,7 @@ class UsersController extends AdminController{
                     $filter->like('parent_user_id');
                     $filter->like('parentUser.account', '上级会员账号');
                 }
-                $filter->equal('login_status')->select(Users::login_status_array());
+                $filter->equal('login_status')->select(StatusEnum::getDescriptions());
             });
             // 添加、删除按钮
             if($this->create_operation == false){
@@ -67,16 +68,16 @@ class UsersController extends AdminController{
             $titles = [
                 'id'=> "ID", 'nickname'=> "昵称", 'account'=> "账号", 'phone'=> "手机号", 'email'=> "邮箱", 'parent_user_id'=> "上级会员ID", 'parentUser.phone'=> "上级手机号", 'login_status'=> "登录权限", 'created_at'=> "创建时间"
             ];
-            foreach($fund_types as $key=>$value){
+            foreach(CoinEnum::getDescriptions() as $key=>$value){
                 $titles[$key] = $value;
             }
-            $grid->export()->titles($titles)->rows(function($rows) use($fund_types){
+            $grid->export()->titles($titles)->rows(function($rows){
                 foreach($rows as $index=> &$row){
                     $row['parentUser.phone'] = $row['parentUser'] == null ? '' : $row['parentUser']['phone'];
-                    foreach($fund_types as $key=>$value){
+                    foreach(CoinEnum::getDescriptions() as $key=>$value){
                         $row[$key] = $row->balances->$key;
                     }
-                    $row['login_status'] = $row->login_status == 1 ? '正常' : '冻结';
+                    $row['login_status'] = StatusEnum::getDescription($row->login_status);
                 }
                 return $rows;
             });
@@ -95,8 +96,7 @@ class UsersController extends AdminController{
             $show->field('parent_user_id');
             $show->field('parentUser.phone', '上级手机号');
             $show->divider();
-            $fund_types = UserBalances::fund_type_array();
-            foreach($fund_types as $key=>$value){
+            foreach(CoinEnum::getDescriptions() as $key=>$value){
                 $show->field('balances.'.$key, $value);
             }
             $show->divider();
@@ -104,9 +104,7 @@ class UsersController extends AdminController{
             $show->field('details.sex', '性别');
             $show->field('details.birthday', '出生日期');
             $show->divider();
-            $show->field('login_status')->as(function($value){
-                return $value == 1 ? '正常' : '冻结';
-            });
+            $show->field('login_status')->asSelect(StatusEnum::getDescriptions());
             $show->field('created_at');
         });
     }
@@ -154,11 +152,11 @@ class UsersController extends AdminController{
                     $form->text('password')->customFormat(function(){
                         return '';
                     })->help('不填写则不修改');
+                    $form->select('login_status', '登录状态')->options(StatusEnum::getDescriptions());
                 });
                 // 资产管理
                 $form->tab('资产', function(Form $form){
-                    $fund_types = UserBalances::fund_type_array();
-                    foreach($fund_types as $key=>$value){
+                    foreach(CoinEnum::getDescriptions() as $key=>$value){
                         $form->number('balances.'.$key, $value);
                     }
                 });
@@ -170,23 +168,38 @@ class UsersController extends AdminController{
                     $form->date("details.birthday", "出生日期");
                 });
                 $form->saving(function (Form $form) {
-                    $form->avatar = $form->avatar ?? $form->model()->avatar;
-                    $form->nickname = $form->nickname ?? $form->model()->nickname;
-                    $form->account = $form->account ?? $form->model()->account;
-                    $form->phone = $form->phone ?? $form->model()->phone;
-                    $form->email = $form->email ?? $form->model()->email;
-                    $form->parent_user_id = $form->parent_user_id ?? $form->model()->parent_user_id;
-                    $form->login_status = $form->login_status ?? $form->model()->login_status;
+                    if($form->avatar == null){
+                        $form->deleteInput('avatar');
+                    }
+                    if($form->nickname == null){
+                        $form->deleteInput('nickname');
+                    }
+                    if($form->account == null){
+                        $form->deleteInput('account');
+                    }
+                    if($form->phone == null){
+                        $form->deleteInput('phone');
+                    }
+                    if($form->email == null){
+                        $form->deleteInput('email');
+                    }
+                    if($form->parent_user_id == null){
+                        $form->deleteInput('parent_user_id');
+                    }
+                    if($form->login_status == null){
+                        $form->deleteInput('login_status');
+                    }
                     //判断是否填写了密码，并加密
                     if($form->password == null){
                         $form->deleteInput('password');
                     }else{
                         $form->password = (new Users())->set_user_password($form->password ?? '');
                     }
-                    $fund_types = UserBalances::fund_type_array();
-                    foreach($fund_types as $key=>$value){
-                        if($form->model()->balances->$key != $form->balances[$key]){
-                            (new UserBalances())->update_fund($form->model()->id, $key, $form->balances[$key] - $form->model()->balances->$key, '管理员更新', '', '管理员更新');
+                    if($form->balances != null){
+                        foreach(CoinEnum::getDescriptions() as $key=>$value){
+                            if($form->model()->balances->$key != $form->balances[$key]){
+                                (new UserBalances())->update_fund($form->model()->id, $key, $form->balances[$key] - $form->model()->balances->$key, '管理员更新', '', '管理员更新');
+                            }
                         }
                     }
                 });

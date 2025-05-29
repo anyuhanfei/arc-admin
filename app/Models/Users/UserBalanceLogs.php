@@ -22,15 +22,6 @@ class UserBalanceLogs extends Model{
     protected $table = 'user_balance_logs';
     protected $guarded = [];
 
-    /**
-     * 币种类型
-     *
-     * @return void
-     */
-    public static function coin_array(){
-        return UserBalances::fund_type_array();
-    }
-
     public function user(){
         return $this->hasOne(Users::class, "id", "user_id");
     }

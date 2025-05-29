@@ -17,14 +17,6 @@ class Articles extends Model{
     use SoftDeletes;
     use BaseFilter;
 
-    public function status_array(){
-        return ['normal'=> '发布', 'hidden'=> '隐藏'];
-    }
-
-    public function status_color_array(){
-        return ['normal'=> 'success', 'hidden'=> 'danger'];
-    }
-
     protected $table = 'articles';
     protected $guarded = [];
 

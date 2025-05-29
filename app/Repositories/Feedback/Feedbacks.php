@@ -13,24 +13,6 @@ class Feedbacks extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**
-     * 状态列表
-     *
-     * @return array
-     */
-    public function status_array():array{
-        return (new $this->eloquentClass())->status_array();
-    }
-
-    /**
-     * 状态对应颜色列表
-     *
-     * @return array
-     */
-    public function status_color_array():array{
-        return (new $this->eloquentClass())->status_color_array();
-    }
-
-    /**
      * 创建意见反馈
      *
      * @param [type] $user_id

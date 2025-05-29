@@ -14,15 +14,6 @@ class UserBalanceLogs extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**
-     * 币种合集
-     *
-     * @return void
-     */
-    public static function coin_array():array{
-        return Model::coin_array();
-    }
-
-    /**
      * 日志类型合集
      *
      * @return array

@@ -20,10 +20,6 @@ class Users extends Model{
     protected $table = 'users';
     protected $guarded = [];
 
-    public static function login_status_array(){
-        return ['0'=> '冻结', '1'=> '正常'];
-    }
-
     public function balances(){
         return $this->hasOne(UserBalances::class, 'id', 'id');
     }

@@ -2,6 +2,9 @@
 
 namespace App\Admin\Controllers\Sys;
 
+use App\Enums\SysBanners\InternalLikeEnum;
+use App\Enums\SysBanners\LinkTypeEnum;
+use App\Enums\SysBanners\SiteEnum;
 use App\Repositories\Article\Articles;
 use App\Repositories\Article\ArticleCategories;
 use App\Repositories\Sys\SysBanners;
@@ -16,14 +19,8 @@ use Dcat\Admin\Http\Controllers\AdminController;
 class SysBannersController extends AdminController{
     protected bool $module_enable;  # 模块是否启用
     protected bool $field_link_enable;  # 字段url是否启用
-    protected array $site_array;  # 轮播图位置集
-    protected array $link_type_array;  # 链接类型集
-    protected array $internal_link_array;  # 内链集
 
     public function __construct(){
-        $this->site_array = (new SysBanners())->site_array();
-        $this->link_type_array = (new SysBanners())->link_type_array();
-        $this->internal_link_array = (new SysBanners())->internal_link_array();
         $this->module_enable = true;
         $this->field_link_enable = true;
     }
@@ -36,23 +33,23 @@ class SysBannersController extends AdminController{
         return Grid::make(new SysBanners(), function (Grid $grid) {
             $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
-            if(count($this->site_array) != 1){
+            if(count(SiteEnum::getKeys()) != 1){
                 $grid->column("site", '位置');
             }
             $grid->column('image')->image('', 60, 60);
             if($this->field_link_enable){
-                $grid->column('link_type', '链接类型')->using($this->link_type_array);
-                $grid->column('link', '链接')->display(function(){
+                $grid->column('link_type', '链接类型')->using(LinkTypeEnum::getDescriptions());
+                $grid->column('link', '链接')->display(function($link){
                     switch($this->link_type){
                         case "internal_link":
-                            return (new SysBanners())->internal_link_array()[$this->link];
+                            return InternalLikeEnum::getDescriptions()[$link];
                         case 'article_id':
-                            $article = (new Articles())->get_data_by_id($this->link);
+                            $article = (new Articles())->get_data_by_id($link);
                             return $article ? $article->title : '文章已删除';
                             break;
                         case "external_link":
                         default:
-                            return $this->link;
+                            return $link;
                             break;
                     }
                     // if()
@@ -66,10 +63,10 @@ class SysBannersController extends AdminController{
 
             $grid->selector(function (Grid\Tools\Selector $selector){
                 if($this->field_link_enable){
-                    $selector->select('link_type', '链接类型', $this->link_type_array);
+                    $selector->select('link_type', '链接类型', LinkTypeEnum::getDescriptions());
                 }
-                if(count($this->site_array) != 1){
-                    $selector->select('site', '位置', array_combine($this->site_array, $this->site_array));
+                if(count(SiteEnum::getKeys()) != 1){
+                    $selector->select('site', '位置', SiteEnum::getDescriptions());
                 }
             });
 
@@ -81,21 +78,21 @@ class SysBannersController extends AdminController{
     protected function form(){
         return Form::make(new SysBanners(), function (Form $form) {
             $form->display('id');
-            if(count($this->site_array) == 1){
-                $form->hidden("site")->value($this->site_array[0]);
+            if(count(SiteEnum::getKeys()) == 1){
+                $form->hidden("site")->value(SiteEnum::HOME);
             }else{
-                $form->select("site", '位置')->options(array_combine($this->site_array, $this->site_array))->required();
+                $form->select("site", '位置')->options(SiteEnum::getDescriptions())->required();
             }
             admin_image_field($form->image('image')->required());
             if($this->field_link_enable){
                 $form->hidden('link');
-                $form->select("link_type", '链接类型')->options($this->link_type_array)->required()->when(['external_link'], function(Form $form){
+                $form->select("link_type", '链接类型')->options(LinkTypeEnum::getDescriptions())->required()->when(['external_link'], function(Form $form){
                     $form->url('external_link', '链接')
                          ->rules('required_if:link_type,external_link')
                          ->value($form->model()->link_type == 'external_link' ? $form->model()->link : '');
                 })->when(['internal_link'], function(Form $form){
                     $form->radio("internal_link", '链接')
-                         ->options($this->internal_link_array)
+                         ->options(InternalLikeEnum::getDescriptions())
                          ->rules('required_if:link_type,internal_link')
                          ->value($form->model()->link_type == 'internal_link' ? $form->model()->link : '');
                 })->when(['article_id'], function(Form $form){
