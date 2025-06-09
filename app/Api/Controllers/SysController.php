@@ -90,6 +90,18 @@ class SysController extends BaseController{
     }
 
     /**
+     * 获取协议详情
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function agreement_detail(Request $request){
+        $type = $request->input('type');
+        $data = $this->service->get_agreement_detail($type);
+        return success("协议详情", $data);
+    }
+
+    /**
      * 获取意见反馈类型列表
      *
      * @return void

@@ -1,16 +1,15 @@
 <?php
-namespace App\Api\Rules;
+namespace App\Api\Rules\Sys;
 
-use App\Enums\SysBanners\SiteEnum;
+use App\Enums\AgreementEnum;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\DataAwareRule;
 
-use App\Repositories\Sys\SysBanners;
 
 /**
- * 判断传入的位置参数是否正确（不正确不能通过验证）
+ * 判断传入的协议类型是否正确（不正确不能通过验证）
  */
-class BannerSiteNoExistVerify implements Rule, DataAwareRule{
+class AgreementTypeNoExistVerify implements Rule, DataAwareRule{
     protected $data = [];
 
     public function setData($data){
@@ -22,11 +21,11 @@ class BannerSiteNoExistVerify implements Rule, DataAwareRule{
         if($value == '' || $value == null){
             return true;
         }else{
-            return in_array($value, SiteEnum::getKeys());
+            return in_array($value, AgreementEnum::getKeys());
         }
     }
 
     public function message(){
-        return "请传入正确的位置参数";
+        return "请传入正确的协议类型";
     }
 }

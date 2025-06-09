@@ -11,7 +11,7 @@ class BannerRequest extends BaseRequest{
 
     public function rules(){
         return [
-            'site' => [new \App\Api\Rules\BannerSiteNoExistVerify],
+            'site' => [new \App\Api\Rules\Sys\BannerSiteNoExistVerify],
         ];
     }
 

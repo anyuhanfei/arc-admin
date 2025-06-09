@@ -149,6 +149,18 @@ class SysService{
     }
 
     /**
+     * 获取协议详情
+     *
+     * @param string $type
+     * @return void
+     */
+    public function get_agreement_detail(string $type){
+        return [
+            'detail' => (new SysSettings())->get_value_by_key($type),
+        ];
+    }
+
+    /**
      * 获取意见反馈类型列表
      *
      * @return void

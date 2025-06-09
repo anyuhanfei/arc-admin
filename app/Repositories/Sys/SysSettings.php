@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Sys;
 
+use App\Enums\AgreementEnum;
 use App\Models\Sys\SysSettings as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
@@ -20,7 +21,13 @@ class SysSettings extends EloquentRepository{
      * @return void
      */
     public function set_list():array{
-        return [
+        // 获取协议枚举设置
+        $agreement_enum = AgreementEnum::getDescriptions();
+        $agreement_options = [];
+        foreach($agreement_enum as $key => $value){
+            $agreement_options[$value] = [$key => ['type'=> 'edit', 'title'=> $value]];
+        }
+        return array_merge([
             '测试设置'=> [
                 'test_text'=> ['type'=> 'text', 'title'=> "测试文本"],
                 'test_number'=> ['type'=> 'number', 'title'=> "测试数字", 'help'=> "只能填写数字", 'step'=> '0.01'],
@@ -37,8 +44,8 @@ class SysSettings extends EloquentRepository{
             ],
             '应用设置'=> [
                 'withdraw_minimum_amount'=> ['type'=> 'number', 'title'=> "最低提现金额", 'step'=> '0.01'],
-            ],
-        ];
+            ]
+        ], $agreement_options);
     }
 
     /**

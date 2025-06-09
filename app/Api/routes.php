@@ -34,6 +34,8 @@ Route::post('sys/notices/list', [\App\Api\Controllers\SysController::class, 'not
 Route::post('sys/article/categories', [\App\Api\Controllers\SysController::class, 'article_categories_list']);
 Route::post('sys/articles/list', [\App\Api\Controllers\SysController::class, 'articles_list']);
 Route::post('sys/article/detail', [\App\Api\Controllers\SysController::class, 'article_detail']);
+// 协议
+Route::post('sys/agreement/detail', [\App\Api\Controllers\SysController::class, 'agreement_detail']);
 // 常见问题
 Route::post('sys/faqs/list', [\App\Api\Controllers\SysController::class, 'faqs_list']);
 // 版本控制
