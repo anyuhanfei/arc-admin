@@ -23,7 +23,12 @@ return new class extends Migration
             $table->string('password')->default('')->comment('密码');
             $table->integer('parent_user_id')->default(0)->comment('上级会员id');
             $table->string('unionid')->default('');
-            $table->string('openid')->default('');
+            $table->string('wxmini_openid')->default('');
+            $table->string("wxapp_openid")->default('');
+            $table->string("wx_openid")->default('');
+            // $table->string("wx_session_key")->default('');
+            // $table->string("wxapp_session_key")->default('');
+            // $table->string("wxmini_session_key")->default('');
             $table->boolean('login_status')->default(true)->comment('登录状态(0=冻结、1=正常)');
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();

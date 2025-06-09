@@ -65,14 +65,6 @@ class Users extends Model{
         return $builder->where("id", $value);
     }
 
-    public function scopeOpenid(Builder $builder, string $value){
-        return $builder->where("openid", $value);
-    }
-
-    public function scopeUnionid(Builder $builder, string $value){
-        return $builder->where("unionid", $value);
-    }
-
     public function scopeLoginStatus(Builder $builder, string $value){
         return $builder->where("login_status", $value);
     }

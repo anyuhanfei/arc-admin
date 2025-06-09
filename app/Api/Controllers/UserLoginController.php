@@ -115,9 +115,9 @@ class UserLoginController extends BaseController{
      */
     public function wxmini_oauth_login(\App\Api\Requests\UserLogin\WxOauthLoginRequest $request){
         $code = $request->input('code', '');
-        $iv = $request->input('iv', '') ?? '';
-        $encryptedData = $request->input('encryptedData', '') ?? '';
-        $data = $this->service->wxmini_oauth_login_operation($code, $iv, $encryptedData);
+        $data = $this->service->wxmini_oauth_login_operation($code);
         return success('登录成功', $data);
     }
+
+    // TODO::缺少微信APP授权登录
 }

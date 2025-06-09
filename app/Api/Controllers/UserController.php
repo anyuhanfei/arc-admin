@@ -44,7 +44,7 @@ class UserController extends BaseController{
     }
 
     /**
-     * 绑定微信手机号
+     * 微信小程序绑定手机号
      *
      * @param Request $request
      * @return void

@@ -85,8 +85,8 @@ class Users extends EloquentRepository{
      * @param string $openid
      * @return EloquentModel
      */
-    public function get_data_by_openid(string $openid):EloquentModel{
-        return $this->eloquentClass::openid($openid)->first();
+    public function get_data_by_wx_openid(string $openid):EloquentModel{
+        return $this->eloquentClass::where('wx_openid', $openid)->first();
     }
 
     /**

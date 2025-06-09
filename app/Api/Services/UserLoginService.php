@@ -42,7 +42,7 @@ class UserLoginService{
             throwBusinessException("账号或密码错误");
         }
         $this->账号冻结验证($data);
-        return $this->返回登录数据($data);
+        return $this->_user_login_data($data);
     }
 
     /**
@@ -73,7 +73,7 @@ class UserLoginService{
             throwBusinessException("手机号或密码错误");
         }
         $this->账号冻结验证($data);
-        return $this->返回登录数据($data);
+        return $this->_user_login_data($data);
     }
 
     /**
@@ -91,7 +91,7 @@ class UserLoginService{
             ]);
         }
         $this->账号冻结验证($data);
-        return $this->返回登录数据($data);
+        return $this->_user_login_data($data);
     }
 
     /**
@@ -116,7 +116,7 @@ class UserLoginService{
             ]);
         }
         $this->账号冻结验证($data);
-        return $this->返回登录数据($data);
+        return $this->_user_login_data($data);
     }
 
     /**
@@ -130,31 +130,29 @@ class UserLoginService{
         if($wx_data['openid'] == ''){
             throwBusinessException("登录失败");
         }
-        $data = $this->repository->get_data_by_openid($wx_data['openid']);
+        $data = $this->repository->get_data_by_wx_openid($wx_data['openid']);
         if(!$data){
             // 走注册流程
             $data = $this->repository->create_data([
-                'openid'=> $wx_data['openid'],
+                'wx_openid'=> $wx_data['openid'],
                 'unionid'=> $wx_data['unionid'],
                 'nickname'=> $wx_data['nickname'],
                 'avatar'=> $wx_data['headimgurl'],
             ]);
         }
         $this->账号冻结验证($data);
-        return $this->返回登录数据($data);
+        return $this->_user_login_data($data);
     }
 
     /**
      * 微信小程序授权登录（自动注册）
      *
      * @param string $code
-     * @param string $iv
-     * @param string $encryptedData
      * @return void
      */
-    public function wxmini_oauth_login_operation(string $code, string $iv, string $encryptedData){
-        $wx_data = (new WxminiLoginTool())->oauth($code, $iv, $encryptedData);
-        $data = $this->repository->get_data_by_openid($wx_data['openid']);
+    public function wxmini_oauth_login_operation(string $code){
+        $wx_data = (new WxminiLoginTool())->oauth($code);
+        $data = $this->repository->get_data_by_wx_openid($wx_data['openid']);
         if(!$data){
             // 走注册流程
             $data = $this->repository->create_data([
@@ -165,7 +163,7 @@ class UserLoginService{
             ]);
         }
         $this->账号冻结验证($data);
-        return $this->返回登录数据($data);
+        return $this->_user_login_data($data);
     }
 
     /**
@@ -183,7 +181,7 @@ class UserLoginService{
     /**
      * 整合登录后需要的基本信息
      */
-    private function 返回登录数据($user_data){
+    public function _user_login_data($user_data){
         $data = [
             'user_id'=> $user_data->id,
             'avatar'=> $user_data->full_avatar,

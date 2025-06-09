@@ -20,25 +20,21 @@ class WxminiLoginTool{
 
     /**
      * 获取openid
-     * 
+     *
      * 当前小程序的政策为：所有用户解析出来的昵称和头像都是微信默认，iv 和 encryptedData 参数可以用来解析用户手机号。
-     *  但是当前小程序的逻辑是使用code获取到微信信息后，才可授权获取用户手机号（分步进行），所以 iv 和 encryptedData 参数一般为空
+     *  但是当前小程序的逻辑是使用code获取到微信信息后，才可授权获取用户手机号（分步进行）
      *
      * @param string $code
      * @return array
      */
-    public function oauth(string $code, string $iv = '', string $encryptedData = ''):array{
+    public function oauth(string $code):array{
         $data = $this->jscode2session($code);
         $this->save_session_key($data['openid'], $data['session_key']);
-        $phone = '';
-        if($iv != '' && $encryptedData != ''){
-            $phone = $this->get_wx_phone($data['openid'], $iv, $encryptedData);
-        }
         return [
             'openid'=> $data['openid'],
             'nickname'=> '微信用户',
             'avatar'=> "https://thirdwx.qlogo.cn/mmopen/vi_32/POgEwh4mIHO4nibH0KlMECNjjGxQUq24ZEaGT4poC6icRiccVGKSyXwibcPq4BWmiaIGuG1icwxaQX6grC9VemZoJ8rg/132",
-            'phone'=> $phone,
+            'phone'=> '',
         ];
     }
 
@@ -135,6 +131,6 @@ class WxminiLoginTool{
      * @return string
      */
     private function get_session_key(string $openid):string{
-        return Redis::get($openid);
+        return Redis::get($openid) ?? '';
     }
 }

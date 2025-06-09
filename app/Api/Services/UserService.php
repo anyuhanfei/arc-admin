@@ -111,9 +111,20 @@ class UserService{
      */
     public function bind_wxmini_phone_operation(string $iv, string $encryptedData):string{
         $user_data = (new Users())->get_data_by_id($this->user_id);
-        $phone = (new \App\Tools\Wx\WxminiLoginTool())->get_wx_phone($user_data->openid, $iv, $encryptedData);
-        $res = $this->update_datas_operation($this->user_id, ['phone'=> $phone]);
-        return $phone;
+        $phone = (new \App\Tools\Wx\WxminiLoginTool())->get_wx_phone($user_data->wxmini_openid, $iv, $encryptedData);
+        // 判断手机号是否已存在, 如果已存在，则合并账号
+        $user_data_by_phone = (new Users())->get_data_by_phone($phone);
+        if($user_data_by_phone){
+            // 合并账号
+            (new Users())->update_datas_by_user($user_data_by_phone->id, [
+                'wxmini_openid'=> $user_data->wxmini_openid,
+            ]);
+            $user_data->delete();
+            $user_data = $user_data_by_phone;
+        }else{
+            $this->update_datas_operation(['user_id' => $this->user_id, 'phone' => $phone]);
+        }
+        return (new UserLoginService((new Users())))->_user_login_data($user_data);
     }
 
     /**
