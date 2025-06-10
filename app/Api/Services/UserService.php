@@ -1,6 +1,7 @@
 <?php
 namespace App\Api\Services;
 
+use App\Repositories\Feedback\Feedbacks;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -261,4 +262,17 @@ class UserService{
         return $datas;
     }
 
+    /**
+     * 提交意见反馈信息
+     *
+     * @param string $type
+     * @param string $content
+     * @param string $contact
+     * @param array $images
+     * @return void
+     */
+    public function apply_feedback_operation(string $type, string $content, string $contact, array $images){
+        $data = (new Feedbacks())->create_data($this->user_id, $type, $content, $contact, $images);
+        return $data;
+    }
 }

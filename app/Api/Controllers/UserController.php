@@ -133,6 +133,21 @@ class UserController extends BaseController{
     }
 
     /**
+     * 提交意见反馈
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function feedback(Request $request){
+        $type = $request->input('type');
+        $content = $request->input('content');
+        $contact = $request->input('contact', '') ?? '';
+        $images = $request->input('images', []) ?? [];
+        $this->service->apply_feedback_operation($type, $content, $contact, $images);
+        return success("提交成功");
+    }
+
+    /**
      * 退出登录
      *
      * @param Request $request

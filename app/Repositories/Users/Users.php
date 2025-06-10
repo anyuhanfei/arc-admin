@@ -24,7 +24,7 @@ class Users extends EloquentRepository{
      * @return Collection
      */
     public function admin_get_datas_by_account(string|null $account = ''):Collection{
-        return $this->eloquentClass::where('account', 'like', "%{$account}%")->get(['id', DB::raw("account as text")]);exit;
+        return $this->eloquentClass::where('account', 'like', "%{$account}%")->get(['id', DB::raw("account as text")]);
     }
 
     /**
@@ -65,7 +65,7 @@ class Users extends EloquentRepository{
      * @param string $account
      * @return EloquentModel
      */
-    public function get_data_by_account(string $account):EloquentModel{
+    public function get_data_by_account(string $account):?EloquentModel{
         return $this->eloquentClass::account($account)->first();
     }
 
@@ -85,7 +85,7 @@ class Users extends EloquentRepository{
      * @param string $openid
      * @return EloquentModel
      */
-    public function get_data_by_wx_openid(string $openid):EloquentModel{
+    public function get_data_by_wx_openid(string $openid):?EloquentModel{
         return $this->eloquentClass::where('wx_openid', $openid)->first();
     }
 
@@ -95,7 +95,7 @@ class Users extends EloquentRepository{
      * @param integer $id
      * @return EloquentModel
      */
-    public function get_data_by_id(int $id):EloquentModel{
+    public function get_data_by_id(int $id):EloquentModel|null{
         return $this->eloquentClass::id($id)->first();
     }
 
@@ -122,10 +122,10 @@ class Users extends EloquentRepository{
     /**
      * 获取全部会员的id
      *
-     * @return Collection
+     * @return array
      */
-    public function get_ids():Collection{
-        return $this->eloquentClass::pluck("id");
+    public function get_ids():array{
+        return $this->eloquentClass::pluck("id")->toArray();
     }
 
     /**

@@ -62,10 +62,10 @@ class SysNotices extends EloquentRepository{
     /**
      * 获取全部的公告id
      *
-     * @return \Illuminate\Support\Collection
+     * @return array
      */
-    public function get_ids():\Illuminate\Support\Collection{
-        return $this->eloquentClass::pluck("id");
+    public function get_ids():array{
+        return $this->eloquentClass::pluck("id")->toArray();
     }
 
     /**

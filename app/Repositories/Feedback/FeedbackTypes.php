@@ -16,7 +16,7 @@ class FeedbackTypes extends EloquentRepository{
      *
      * @return void
      */
-    public function get_names(){
-        return $this->eloquentClass::pluck("name");
+    public function get_names():array{
+        return $this->eloquentClass::pluck("name")->toArray();
     }
 }

@@ -170,20 +170,6 @@ class SysService{
         return $names;
     }
 
-    /**
-     * 提交意见反馈信息
-     *
-     * @param integer $user_id
-     * @param string $type
-     * @param string $content
-     * @param string $contact
-     * @param array $images
-     * @return void
-     */
-    public function apply_feedback_operation(int $user_id, string $type, string $content, string $contact, array $images){
-        $data = (new Feedbacks())->create_data($user_id, $type, $content, $contact, $images);
-        return $data;
-    }
 
     /**
      * 获取常见问题列表
@@ -218,6 +204,11 @@ class SysService{
         ];
     }
 
+    /**
+     * 获取app版本更新信息
+     *
+     * @return void
+     */
     public function get_app_version_check(){
         $latestVersion = (new AppVersions())->get_latest_version();
         if(!$latestVersion){

@@ -112,21 +112,6 @@ class SysController extends BaseController{
     }
 
     /**
-     * 提交意见反馈
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function feedback(Request $request){
-        $type = $request->input('type');
-        $content = $request->input('content');
-        $contact = $request->input('contact', '') ?? '';
-        $images = $request->input('images', []) ?? [];
-        $this->service->apply_feedback_operation($this->user_id, $type, $content, $contact, $images);
-        return success("提交成功");
-    }
-
-    /**
      * 获取常见问题列表
      *
      * @return void
@@ -136,11 +121,22 @@ class SysController extends BaseController{
         return success("常见问题列表", $data);
     }
 
+    /**
+     * 获取系统设置
+     *
+     * @return void
+     */
     public function sys_data(){
         $data = $this->service->get_sys_data();
         return success("系统设置", $data);
     }
 
+    /**
+     * 检查app版本
+     *
+     * @param Request $request
+     * @return void
+     */
     public function app_version_check(Request $request){
         $data = $this->service->get_app_version_check();
         return success("版本信息", $data);
