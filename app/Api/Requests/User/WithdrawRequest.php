@@ -23,8 +23,9 @@ class WithdrawRequest extends BaseRequest{
 
     public function messages(){
         return [
-            'account.required'=> '请填写账号',
-            'password.required'=> '请填写密码',
+            'amount.required'=> '请填写提现金额',
+            'account_type.required'=> '请填写提现方式',
+            'coin_type.required'=> '请填写提现币种',
         ];
     }
 }

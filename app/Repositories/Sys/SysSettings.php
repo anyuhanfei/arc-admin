@@ -44,6 +44,7 @@ class SysSettings extends EloquentRepository{
             ],
             '应用设置'=> [
                 'withdraw_minimum_amount'=> ['type'=> 'number', 'title'=> "最低提现金额", 'step'=> '0.01'],
+                'withdraw_fee_rate'=> ['type'=> 'number', 'title'=> "提现手续费率", 'step'=> '0.01'],
             ]
         ], $agreement_options);
     }
