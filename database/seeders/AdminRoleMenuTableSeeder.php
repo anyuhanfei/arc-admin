@@ -31,6 +31,9 @@ class AdminRoleMenuTableSeeder extends Seeder
             ['role_id' => 1, 'menu_id' => 20, 'created_at' => '2023-11-04 14:21:32', 'updated_at' => '2023-11-04 14:21:32'],
             ['role_id' => 1, 'menu_id' => 21, 'created_at' => '2025-02-08 16:21:22', 'updated_at' => '2025-02-08 16:21:22'],
             ['role_id' => 1, 'menu_id' => 22, 'created_at' => '2025-02-08 16:36:45', 'updated_at' => '2025-02-08 16:36:45'],
+            ['role_id' => 1, 'menu_id' => 23, 'created_at' => '2025-02-08 16:36:45', 'updated_at' => '2025-02-08 16:36:45'],
+            ['role_id' => 1, 'menu_id' => 24, 'created_at' => '2025-02-08 16:36:45', 'updated_at' => '2025-02-08 16:36:45'],
+            ['role_id' => 1, 'menu_id' => 25, 'created_at' => '2025-02-08 16:36:45', 'updated_at' => '2025-02-08 16:36:45'],
         ];
 
         DB::table('admin_role_menu')->truncate();  // 清空表

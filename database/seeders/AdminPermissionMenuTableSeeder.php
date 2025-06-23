@@ -178,7 +178,35 @@ class AdminPermissionMenuTableSeeder extends Seeder
             ['permission_id' => 58, 'menu_id' => 17, 'created_at' => '2023-10-30 08:41:34', 'updated_at' => '2023-10-30 08:41:34'],
             ['permission_id' => 58, 'menu_id' => 20, 'created_at' => '2023-10-30 08:41:34', 'updated_at' => '2023-10-30 08:41:34'],
             ['permission_id' => 59, 'menu_id' => 17, 'created_at' => '2023-10-30 08:41:34', 'updated_at' => '2023-10-30 08:41:34'],
-            ['permission_id' => 59, 'menu_id' => 20, 'created_at' => '2023-10-30 08:41:34', 'updated_at' => '2023-10-30 08:41:34']
+            ['permission_id' => 59, 'menu_id' => 20, 'created_at' => '2023-10-30 08:41:34', 'updated_at' => '2023-10-30 08:41:34'],
+            // 常见问题类型管理
+            ['permission_id' => 60, 'menu_id' => 14, 'created_at' => '2025-06-23 17:34:43', 'updated_at' => '2025-06-23 17:34:43'],
+            ['permission_id' => 60, 'menu_id' => 23, 'created_at' => '2025-06-23 17:34:43', 'updated_at' => '2025-06-23 17:34:43'],
+            ['permission_id' => 61, 'menu_id' => 14, 'created_at' => '2025-06-23 17:35:34', 'updated_at' => '2025-06-23 17:35:34'],
+            ['permission_id' => 61, 'menu_id' => 23, 'created_at' => '2025-06-23 17:35:34', 'updated_at' => '2025-06-23 17:35:34'],
+            ['permission_id' => 62, 'menu_id' => 14, 'created_at' => '2025-06-23 17:36:20', 'updated_at' => '2025-06-23 17:36:20'],
+            ['permission_id' => 62, 'menu_id' => 23, 'created_at' => '2025-06-23 17:36:20', 'updated_at' => '2025-06-23 17:36:20'],
+            ['permission_id' => 63, 'menu_id' => 14, 'created_at' => '2025-06-23 17:36:57', 'updated_at' => '2025-06-23 17:36:57'],
+            ['permission_id' => 63, 'menu_id' => 23, 'created_at' => '2025-06-23 17:36:57', 'updated_at' => '2025-06-23 17:36:57'],
+            ['permission_id' => 64, 'menu_id' => 14, 'created_at' => '2025-06-23 17:38:01', 'updated_at' => '2025-06-23 17:38:01'],
+            ['permission_id' => 64, 'menu_id' => 23, 'created_at' => '2025-06-23 17:38:01', 'updated_at' => '2025-06-23 17:38:01'],
+            // 常见问题管理
+            ['permission_id' => 65, 'menu_id' => 14, 'created_at' => '2025-06-23 17:38:53', 'updated_at' => '2025-06-23 17:38:53'],
+            ['permission_id' => 65, 'menu_id' => 24, 'created_at' => '2025-06-23 17:38:53', 'updated_at' => '2025-06-23 17:38:53'],
+            ['permission_id' => 66, 'menu_id' => 14, 'created_at' => '2025-06-23 17:39:49', 'updated_at' => '2025-06-23 17:39:49'],
+            ['permission_id' => 66, 'menu_id' => 24, 'created_at' => '2025-06-23 17:39:49', 'updated_at' => '2025-06-23 17:39:49'],
+            ['permission_id' => 67, 'menu_id' => 14, 'created_at' => '2025-06-23 17:40:37', 'updated_at' => '2025-06-23 17:40:37'],
+            ['permission_id' => 67, 'menu_id' => 24, 'created_at' => '2025-06-23 17:40:37', 'updated_at' => '2025-06-23 17:40:37'],
+            ['permission_id' => 68, 'menu_id' => 14, 'created_at' => '2025-06-23 17:41:07', 'updated_at' => '2025-06-23 17:41:07'],
+            ['permission_id' => 68, 'menu_id' => 24, 'created_at' => '2025-06-23 17:41:07', 'updated_at' => '2025-06-23 17:41:07'],
+            ['permission_id' => 69, 'menu_id' => 14, 'created_at' => '2025-06-23 17:43:08', 'updated_at' => '2025-06-23 17:43:08'],
+            ['permission_id' => 69, 'menu_id' => 24, 'created_at' => '2025-06-23 17:43:08', 'updated_at' => '2025-06-23 17:43:08'],
+            // APP版本管理
+            ['permission_id' => 70, 'menu_id' => 25, 'created_at' => '2025-06-23 17:46:57', 'updated_at' => '2025-06-23 17:46:57'],
+            ['permission_id' => 71, 'menu_id' => 25, 'created_at' => '2025-06-23 17:48:12', 'updated_at' => '2025-06-23 17:48:12'],
+            ['permission_id' => 72, 'menu_id' => 25, 'created_at' => '2025-06-23 17:48:43', 'updated_at' => '2025-06-23 17:48:43'],
+            ['permission_id' => 73, 'menu_id' => 25, 'created_at' => '2025-06-23 17:49:10', 'updated_at' => '2025-06-23 17:49:10'],
+            ['permission_id' => 74, 'menu_id' => 25, 'created_at' => '2025-06-23 17:49:48', 'updated_at' => '2025-06-23 17:49:48']
         ];
 
         DB::table('admin_permission_menu')->truncate();  // 清空表

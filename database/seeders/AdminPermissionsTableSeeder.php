@@ -232,7 +232,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 21,
-                'name' => '添加',
+                'name' => '新增',
                 'slug' => 'banners_add',
                 'http_method' => '',
                 'http_path' => '/sys/banners/create*',
@@ -287,7 +287,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 26,
-                'name' => '添加',
+                'name' => '新增',
                 'slug' => 'notices_add',
                 'http_method' => '',
                 'http_path' => '/sys/notices/create*',
@@ -298,7 +298,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 27,
-                'name' => '编辑(包含查看)',
+                'name' => '编辑(包含显示)',
                 'slug' => 'notices_edit',
                 'http_method' => 'GET,PUT',
                 'http_path' => '/sys/notices/*,/sys/notices/*/edit',
@@ -331,7 +331,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 31,
-                'name' => '添加',
+                'name' => '新增',
                 'slug' => 'messages_add',
                 'http_method' => '',
                 'http_path' => '/sys/messages/create*',
@@ -342,7 +342,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 32,
-                'name' => '编辑(包含查看)',
+                'name' => '编辑(包含显示)',
                 'slug' => 'messages_edit',
                 'http_method' => 'GET,PUT',
                 'http_path' => '/sys/messages/*,/sys/messages/*/edit',
@@ -375,7 +375,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 35,
-                'name' => '添加',
+                'name' => '新增',
                 'slug' => 'users_add',
                 'http_method' => '',
                 'http_path' => '/users/users/create*',
@@ -386,7 +386,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 36,
-                'name' => '编辑(包含查看)',
+                'name' => '编辑(包含显示)',
                 'slug' => 'users_edit',
                 'http_method' => 'GET,PUT',
                 'http_path' => '/users/users/*,/users/users/*/edit',
@@ -419,7 +419,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 39,
-                'name' => '添加',
+                'name' => '新增',
                 'slug' => 'article_categories_add',
                 'http_method' => '',
                 'http_path' => '/article/categories/create*',
@@ -463,7 +463,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 43,
-                'name' => '添加',
+                'name' => '新增',
                 'slug' => 'articles_add',
                 'http_method' => '',
                 'http_path' => '/article/articles/create*',
@@ -474,7 +474,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 44,
-                'name' => '编辑(包含查看)',
+                'name' => '编辑(包含显示)',
                 'slug' => 'articles_edit',
                 'http_method' => 'GET,PUT',
                 'http_path' => '/article/articles/*,/article/articles/*/edit',
@@ -518,7 +518,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 48,
-                'name' => '添加',
+                'name' => '新增',
                 'slug' => 'feedback_types_add',
                 'http_method' => '',
                 'http_path' => '/feedback/types/create*',
@@ -573,7 +573,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 53,
-                'name' => '添加',
+                'name' => '新增',
                 'slug' => 'feedbacks_add',
                 'http_method' => '',
                 'http_path' => '/feedback/feedbacks/create*',
@@ -584,7 +584,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 54,
-                'name' => '编辑(包含查看)',
+                'name' => '编辑(包含显示)',
                 'slug' => 'feedbacks_edit',
                 'http_method' => 'GET,PUT',
                 'http_path' => '/feedback/feedbacks/*,/feedback/feedbacks/*/edit',
@@ -617,7 +617,7 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 57,
-                'name' => '查看',
+                'name' => '显示',
                 'slug' => 'balances_view',
                 'http_method' => 'GET',
                 'http_path' => '/log/balances/*',
@@ -647,6 +647,174 @@ class AdminPermissionsTableSeeder extends Seeder
                 'parent_id' => 19,
                 'created_at' => '2025-02-10 11:44:39',
                 'updated_at' => '2025-02-10 11:44:39'
+            ],
+            // 常见问题类型管理
+            [
+                'id' => 60,
+                'name' => '常见问题类型管理',
+                'slug' => '常见问题类型管理',
+                'http_method' => '',
+                'http_path' => '',
+                'order' => 59,
+                'parent_id' => 14,
+                'created_at' => '2025-06-23 17:34:43',
+                'updated_at' => '2025-06-23 17:34:43'
+            ],
+            [
+                'id' => 61,
+                'name' => '列表',
+                'slug' => 'faqs_types_list',
+                'http_method' => '',
+                'http_path' => '/faqs/types',
+                'order' => 60,
+                'parent_id' => 60,
+                'created_at' => '2025-06-23 17:35:34',
+                'updated_at' => '2025-06-23 17:35:34'
+            ],
+            [
+                'id' => 62,
+                'name' => '新增',
+                'slug' => 'faqs_types_add',
+                'http_method' => '',
+                'http_path' => '/faqs/types/create*',
+                'order' => 61,
+                'parent_id' => 60,
+                'created_at' => '2025-06-23 17:36:20',
+                'updated_at' => '2025-06-23 17:36:20'
+            ],
+            [
+                'id' => 63,
+                'name' => '编辑',
+                'slug' => 'faqs_types_edit',
+                'http_method' => 'GET,PUT',
+                'http_path' => '/faqs/types/*,/faqs/types/*/edit',
+                'order' => 62,
+                'parent_id' => 60,
+                'created_at' => '2025-06-23 17:36:57',
+                'updated_at' => '2025-06-23 17:36:57'
+            ],
+            [
+                'id' => 64,
+                'name' => '删除',
+                'slug' => 'faqs_types_del',
+                'http_method' => 'DELETE',
+                'http_path' => '/faqs/types/*',
+                'order' => 63,
+                'parent_id' => 60,
+                'created_at' => '2025-06-23 17:38:01',
+                'updated_at' => '2025-06-23 17:38:01'
+            ],
+            // 常见问题管理
+            [
+                'id' => 65,
+                'name' => '常见问题管理',
+                'slug' => '常见问题管理',
+                'http_method' => '',
+                'http_path' => '',
+                'order' => 64,
+                'parent_id' => 14,
+                'created_at' => '2025-06-23 17:38:53',
+                'updated_at' => '2025-06-23 17:38:53'
+            ],
+            [
+                'id' => 66,
+                'name' => '列表',
+                'slug' => 'faqs_faqs_list',
+                'http_method' => '',
+                'http_path' => '/faqs/faqs',
+                'order' => 65,
+                'parent_id' => 65,
+                'created_at' => '2025-06-23 17:39:49',
+                'updated_at' => '2025-06-23 17:39:49'
+            ],
+            [
+                'id' => 67,
+                'name' => '新增',
+                'slug' => 'faqs_faqs_add',
+                'http_method' => '',
+                'http_path' => '/faqs/faqs/create*',
+                'order' => 66,
+                'parent_id' => 65,
+                'created_at' => '2025-06-23 17:40:37',
+                'updated_at' => '2025-06-23 17:40:37'
+            ],
+            [
+                'id' => 68,
+                'name' => '编辑',
+                'slug' => 'faqs_faqs_edit',
+                'http_method' => 'GET,PUT',
+                'http_path' => '/faqs/faqs/*,/faqs/faqs/*/edit',
+                'order' => 67,
+                'parent_id' => 65,
+                'created_at' => '2025-06-23 17:41:07',
+                'updated_at' => '2025-06-23 17:41:07'
+            ],
+            [
+                'id' => 69,
+                'name' => '删除',
+                'slug' => 'faqs_faqs_del',
+                'http_method' => 'DELETE',
+                'http_path' => '/faqs/faqs/*',
+                'order' => 68,
+                'parent_id' => 65,
+                'created_at' => '2025-06-23 17:43:08',
+                'updated_at' => '2025-06-23 17:43:08'
+            ],
+            // APP版本管理
+            [
+                'id' => 70,
+                'name' => 'APP版本管理',
+                'slug' => 'APP版本管理',
+                'http_method' => '',
+                'http_path' => '',
+                'order' => 69,
+                'parent_id' => 0,
+                'created_at' => '2025-06-23 17:46:57',
+                'updated_at' => '2025-06-23 17:46:57'
+            ],
+            [
+                'id' => 71,
+                'name' => '列表',
+                'slug' => 'app_versions_list',
+                'http_method' => '',
+                'http_path' => '/app/versions',
+                'order' => 70,
+                'parent_id' => 70,
+                'created_at' => '2025-06-23 17:48:12',
+                'updated_at' => '2025-06-23 17:48:12'
+            ],
+            [
+                'id' => 72,
+                'name' => '新增',
+                'slug' => 'app_versions_add',
+                'http_method' => '',
+                'http_path' => '/app/versions/create*',
+                'order' => 71,
+                'parent_id' => 70,
+                'created_at' => '2025-06-23 17:48:43',
+                'updated_at' => '2025-06-23 17:48:43'
+            ],
+            [
+                'id' => 73,
+                'name' => '编辑',
+                'slug' => 'app_versions_edit',
+                'http_method' => 'GET,PUT',
+                'http_path' => '/app/versions/*,/app/versions/*/edit',
+                'order' => 72,
+                'parent_id' => 70,
+                'created_at' => '2025-06-23 17:49:10',
+                'updated_at' => '2025-06-23 17:49:10'
+            ],
+            [
+                'id' => 74,
+                'name' => '删除',
+                'slug' => 'app_versions_del',
+                'http_method' => 'DELETE',
+                'http_path' => '/app/versions/*',
+                'order' => 73,
+                'parent_id' => 70,
+                'created_at' => '2025-06-23 17:49:48',
+                'updated_at' => '2025-06-23 17:49:48'
             ],
         ];
 

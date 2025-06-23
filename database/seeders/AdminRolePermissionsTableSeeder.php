@@ -55,6 +55,18 @@ class AdminRolePermissionsTableSeeder extends Seeder
             ['role_id' => 1, 'permission_id' => 57, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
             ['role_id' => 1, 'permission_id' => 58, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
             ['role_id' => 1, 'permission_id' => 59, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
+            ['role_id' => 1, 'permission_id' => 61, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
+            ['role_id' => 1, 'permission_id' => 62, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
+            ['role_id' => 1, 'permission_id' => 63, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
+            ['role_id' => 1, 'permission_id' => 64, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
+            ['role_id' => 1, 'permission_id' => 66, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
+            ['role_id' => 1, 'permission_id' => 67, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
+            ['role_id' => 1, 'permission_id' => 68, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
+            ['role_id' => 1, 'permission_id' => 69, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
+            ['role_id' => 1, 'permission_id' => 71, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
+            ['role_id' => 1, 'permission_id' => 72, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
+            ['role_id' => 1, 'permission_id' => 73, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
+            ['role_id' => 1, 'permission_id' => 74, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
         ];
 
         DB::table('admin_role_permissions')->truncate();  // 清空表
