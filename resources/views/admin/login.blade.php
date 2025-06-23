@@ -154,7 +154,7 @@
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                 <img class="form-tips" src="/static/admin_login/form-tips.png" alt="" />
                 <div class="title">
-                    {{ $app_name }}
+                    {{ $app_name }}后台管理系统
                 </div>
                 <div class="form-item ">
                     <div class="borderr">

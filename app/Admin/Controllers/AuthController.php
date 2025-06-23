@@ -17,7 +17,7 @@ class AuthController extends BaseAuthController{
         if ($this->guard()->check()) {
             return redirect($this->getRedirectPath());
         }
-        return $content->full()->body(view($this->view, ['app_name'=> Env::get("APP_NAME")]));
+        return $content->full()->body(view($this->view, ['app_name'=> config('admin.name')]));
     }
 
     /**
