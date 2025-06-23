@@ -71,7 +71,7 @@ return [
     // optional，默认 warning；日志路径为：sys_get_temp_dir().'/logs/yansongda.pay.log'
     'logger' => [
         'enable' => false,
-        'file' => null,
+        'file' => sys_get_temp_dir().'/logs/debug.pay.log',
         'level' => 'debug',
         'type' => 'single', // optional, 可选 daily.
         'max_file' => 30,
