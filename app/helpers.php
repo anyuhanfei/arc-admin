@@ -128,28 +128,6 @@ function get_collection_field(\Illuminate\Database\Eloquent\Collection $data_lis
 }
 
 /**
- * 二维码生成
- *
- * @param string $url 链接
- * @param string $identity 标识(文件名)
- * @return void
- */
-function qrcode($url, $identity){
-    include_once '../extend/phpqrcode/qrlib.php'; //放在extend中
-     //vendor('phpqrcode.phpqrcode'); //放在vender中
-     $errorCorrectionLevel = 'H'; //容错级别
-     $matrixPointSize = 5; //图片大小慢慢自己调整，只要是int就行
-     $path = './qrcode/';
-     $QR = $QRB = $path . $identity . ".png";
-     QRcode::png($url, $QR, $errorCorrectionLevel, $matrixPointSize, 2);
-     if(file_exists($path . $identity . ".png")){
-         return config("app.url") . "/qrcode/" . $identity . ".png";
-     }else{
-         return false;
-     }
- }
-
-/**
  * 后台会员展示优化
  *  使用方式：在 grid() 方法中的字段列表对象中使用 display() 方法，然后使用此方法
 *
