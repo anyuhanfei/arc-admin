@@ -26,10 +26,10 @@ return new class extends Migration
             $table->string('wxmini_openid')->default('');
             $table->string("wxapp_openid")->default('');
             $table->string("wx_openid")->default('');
-            // $table->string("wx_session_key")->default('');
-            // $table->string("wxapp_session_key")->default('');
-            // $table->string("wxmini_session_key")->default('');
-            $table->boolean('login_status')->default(true)->comment('登录状态(0=冻结、1=正常)');
+            $table->string("wx_session_key")->default('');
+            $table->string("wxapp_session_key")->default('');
+            $table->string("wxmini_session_key")->default('');
+            $table->enum('login_status', ['normal', 'frozen'])->default('normal')->comment('状态(normal=正常、frozen=冻结)');
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();

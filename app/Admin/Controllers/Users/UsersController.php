@@ -4,6 +4,7 @@ namespace App\Admin\Controllers\Users;
 
 use App\Enums\StatusEnum;
 use App\Enums\Users\CoinEnum;
+use App\Enums\Users\LoginStatusEnum;
 use App\Repositories\Users\Users;
 use App\Repositories\Users\UserBalances;
 use Dcat\Admin\Form;
@@ -11,6 +12,7 @@ use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 会员管理模块控制器
@@ -42,7 +44,7 @@ class UsersController extends AdminController{
             $grid->column('parent_user_id', '上级会员信息')->width("300px")->display(function(){
                 return $this->parent_user_id == 0 ? '' : admin_grid_user_field($this->parentUser);
             });
-            $grid->column('login_status')->select(StatusEnum::getDescriptions())->help('如果关闭则此会员无法登录');
+            $grid->column('login_status')->select(LoginStatusEnum::getDescriptions())->help('如果关闭则此会员无法登录');
             $grid->column('created_at');
             $field_parent_enable = $this->field_parent_enable;
             $grid->filter(function (Grid\Filter $filter) use($field_parent_enable){
@@ -55,7 +57,7 @@ class UsersController extends AdminController{
                     $filter->like('parent_user_id');
                     $filter->like('parentUser.account', '上级会员账号');
                 }
-                $filter->equal('login_status')->select(StatusEnum::getDescriptions());
+                $filter->equal('login_status')->select(LoginStatusEnum::getDescriptions());
             });
             // 添加、删除按钮
             if($this->create_operation == false){
@@ -77,7 +79,7 @@ class UsersController extends AdminController{
                     foreach(CoinEnum::getDescriptions() as $key=>$value){
                         $row[$key] = $row->balances->$key;
                     }
-                    $row['login_status'] = StatusEnum::getDescription($row->login_status);
+                    $row['login_status'] = LoginStatusEnum::getDescription($row->login_status);
                 }
                 return $rows;
             });
@@ -104,7 +106,7 @@ class UsersController extends AdminController{
             $show->field('details.sex', '性别');
             $show->field('details.birthday', '出生日期');
             $show->divider();
-            $show->field('login_status')->asSelect(StatusEnum::getDescriptions());
+            $show->field('login_status')->asSelect(LoginStatusEnum::getDescriptions());
             $show->field('created_at');
         });
     }
@@ -124,6 +126,7 @@ class UsersController extends AdminController{
                 }
                 // 密码加密、数据添加默认值
                 $form->saving(function (Form $form) {
+                    DB::beginTransaction();
                     $form->password = (new Users())->set_user_password($form->password ?? '');
                     $form->avatar = $form->avatar ?? 'avatar.jpeg';
                     $form->nickname = $form->nickname ?? '';
@@ -131,12 +134,13 @@ class UsersController extends AdminController{
                     $form->phone = $form->phone ?? '';
                     $form->email = $form->email ?? '';
                     $form->parent_user_id = $form->parent_user_id ?? 0;
-                    $form->login_status = 1;
+                    $form->login_status = LoginStatusEnum::NORMAL;
                 });
                 // 同步创建资产表与详情表
                 $form->saved(function (Form $form, $result) {
                     (new \App\Repositories\Users\UserBalances())->create_data($result);
                     (new \App\Repositories\Users\UserDetails())->create_data($result);
+                    DB::commit();
                 });
             }else{  // 修改
                 $form->tab('基本信息', function(Form $form){
@@ -152,7 +156,7 @@ class UsersController extends AdminController{
                     $form->text('password')->customFormat(function(){
                         return '';
                     })->help('不填写则不修改');
-                    $form->hidden('login_status', '登录状态')->options(StatusEnum::getDescriptions());
+                    $form->hidden('login_status', '登录权限')->options(LoginStatusEnum::getDescriptions());
                 });
                 // 资产管理
                 $form->tab('资产', function(Form $form){

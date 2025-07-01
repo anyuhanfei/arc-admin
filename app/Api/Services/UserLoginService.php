@@ -7,6 +7,9 @@ use App\Tools\Wx\WxLoginTool;
 use App\Tools\Wx\WxminiLoginTool;
 use App\Tools\YidunMobileTool;
 
+/**
+ * 用户登录服务
+ */
 class UserLoginService{
     protected $repository;
 
@@ -41,7 +44,6 @@ class UserLoginService{
         if(!$data || $this->repository->verify_user_password($data->password, $password) == false){
             throwBusinessException("账号或密码错误");
         }
-        $this->账号冻结验证($data);
         return $this->_user_login_data($data);
     }
 
@@ -72,7 +74,6 @@ class UserLoginService{
         if(!$data || $this->repository->verify_user_password($data->password, $password) == false){
             throwBusinessException("手机号或密码错误");
         }
-        $this->账号冻结验证($data);
         return $this->_user_login_data($data);
     }
 
@@ -90,7 +91,6 @@ class UserLoginService{
                 'phone' => $phone,
             ]);
         }
-        $this->账号冻结验证($data);
         return $this->_user_login_data($data);
     }
 
@@ -115,7 +115,6 @@ class UserLoginService{
                 'phone' => $phone,
             ]);
         }
-        $this->账号冻结验证($data);
         return $this->_user_login_data($data);
     }
 
@@ -140,7 +139,6 @@ class UserLoginService{
                 'avatar'=> $wx_data['headimgurl'],
             ]);
         }
-        $this->账号冻结验证($data);
         return $this->_user_login_data($data);
     }
 
@@ -162,26 +160,14 @@ class UserLoginService{
                 'phone'=> $wx_data['phone'],
             ]);
         }
-        $this->账号冻结验证($data);
         return $this->_user_login_data($data);
-    }
-
-    /**
-     * 判断登录的账号是否已冻结，如果已冻结则抛出异常
-     *
-     * @param object $user_data
-     * @return void
-     */
-    private function 账号冻结验证($user_data){
-        if($user_data->login_status == 0){
-            throwBusinessException('当前用户已被冻结');
-        }
     }
 
     /**
      * 整合登录后需要的基本信息
      */
     public function _user_login_data($user_data){
+        $this->repository->verify_status_by_user($user_data);
         $data = [
             'user_id'=> $user_data->id,
             'avatar'=> $user_data->full_avatar,

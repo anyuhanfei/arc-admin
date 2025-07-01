@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Users;
 
+use App\Enums\Users\LoginStatusEnum;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
@@ -139,8 +140,14 @@ class Users extends EloquentRepository{
         return $this->eloquentClass::where("id", $user_id)->update($params);
     }
 
+    /**
+     * 验证会员状态
+     *
+     * @param Model $user_data
+     * @return void
+     */
     public function verify_status_by_user(Model $user_data){
-        if(!$user_data || $user_data->login_status == 0){
+        if(!$user_data || $user_data->login_status == LoginStatusEnum::FROZEN){
             throwBusinessException("会员不存在或已冻结", NO_LOGIN);
         }
     }
