@@ -181,13 +181,17 @@ class SysService{
         $types = (new FaqTypes())->get_datas_by_publish();
         // 处理数据
         $types = $types->map(function($item){
-            // 只获取常见问题数据中状态为 normal 的数据
-            $item->faqs = $item->faqs->where('status', StatusEnum::NORMAL);
-            // 设置常见问题数据的可见字段
-            $item->faqs = $item->faqs->setVisible(['id', 'question', 'answer']);
+            // 只获取常见问题数据中状态为 normal 的数据并转换为数组
+            $item->faqs = $item->faqs
+                ->where('status', StatusEnum::NORMAL)
+                ->map(function($faq) {
+                    return $faq->only(['id', 'question', 'answer']);
+                })->values();
             // 处理完成数据后返回整体
             return $item;
-        })->setVisible(['id', 'name', 'faqs']); // 设置可见字段
+        })->map(function($item) {
+            return $item->only(['id', 'name', 'faqs']);
+        });
         return $types;
     }
 

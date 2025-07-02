@@ -26,9 +26,10 @@ class CreateFaqsTables extends Migration
         Schema::create('faqs', function (Blueprint $table) {
             $table->comment('常见问题表');
             $table->bigIncrements('id');
-            $table->string('type')->default('')->comment('类型');
+            $table->integer('type_id')->default(0)->comment('类型ID');
             $table->string('question')->default('')->comment('问题');
             $table->text('answer')->comment('回答');
+            $table->enum('status', ['normal', 'hidden'])->default('normal')->comment('状态');
             $table->timestamps();
             $table->softDeletes();
         });
