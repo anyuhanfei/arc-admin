@@ -26,7 +26,7 @@ class Users extends Model{
 
     public function fullAvatar(): Attribute{
         return Attribute::make(
-            get: fn(string|null $value, array $data) => Str::contains($data['avatar'], '//') ? $data['avatar'] : Storage::disk('admin')->url($data['avatar']),
+            get: fn(string|null $value, array $data) => empty($data['avatar']) ? '' : (Str::contains($data['avatar'], '//') ? $data['avatar'] : Storage::disk('admin')->url($data['avatar'])),
         );
     }
 
