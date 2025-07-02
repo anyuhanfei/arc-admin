@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Api\Controllers\BaseController;
 
 use App\Api\Services\SysService;
+use App\Enums\AppVersions\SideEnum;
 
 /**
  * 配置相关
@@ -138,7 +139,9 @@ class SysController extends BaseController{
      * @return void
      */
     public function app_version_check(Request $request){
-        $data = $this->service->get_app_version_check();
+        $default_side = SideEnum::getKeys()[0];
+        $side = $request->input('side', $default_side) ?? $default_side;
+        $data = $this->service->get_app_version_check($side);
         return success("版本信息", $data);
     }
 }

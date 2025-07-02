@@ -186,7 +186,7 @@ return new class extends Migration
             $table->string('title')->default('')->comment('标题');
             $table->string('image')->default('')->comment('图片');
             $table->string('content')->default('')->comment('内容');
-            $table->string('relevance_data', 2550)->comment('关联数据');
+            $table->string('relevance_data', 2550)->default('')->comment('关联数据');
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();
@@ -209,7 +209,7 @@ return new class extends Migration
         Schema::create('sys_settings', function (Blueprint $table) {
             $table->comment('网站设置表');
             $table->string('key')->default('')->primary()->comment('键');
-            $table->string('value')->default('')->comment('值');
+            $table->longText('value')->default('')->comment('值');
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();

@@ -8,6 +8,7 @@ return new class extends Migration{
     public function up(): void{
         Schema::create('app_versions', function (Blueprint $table) {
             $table->id();
+            $table->string('side')->nullable()->comment('端');
             $table->boolean('is_force')->default(0)->comment('是否强制更新');
             $table->string('wgt_url')->nullable()->comment('wgt包下载地址');
             $table->string('i_app_url')->nullable()->comment('iOS应用商店地址');

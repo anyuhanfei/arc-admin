@@ -213,8 +213,8 @@ class SysService{
      *
      * @return void
      */
-    public function get_app_version_check(){
-        $latestVersion = (new AppVersions())->get_latest_version();
+    public function get_app_version_check(string $side){
+        $latestVersion = (new AppVersions())->get_latest_version_by_side($side);
         if(!$latestVersion){
             throwBusinessException("暂无版本信息", 'no_version');
         }

@@ -11,4 +11,8 @@ class AppVersions extends EloquentRepository{
     public function get_latest_version():?EloquentModel{
         return $this->eloquentClass::orderBy("version", "desc")->first();
     }
+
+    public function get_latest_version_by_side(string $side):?EloquentModel{
+        return $this->eloquentClass::where("side", $side)->orderBy("version", "desc")->first();
+    }
 }

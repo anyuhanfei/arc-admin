@@ -19,6 +19,7 @@ return [
         'size' => '包大小',
         'content' => '更新内容',
         'is_force' => '是否强制更新',
+        'side' => '端',
     ],
 
     'options' => [
