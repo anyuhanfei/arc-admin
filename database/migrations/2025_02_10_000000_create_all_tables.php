@@ -199,6 +199,7 @@ return new class extends Migration
             $table->string('title')->default('')->comment('标题');
             $table->text('content')->nullable()->comment('内容');
             $table->string('image')->default('')->comment('图片');
+            $table->enum('status', ['normal', 'hidden'])->default('normal')->comment('状态');
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();
