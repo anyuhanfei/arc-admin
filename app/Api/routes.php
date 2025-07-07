@@ -63,8 +63,10 @@ Route::group([
     $router->post('user/bind/wxmini/phone', [\App\Api\Controllers\UserController::class, 'bind_wxmini_phone']);
 
     // 系统消息
+    $router->post('user/sys/messages/count', [\App\Api\Controllers\UserController::class, 'sys_message_count']);
     $router->post('user/sys/messages/list', [\App\Api\Controllers\UserController::class, 'sys_messages_list']);
     $router->post('user/sys/message/detail', [\App\Api\Controllers\UserController::class, 'sys_message_detail']);
+
     // 资产记录
     $router->post('user/balances/list', [\App\Api\Controllers\UserController::class, 'user_balances_log_list']);
     // 提现

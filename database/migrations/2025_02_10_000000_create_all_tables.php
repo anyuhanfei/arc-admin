@@ -182,6 +182,8 @@ return new class extends Migration
         Schema::create('sys_message_logs', function (Blueprint $table) {
             $table->comment('系统消息表');
             $table->integer('id', true);
+            $table->string('send_users_group', 50)->default('USERS')->comment('发送用户组');
+            $table->string("send_type", 50)->default('SYS')->comment('发送类型');
             $table->string('user_ids', 2550)->default('0')->comment('会员id集');
             $table->string('title')->default('')->comment('标题');
             $table->string('image')->default('')->comment('图片');

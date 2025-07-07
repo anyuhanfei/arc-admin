@@ -4,8 +4,9 @@ namespace App\Api\Controllers;
 use Illuminate\Http\Request;
 
 use App\Api\Controllers\BaseController;
-
+use App\Api\Services\SysMessageService;
 use App\Api\Services\UserService;
+use App\Enums\SysMessageLogs\SendTypeEnum;
 
 /**
  * 会员信息相关
@@ -57,6 +58,17 @@ class UserController extends BaseController{
     }
 
     /**
+     * 获取系统消息统计信息
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function sys_message_count(Request $request){
+        $data = (new SysMessageService($this->user_id))->get_sys_message_count();
+        return success("消息统计信息", $data);
+    }
+
+    /**
      * 获取系统消息列表
      *
      * @param \App\Api\Requests\PageRequest $request
@@ -65,7 +77,11 @@ class UserController extends BaseController{
     public function sys_messages_list(\App\Api\Requests\PageRequest $request){
         $page = $request->input("page");
         $limit = $request->input("limit");
-        $data = $this->service->get_sys_messages_list($page, $limit);
+        $type = $request->input("type", 'sys') ?? "sys";
+        if(!in_array($type, SendTypeEnum::getKeys())){
+            throwBusinessException("请传入正确的消息类型");
+        }
+        $data = (new SysMessageService($this->user_id))->get_sys_messages_list($page, $limit, $type);
         return success("系统消息列表", $data);
     }
 
@@ -77,7 +93,7 @@ class UserController extends BaseController{
      */
     public function sys_message_detail(Request $request){
         $id = $request->input("id");
-        $data = $this->service->get_sys_message_detail($id);
+        $data = (new SysMessageService($this->user_id))->get_sys_message_detail($id);
         return success("系统消息详情", $data);
     }
 

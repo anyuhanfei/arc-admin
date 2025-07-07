@@ -34,4 +34,8 @@ class SysMessageLogs extends Model{
             $query->whereRaw("FIND_IN_SET({$value}, user_ids)");
         });
     }
+
+    public function scopeType(Builder $builder, string $value){
+        return $builder->where("send_type", $value);
+    }
 }
