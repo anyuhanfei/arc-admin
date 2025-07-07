@@ -104,29 +104,73 @@ class UserService{
     }
 
     /**
-     * 获取微信绑定的手机号并保存手机号
+     * 获取微信小程序绑定的手机号并保存手机号
      *
      * @param string $iv
      * @param string $encryptedData
      * @return void
      */
-    public function bind_wxmini_phone_operation(string $iv, string $encryptedData):string{
+    public function bind_wxmini_phone_operation(string $iv, string $encryptedData){
+        // 通过微信小程序的参数获取手机号
         $user_data = (new Users())->get_data_by_id($this->user_id);
         $phone = (new \App\Tools\Wx\WxminiLoginTool())->get_wx_phone($user_data->wxmini_openid, $iv, $encryptedData);
-        // 判断手机号是否已存在, 如果已存在，则合并账号
-        $user_data_by_phone = (new Users())->get_data_by_phone($phone);
-        if($user_data_by_phone){
-            // 合并账号
-            (new Users())->update_datas_by_user($user_data_by_phone->id, [
-                'wxmini_openid'=> $user_data->wxmini_openid,
+        // 执行绑定手机号/合并账号操作
+        return $this->_bind_phone_operation($phone, 'wxmini_openid');
+    }
+
+    /**
+     * 微信公众号/H5授权时，绑定输入的手机号
+     *
+     * @param string $phone
+     * @return void
+     */
+    public function bind_wx_phone_operation(string $phone){
+        // 执行绑定手机号/合并账号操作
+        return $this->_bind_phone_operation($phone, 'wx_openid');
+    }
+
+    /**
+     * 微信小程序绑定输入的手机号
+     *
+     * @param string $phone
+     * @return void
+     */
+    public function bind_wxapp_phone_operation(string $phone){
+        // 执行绑定手机号/合并账号操作
+        return $this->_bind_phone_operation($phone, 'wxapp_openid');
+    }
+
+    /**
+     * 绑定手机号/合并账号操作
+     *
+     * @param string $phone
+     * @param string $openid_field_name
+     * @return void
+     */
+    private function _bind_phone_operation(string $phone, string $openid_field_name){
+        $user_data = (new Users())->get_data_by_id($this->user_id);
+        if($user_data->phone != ''){
+            throwBusinessException('您已经绑定过手机号，无需再次绑定');
+        }
+        $verify_user_data = (new Users())->get_data_by_phone($phone);
+        if($verify_user_data){
+            // 当前手机号已经存在账号，那么进行合并操作
+            if($verify_user_data->$openid_field_name != ''){
+                throwBusinessException('当前手机号已经绑定过微信账号，无法再次绑定');
+            }
+            (new Users())->update_datas_by_user($verify_user_data->id, [
+                $openid_field_name=> $user_data->$openid_field_name,
             ]);
             $user_data->delete();
-            $user_data = $user_data_by_phone;
+            $user_data = $verify_user_data;
         }else{
-            $this->update_datas_operation(['user_id' => $this->user_id, 'phone' => $phone]);
+            // 当前手机号不存在账号，那么进行绑定操作
+            $this->update_datas_operation(['phone' => $phone]);
         }
+        $user_data = (new Users())->get_data_by_id($user_data->id);
         return (new UserLoginService((new Users())))->_user_login_data($user_data);
     }
+
 
     /**
      * 获取会员资金流水记录

@@ -73,10 +73,10 @@ class UserLoginController extends BaseController{
     /**
      * 手机号短信登录(一键登录不用注册)
      *
-     * @param \App\Api\Requests\UserLogin\PhoneSmscodeLoginRequest $request
+     * @param \App\Api\Requests\PhoneSmscodeRequest $request
      * @return void
      */
-    public function phone_smscode_login(\App\Api\Requests\UserLogin\PhoneSmscodeLoginRequest $request){
+    public function phone_smscode_login(\App\Api\Requests\PhoneSmscodeRequest $request){
         $phone = $request->input('phone');
         $data = $this->service->phone_smscode_login_operation($phone);
         return success('登录成功', $data);
@@ -119,5 +119,15 @@ class UserLoginController extends BaseController{
         return success('登录成功', $data);
     }
 
-    // TODO::缺少微信APP授权登录
+    /**
+     * 微信APP登录
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function wxapp_oauth_login(\App\Api\Requests\UserLogin\WxOauthLoginRequest $request){
+        $code = $request->input('code');
+        $data = $this->service->wxapp_oauth_login_operation($code);
+        return success('登录成功', $data);
+    }
 }

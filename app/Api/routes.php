@@ -20,9 +20,10 @@ Route::post('login/phone/password', [\App\Api\Controllers\UserLoginController::c
 // 手机号验证码登录注册
 Route::post('login/phone/smscode', [\App\Api\Controllers\UserLoginController::class, 'phone_smscode_login']);
 // 其他登录方式（云盾、微信公众号、微信小程序）
-Route::post('login/yidun_oauth', [\App\Api\Controllers\UserLoginController::class, 'yidun_oauth_login']);
-Route::post('login/wx_oauth', [\App\Api\Controllers\UserLoginController::class, 'wx_oauth_login']);
-Route::post('login/wxmini_oauth', [\App\Api\Controllers\UserLoginController::class, 'wxmini_oauth_login']);
+Route::post('login/yidun/oauth', [\App\Api\Controllers\UserLoginController::class, 'yidun_oauth_login']);
+Route::post('login/wx/oauth', [\App\Api\Controllers\UserLoginController::class, 'wx_oauth_login']);
+Route::post('login/wxmini/oauth', [\App\Api\Controllers\UserLoginController::class, 'wxmini_oauth_login']);
+Route::post('login/wxapp/oauth', [\App\Api\Controllers\UserLoginController::class, 'wxapp_oauth_login']);
 
 
 // 轮播图列表
@@ -59,8 +60,11 @@ Route::group([
     $router->post('user/detail', [\App\Api\Controllers\UserController::class, 'user_detail']);
     // 修改会员基本信息
     $router->post('user/update/data', [\App\Api\Controllers\UserController::class, 'update_basic_detail']);
-    // 绑定微信小程序手机号
+
+    // 绑定微信小程序/APP/公众号手机号
     $router->post('user/bind/wxmini/phone', [\App\Api\Controllers\UserController::class, 'bind_wxmini_phone']);
+    $router->post('user/bind/wxapp/phone', [\App\Api\Controllers\UserController::class, 'bind_wxapp_phone']);
+    $router->post('user/bind/wx/phone', [\App\Api\Controllers\UserController::class, 'bind_wx_phone']);
 
     // 系统消息
     $router->post('user/sys/messages/count', [\App\Api\Controllers\UserController::class, 'sys_message_count']);

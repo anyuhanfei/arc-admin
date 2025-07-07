@@ -5,7 +5,7 @@ use App\Api\Requests\BaseRequest;
 
 
 /**
- * 微信公众号/小程序授权登录验证
+ * 微信公众号/小程序/APP授权登录验证
  */
 class WxOauthLoginRequest extends BaseRequest{
     public function authorize(){

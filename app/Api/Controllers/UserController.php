@@ -45,6 +45,18 @@ class UserController extends BaseController{
     }
 
     /**
+     * 微信公众号/H5绑定手机号
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function bind_wx_phone(\App\Api\Requests\PhoneSmscodeRequest $request){
+        $phone = $request->input('phone');
+        $res = $this->service->bind_wx_phone_operation($phone);
+        return success("绑定成功", $res);
+    }
+
+    /**
      * 微信小程序绑定手机号
      *
      * @param Request $request
@@ -55,6 +67,18 @@ class UserController extends BaseController{
         $encryptedData = $request->input('encryptedData');
         $phone = $this->service->bind_wxmini_phone_operation($iv, $encryptedData);
         return success("绑定成功", ['phone'=> $phone]);
+    }
+
+    /**
+     * 微信APP绑定手机号
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function bind_wxapp_phone(\App\Api\Requests\PhoneSmscodeRequest $request){
+        $phone = $request->input('phone');
+        $res = $this->service->bind_wxapp_phone_operation($phone);
+        return success("绑定成功", $res);
     }
 
     /**

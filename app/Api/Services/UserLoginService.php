@@ -1,8 +1,11 @@
 <?php
 namespace App\Api\Services;
 
+use Illuminate\Support\Str;
+
 use App\Repositories\Users\Users;
 
+use App\Tools\Wx\WxappLoginTool;
 use App\Tools\Wx\WxLoginTool;
 use App\Tools\Wx\WxminiLoginTool;
 use App\Tools\YidunMobileTool;
@@ -150,17 +153,41 @@ class UserLoginService{
      */
     public function wxmini_oauth_login_operation(string $code){
         $wx_data = (new WxminiLoginTool())->oauth($code);
-        $data = $this->repository->get_data_by_wx_openid($wx_data['openid']);
+        $data = $this->repository->get_data_by_wxmini_openid($wx_data['openid']);
         if(!$data){
             // 走注册流程
             $data = $this->repository->create_data([
-                'openid'=> $wx_data['openid'],
+                'wxmini_openid'=> $wx_data['openid'],
                 'nickname'=> $wx_data['nickname'],
                 'avatar'=> $wx_data['avatar'],
                 'phone'=> $wx_data['phone'],
             ]);
         }
         return $this->_user_login_data($data);
+    }
+
+    /**
+     * 微信APP授权登录（自动注册）
+     *
+     * @param string $code
+     * @return void
+     */
+    public function wxapp_oauth_login_operation(string $code){
+        $token_data = (new WxappLoginTool())->get_access_token($code);
+        $openid = $token_data['openid'];
+        $access_token = $token_data['access_token'];
+        // 获取到了openid，检测是否已经注册
+        $user_data = (new Users())->get_data_by_wxapp_openid($openid);
+        if(!$user_data){
+            // 走注册流程
+            $wx_user_data = (new WxappLoginTool())->get_user_info($access_token, $openid);
+            $user_data = (new Users())->create_data([
+                'wxapp_openid'=> $openid,
+                'nickname' => $wx_user_data['nickname'] ?? "微信用户_".Str::random(6),
+                'avatar' => $wx_user_data['headimgurl'],
+            ]);
+        }
+        return $this->_user_login_data($user_data);
     }
 
     /**

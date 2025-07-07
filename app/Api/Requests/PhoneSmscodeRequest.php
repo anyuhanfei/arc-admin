@@ -1,12 +1,12 @@
 <?php
-namespace App\Api\Requests\UserLogin;
+namespace App\Api\Requests;
 
 use App\Api\Requests\BaseRequest;
 
 /**
  * 手机号-验证码登录验证
  */
-class PhoneSmscodeLoginRequest extends BaseRequest{
+class PhoneSmscodeRequest extends BaseRequest{
     public function authorize(){
         return true;
     }

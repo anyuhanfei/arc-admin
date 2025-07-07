@@ -47,7 +47,12 @@ class Users extends EloquentRepository{
                 'password'=> $password,
                 'parent_user_id'=> $params['parent_user_id'] ?? 0,
                 'unionid'=> $params['unionid'] ?? '',
-                'openid'=> $params['openid'] ?? '',
+                'wxmini_openid'=> $params['wxmini_openid'] ?? '',
+                'wxapp_openid'=> $params['wxapp_openid'] ?? '',
+                'wx_openid'=> $params['wx_openid'] ?? '',
+                'wx_session_key'=> $params['wx_session_key'] ?? '',
+                'wxapp_session_key'=> $params['wxapp_session_key'] ?? '',
+                'wxmini_session_key'=> $params['wxmini_session_key'] ?? '',
                 'login_status'=> $params['login_status'] ?? 1,
             ]);
             (new UserBalances())->create_data($user_data->id);
@@ -88,6 +93,12 @@ class Users extends EloquentRepository{
      */
     public function get_data_by_wx_openid(string $openid):?EloquentModel{
         return $this->eloquentClass::where('wx_openid', $openid)->first();
+    }
+    public function get_data_by_wxapp_openid(string $openid):?EloquentModel{
+        return $this->eloquentClass::where('wxapp_openid', $openid)->first();
+    }
+    public function get_data_by_wxmini_openid(string $openid):?EloquentModel{
+        return $this->eloquentClass::where('wxmini_openid', $openid)->first();
     }
 
     /**
