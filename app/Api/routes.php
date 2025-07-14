@@ -78,7 +78,7 @@ Route::group([
     $router->post('user/withdraws/list', [\App\Api\Controllers\UserController::class, 'withdraws_list']);
 
     // 意见反馈
-    $router->post('feedback/apply', [\App\Api\Controllers\SysController::class, 'feedback']);
+    $router->post('feedback/apply', [\App\Api\Controllers\UserController::class, 'feedback']);
 
     // 会员退出登录
     $router->post('user/logout', [\App\Api\Controllers\UserController::class, 'logout']);

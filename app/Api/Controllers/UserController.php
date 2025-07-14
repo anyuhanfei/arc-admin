@@ -4,6 +4,7 @@ namespace App\Api\Controllers;
 use Illuminate\Http\Request;
 
 use App\Api\Controllers\BaseController;
+use App\Api\Requests\User\FeedbackRequest;
 use App\Api\Services\SysMessageService;
 use App\Api\Services\UserService;
 use App\Enums\SysMessageLogs\SendTypeEnum;
@@ -178,7 +179,7 @@ class UserController extends BaseController{
      * @param Request $request
      * @return void
      */
-    public function feedback(Request $request){
+    public function feedback(FeedbackRequest $request){
         $type = $request->input('type');
         $content = $request->input('content');
         $contact = $request->input('contact', '') ?? '';
