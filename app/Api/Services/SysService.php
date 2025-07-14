@@ -102,7 +102,11 @@ class SysService{
      *
      */
     public function get_article_categories_list(){
-        return (new ArticleCategories())->get_datas();
+        $datas = (new ArticleCategories())->get_datas();
+        foreach($datas as &$item){
+            $item->image = full_url($item->image);
+        }
+        return $datas;
     }
 
     /**
@@ -120,12 +124,11 @@ class SysService{
             $datas = (new Articles())->get_list($page, $limit);
         }
         $datas->load(['category']);
-        foreach($datas as &$item){
+        return format_paginated_datas($datas, ['id', 'category_id', 'title', 'intro', 'image', 'author', 'keyword', 'created_at', 'category_name'], function($item){
+            $item->image = full_url($item->image);
             $item->keyword = comma_str_to_array($item->keyword);
             $item->category_name = $item->category->name;
-        }
-        $datas = format_paginated_datas($datas, ['id', 'category_id', 'title', 'intro', 'image', 'author', 'keyword', 'created_at', 'category_name']);
-        return $datas;
+        });
     }
 
     /**
@@ -145,6 +148,7 @@ class SysService{
         }
         $data->keyword = comma_str_to_array($data->keyword);
         $data->category_name = $data->category->name;
+        $data->image = full_url($data->image);
         return $data;
     }
 
