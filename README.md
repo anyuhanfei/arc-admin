@@ -34,6 +34,13 @@ php artisan db:seed
 账号：admin
 密码：admin
 ```
+8. 进入后台后，点击左侧菜单 `开发工具` -> `扩展`, 将两个扩展都启用。
+9. 连接可视化数据库软件，打开 `admin_menu` 表的数据，将最后一行数据 `title` 为 `operation-logs` 的数据修改以下字段数据：
+```bash
+id: 27
+title: 后台操作日志
+icon: ''
+```
 
 #### TODO
 1. 公告、文章、轮播图的开关（发布、隐藏）

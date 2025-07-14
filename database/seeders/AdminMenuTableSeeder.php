@@ -322,6 +322,18 @@ class AdminMenuTableSeeder extends Seeder
                 'created_at' => '2025-02-08 16:36:45',
                 'updated_at' => '2025-02-08 16:36:45'
             ],
+            [
+                'id' => 29,
+                'parent_id' => 0,
+                'order' => 27,
+                'title' => 'Media Manager',
+                'icon' => "fa-folder-open",
+                'uri' => 'media',
+                'extension' => 'jatdung.media-manager',
+                'show' => 1,
+                'created_at' => '2025-02-08 16:36:45',
+                'updated_at' => '2025-02-08 16:36:45'
+            ],
         ];
 
         DB::table('admin_menu')->truncate();  // 清空表
