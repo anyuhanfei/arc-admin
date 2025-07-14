@@ -211,7 +211,7 @@ return new class extends Migration
         Schema::create('sys_settings', function (Blueprint $table) {
             $table->comment('网站设置表');
             $table->string('key')->default('')->primary()->comment('键');
-            $table->longText('value')->default('')->comment('值');
+            $table->longText('value')->comment('值');
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
             $table->dateTime('deleted_at')->nullable();
