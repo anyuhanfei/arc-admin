@@ -206,10 +206,17 @@ class SysService{
      * @return void
      */
     public function get_sys_data(){
-        $sys_setting_repository = new SysSettings();
-        return [
-            'withdraw_minimum_amount' => $sys_setting_repository->get_value_by_key("withdraw_minimum_amount"),
+        $ssr = new SysSettings();
+        // 填写需要返回的系统配置键名
+        $return_keys = [
+            'withdraw_minimum_amount',
+            'withdraw_fee_rate',
         ];
+        $return_datas = [];
+        foreach($return_keys as $key){
+            $return_datas[$key] = $ssr->get_value_by_key($key);
+        }
+        return $return_datas;
     }
 
     /**

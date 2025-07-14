@@ -43,8 +43,8 @@ class SysSettings extends EloquentRepository{
                 'test_eidt'=> ['type'=> "edit", "title"=> "测试富文本"],
             ],
             '应用设置'=> [
-                'withdraw_minimum_amount'=> ['type'=> 'number', 'title'=> "最低提现金额", 'step'=> '0.01'],
-                'withdraw_fee_rate'=> ['type'=> 'number', 'title'=> "提现手续费率", 'step'=> '0.01'],
+                'withdraw_minimum_amount'=> ['type'=> 'number', 'title'=> "最低提现金额", 'step'=> '0.01', 'help'=> "单位为 元"],
+                'withdraw_fee_rate'=> ['type'=> 'number', 'title'=> "提现手续费率", 'step'=> '0.01', 'help'=> "单位为 %"],
             ]
         ], $agreement_options);
     }
