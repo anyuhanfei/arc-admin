@@ -206,7 +206,17 @@ class AdminPermissionMenuTableSeeder extends Seeder
             ['permission_id' => 71, 'menu_id' => 25, 'created_at' => '2025-06-23 17:48:12', 'updated_at' => '2025-06-23 17:48:12'],
             ['permission_id' => 72, 'menu_id' => 25, 'created_at' => '2025-06-23 17:48:43', 'updated_at' => '2025-06-23 17:48:43'],
             ['permission_id' => 73, 'menu_id' => 25, 'created_at' => '2025-06-23 17:49:10', 'updated_at' => '2025-06-23 17:49:10'],
-            ['permission_id' => 74, 'menu_id' => 25, 'created_at' => '2025-06-23 17:49:48', 'updated_at' => '2025-06-23 17:49:48']
+            ['permission_id' => 74, 'menu_id' => 25, 'created_at' => '2025-06-23 17:49:48', 'updated_at' => '2025-06-23 17:49:48'],
+            // 后台操作日志/开发者
+            ['permission_id' => 75, 'menu_id' => 25, 'created_at' => '2025-06-23 17:49:48', 'updated_at' => '2025-06-23 17:49:48'],
+            ['permission_id' => 75, 'menu_id' => 27, 'created_at' => '2025-06-23 17:49:48', 'updated_at' => '2025-06-23 17:49:48'],
+            ['permission_id' => 75, 'menu_id' => 28, 'created_at' => '2025-06-23 17:49:48', 'updated_at' => '2025-06-23 17:49:48'],
+            ['permission_id' => 76, 'menu_id' => 27, 'created_at' => '2025-06-23 17:49:48', 'updated_at' => '2025-06-23 17:49:48'],
+            ['permission_id' => 76, 'menu_id' => 28, 'created_at' => '2025-06-23 17:49:48', 'updated_at' => '2025-06-23 17:49:48'],
+            ['permission_id' => 77, 'menu_id' => 27, 'created_at' => '2025-06-23 17:49:48', 'updated_at' => '2025-06-23 17:49:48'],
+            ['permission_id' => 77, 'menu_id' => 28, 'created_at' => '2025-06-23 17:49:48', 'updated_at' => '2025-06-23 17:49:48'],
+            ['permission_id' => 78, 'menu_id' => 27, 'created_at' => '2025-06-23 17:49:48', 'updated_at' => '2025-06-23 17:49:48'],
+            ['permission_id' => 78, 'menu_id' => 28, 'created_at' => '2025-06-23 17:49:48', 'updated_at' => '2025-06-23 17:49:48'],
         ];
 
         DB::table('admin_permission_menu')->truncate();  // 清空表

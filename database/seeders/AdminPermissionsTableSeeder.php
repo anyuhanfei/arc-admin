@@ -767,8 +767,8 @@ class AdminPermissionsTableSeeder extends Seeder
                 'slug' => 'APP版本管理',
                 'http_method' => '',
                 'http_path' => '',
-                'order' => 69,
-                'parent_id' => 0,
+                'order' => 70,
+                'parent_id' => 75,
                 'created_at' => '2025-06-23 17:46:57',
                 'updated_at' => '2025-06-23 17:46:57'
             ],
@@ -778,7 +778,7 @@ class AdminPermissionsTableSeeder extends Seeder
                 'slug' => 'app_versions_list',
                 'http_method' => '',
                 'http_path' => '/app/versions',
-                'order' => 70,
+                'order' => 71,
                 'parent_id' => 70,
                 'created_at' => '2025-06-23 17:48:12',
                 'updated_at' => '2025-06-23 17:48:12'
@@ -789,7 +789,7 @@ class AdminPermissionsTableSeeder extends Seeder
                 'slug' => 'app_versions_add',
                 'http_method' => '',
                 'http_path' => '/app/versions/create*',
-                'order' => 71,
+                'order' => 72,
                 'parent_id' => 70,
                 'created_at' => '2025-06-23 17:48:43',
                 'updated_at' => '2025-06-23 17:48:43'
@@ -800,7 +800,7 @@ class AdminPermissionsTableSeeder extends Seeder
                 'slug' => 'app_versions_edit',
                 'http_method' => 'GET,PUT',
                 'http_path' => '/app/versions/*,/app/versions/*/edit',
-                'order' => 72,
+                'order' => 73,
                 'parent_id' => 70,
                 'created_at' => '2025-06-23 17:49:10',
                 'updated_at' => '2025-06-23 17:49:10'
@@ -811,11 +811,58 @@ class AdminPermissionsTableSeeder extends Seeder
                 'slug' => 'app_versions_del',
                 'http_method' => 'DELETE',
                 'http_path' => '/app/versions/*',
-                'order' => 73,
+                'order' => 74,
                 'parent_id' => 70,
                 'created_at' => '2025-06-23 17:49:48',
                 'updated_at' => '2025-06-23 17:49:48'
             ],
+            // 开发者
+            [
+                'id' => 75,
+                'name' => '开发者',
+                'slug' => '开发者',
+                'http_method' => '',
+                'http_path' => '',
+                'order' => 69,
+                'parent_id' => 0,
+                'created_at' => '2025-06-23 17:48:12',
+                'updated_at' => '2025-06-23 17:48:12'
+            ],
+            // 后台操作日志
+            [
+                'id' => 76,
+                'name' => '后台操作日志',
+                'slug' => '后台操作日志',
+                'http_method' => '',
+                'http_path' => '',
+                'order' => 75,
+                'parent_id' => 75,
+                'created_at' => '2025-06-23 17:48:12',
+                'updated_at' => '2025-06-23 17:48:12'
+            ],
+            [
+                'id' => 77,
+                'name' => '列表',
+                'slug' => 'operation-logs_list',
+                'http_method' => '',
+                'http_path' => '/auth/operation-logs',
+                'order' => 76,
+                'parent_id' => 76,
+                'created_at' => '2025-06-23 17:48:12',
+                'updated_at' => '2025-06-23 17:48:12'
+            ],
+            [
+                'id' => 78,
+                'name' => '删除',
+                'slug' => 'operation-logs_del',
+                'http_method' => 'DELETE',
+                'http_path' => '/auth/operation-logs/*',
+                'order' => 77,
+                'parent_id' => 76,
+                'created_at' => '2025-06-23 17:48:12',
+                'updated_at' => '2025-06-23 17:48:12'
+            ],
+
         ];
 
         DB::table('admin_permissions')->truncate();  // 清空表
