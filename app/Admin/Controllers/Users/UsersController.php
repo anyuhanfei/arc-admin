@@ -115,7 +115,7 @@ class UsersController extends AdminController{
         return Form::make(new Users(["balances", "details"]), function (Form $form) {
             $form->hidden('login_status');
             if($form->isCreating()){  // 添加
-                admin_form_image_field($form->image('avatar')->required());
+                admin_form_media_selector_field($form->mediaSelector('avatar')->required(), 1, ['image']);
                 $form->text('nickname')->required();
                 $form->text('account')->required();
                 $form->text('phone')->required();
@@ -145,7 +145,7 @@ class UsersController extends AdminController{
             }else{  // 修改
                 $form->tab('基本信息', function(Form $form){
                     $form->display('id');
-                    $this->admin_image_compress(admin_form_image_field($form->image('avatar')->required()));
+                    $this->admin_image_compress(admin_form_media_selector_field($form->mediaSelector('avatar')->required(), 1, ['image']));
                     $form->text('nickname');
                     $form->text('account');
                     $form->text('phone');

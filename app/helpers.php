@@ -179,6 +179,25 @@ function admin_form_image_field($image_obj){
 }
 
 /**
+ * 后台媒体选择表单上传处理
+ *  使用方法，将 form() 中的媒体选择表单对象传入此方法
+ *
+ * @param [type] $media_selector_obj
+ * @param int $limit
+ * @param array $types image-图片选择,video-视频选择,audio-音频选择,powerpoint-文稿选择,code-代码文件选择,zip-压缩包选择,text-文本选择,other-其他选择
+ * @return void
+ */
+function admin_form_media_selector_field($media_selector_obj, int $limit = 1, array $types = ['image']){
+    return $media_selector_obj->options([
+        'area'     => ['60%', '98%'], // 弹框大小
+        'limit'    => $limit, // 媒体数量
+        'types'    => $types, // 媒体选择类型
+        'sortable' => true, // 排序
+        'move'     => json_encode(['dir' => 'media', 'fileNameIsEncrypt' => true]),// 第一个参数，媒体上传路径。默认media。第二个参数，媒体名称是否加密。默认true
+    ]);
+}
+
+/**
  * 后台数字表单输入限制
  *  使用方法，将 form() 中的数字表单对象传入此方法
  *

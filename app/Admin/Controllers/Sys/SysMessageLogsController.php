@@ -177,7 +177,7 @@ class SysMessageLogsController extends AdminController{
             }
             // 上传图片
             if($this->field_image_enable){
-                admin_form_image_field($form->image('image')->required());
+                admin_form_media_selector_field($form->mediaSelector('image'), 1, ['image'])->required();
             }else{
                 $form->hidden("image");
             }

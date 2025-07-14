@@ -48,7 +48,7 @@ class SysSettingsController extends AdminController{
                                 $field = $form->switch($field_key, $value_arr['title']);
                                 break;
                             case "image":
-                                $field = admin_form_image_field($form->image($field_key, $value_arr['title']));
+                                $field = admin_form_media_selector_field($form->mediaSelector($field_key, $value_arr['title']), 1, ['image']);
                                 break;
                             case "number":
                                 $field = admin_form_number_field($form->text($field_key, $value_arr['title']), empty($value_arr['step']) ? '1' : $value_arr['step']);
@@ -98,7 +98,7 @@ class SysSettingsController extends AdminController{
                         $field_key = "sys.{$key}";
                         switch($value_arr['type']){
                             case "image":
-                                admin_form_image_field($form->image($field_key, $value_arr['title'])->required()->autoSave(false));
+                                admin_form_media_selector_field($form->mediaSelector($field_key, $value_arr['title'])->required()->autoSave(false));
                                 break;
                             default:
                                 $form->hidden($field_key, $value_arr['title']);

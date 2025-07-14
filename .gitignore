@@ -8,6 +8,7 @@
 /public/vendor
 /public/uploads/captcha
 /public/uploads/files
+/public/uploads/media
 .env
 .env.backup
 .env.production

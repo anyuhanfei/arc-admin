@@ -104,7 +104,7 @@ class SysNoticesController extends AdminController{
                     $form->hidden('content');
                     break;
             }
-            $this->field_image_enable ? admin_form_image_field($form->image('image')->required()) : '';
+            $this->field_image_enable ? admin_form_media_selector_field($form->mediaSelector('image'), 1, ['image'])->required() : '';
             if($this->type == '多条文字' || $this->type == "多条富文本"){
                 $form->radio('status', '状态')->options(StatusEnum::getDescriptions())->default(StatusEnum::NORMAL);
             }

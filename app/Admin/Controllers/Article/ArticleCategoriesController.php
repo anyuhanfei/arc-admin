@@ -34,7 +34,7 @@ class ArticleCategoriesController extends AdminController{
         return Form::make(new ArticleCategories(), function (Form $form) {
             $form->display('id');
             $form->text('name')->required();
-            $this->field_image_enable ? $this->admin_image_compress(admin_form_image_field($form->image('image')->required())) : '';
+            $this->field_image_enable ? $this->admin_image_compress(admin_form_media_selector_field($form->mediaSelector('image'), 1, ['image'])->required()) : '';
 
             $form->disableEditingCheck();
             $form->disableCreatingCheck();

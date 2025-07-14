@@ -83,7 +83,7 @@ class SysBannersController extends AdminController{
             }else{
                 $form->select("site", '位置')->options(SiteEnum::getDescriptions())->required();
             }
-            admin_form_image_field($form->image('image')->required());
+            admin_form_media_selector_field($form->mediaSelector('image'), 1, ['image'])->required();
             if($this->field_link_enable){
                 $form->hidden('link');
                 $form->select("link_type", '链接类型')->options(LinkTypeEnum::getDescriptions())->required()->when(['external_link'], function(Form $form){
