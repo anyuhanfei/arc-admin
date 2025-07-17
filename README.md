@@ -41,6 +41,10 @@ id: 27
 title: 后台操作日志
 icon: ''
 ```
+10. 运行以下命令完成扩展工具 `dcat-media-selector` 的数据库迁移
+```bash
+php artisan migrate --path=vendor/dememory/dcat-media-selector/updates
+```
 
 #### TODO
 1. 公告、文章、轮播图的开关（发布、隐藏）

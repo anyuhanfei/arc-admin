@@ -34,7 +34,7 @@ class ArticleCategoriesController extends AdminController{
         return Form::make(new ArticleCategories(), function (Form $form) {
             $form->display('id');
             $form->text('name')->required();
-            $this->field_image_enable ? $this->admin_image_compress(admin_form_media_selector_field($form->mediaSelector('image'), 1, ['image'])->required()) : '';
+            $this->field_image_enable ? admin_form_media_selector_field($form->mediaSelector('image'), 1, ['image'])->required() : '';
 
             $form->disableEditingCheck();
             $form->disableCreatingCheck();
@@ -46,16 +46,5 @@ class ArticleCategoriesController extends AdminController{
     public function get_categories(Request $request){
         $name = $request->get('q');
         return (new ArticleCategories())->admin_get_datas_by_name($name);
-    }
-
-
-    protected function admin_image_compress($image_obj){
-        return $image_obj->compress([
-            'width' => 320,
-            'height' => 320,
-            'quality' => 70,
-            'crop' => false,
-            'noCompressIfLarger' => true,
-        ]);
     }
 }

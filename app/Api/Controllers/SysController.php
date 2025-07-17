@@ -36,7 +36,6 @@ class SysController extends BaseController{
      * @return void
      */
     public function notices_list(\App\Api\Requests\PageRequest $request){
-        $page = $request->input("page", 1) ?? 1;
         $limit = $request->input("limit", 10) ?? 10;
         $data = $this->service->get_notices_list($limit);
         return success('公告列表', $data);
@@ -71,10 +70,9 @@ class SysController extends BaseController{
      * @return void
      */
     public function articles_list(\App\Api\Requests\PageRequest $request){
-        $page = $request->input("page", 1) ?? 1;
         $limit = $request->input("limit", 10) ?? 10;
         $category_id = $request->input("category_id", 0) ?? 0;
-        $datas = $this->service->get_articles_list($category_id, $page, $limit);
+        $datas = $this->service->get_articles_list($category_id, $limit);
         return success("文章列表", $datas);
     }
 

@@ -113,15 +113,14 @@ class SysService{
      * 获取文章列表
      *
      * @param integer $category_id
-     * @param integer $page
      * @param integer $limit
      * @return array
      */
-    public function get_articles_list(int $category_id, int $page = 1, int $limit = 10):array{
+    public function get_articles_list(int $category_id, int $limit = 10):array{
         if($category_id != 0){
-            $datas = (new Articles())->get_list_by_category($category_id, $page, $limit);
+            $datas = (new Articles())->get_list_by_category($category_id, $limit);
         }else{
-            $datas = (new Articles())->get_list($page, $limit);
+            $datas = (new Articles())->get_list($limit);
         }
         $datas->load(['category']);
         return format_paginated_datas($datas, ['id', 'category_id', 'title', 'intro', 'image', 'author', 'keyword', 'created_at', 'category_name'], function($item){

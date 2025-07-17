@@ -27,15 +27,16 @@ class SysMessageLogs extends EloquentRepository{
      * @param string $relevance_data 关联数据,格式一般为 <type>:<id>
      * @return void
      */
-    public function send_message(int|array $user_ids, string $title, string $content, string $image = '', string $relevance_data = ""){
+    public function send_message(int|array $user_ids, string $type, string $title, string $content, string $image = '', string $relevance_data = ""){
         $data = $this->eloquentClass::create([
             'user_ids' => $user_ids,
+            'send_type' => $type,
             'title' => $title,
             'content' => $content,
             'image' => $image,
             'relevance_data' => $relevance_data,
         ]);
-        $this->set_data_as_unread($user_ids, $data->id);
+        $this->set_data_as_unread($user_ids, $data->id, $type);
         return $data;
     }
 
@@ -44,12 +45,11 @@ class SysMessageLogs extends EloquentRepository{
      *
      * @param integer $user_id
      * @param string $type
-     * @param integer $page
      * @param integer $limit
      * @return Collection
      */
-    public function get_list_by_user_type(int $user_id, string $type, int $page, int $limit):LengthAwarePaginator{
-        return $this->eloquentClass::userIds($user_id)->type($type)->orderby("id", 'desc')->paginate($limit, ['*'], 'page', $page);
+    public function get_list_by_user_type(int $user_id, string $type, int $limit):LengthAwarePaginator{
+        return $this->eloquentClass::userIds($user_id)->type($type)->orderby("id", 'desc')->fastPaginate($limit);
     }
 
     /**

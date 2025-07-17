@@ -64,11 +64,10 @@ trait BaseRepository{
     /**
      * 以列表的形式获取数据
      *
-     * @param int $page 页码
      * @param int $limit 每页数量
      * @return LengthAwarePaginator
      */
-    public function get_list(int $page, int $limit):LengthAwarePaginator{
-        return $this->eloquentClass::paginate($limit, ['*'], 'page', $page);
+    public function get_list(int $limit):LengthAwarePaginator{
+        return $this->eloquentClass::fastPaginate($limit);
     }
 }

@@ -145,7 +145,7 @@ class UsersController extends AdminController{
             }else{  // 修改
                 $form->tab('基本信息', function(Form $form){
                     $form->display('id');
-                    $this->admin_image_compress(admin_form_media_selector_field($form->mediaSelector('avatar')->required(), 1, ['image']));
+                    admin_form_media_selector_field($form->mediaSelector('avatar')->required(), 1, ['image']);
                     $form->text('nickname');
                     $form->text('account');
                     $form->text('phone');
@@ -217,16 +217,5 @@ class UsersController extends AdminController{
     public function get_users(Request $request){
         $account = $request->get('q');
         return (new Users())->admin_get_datas_by_account($account);
-    }
-
-
-    protected function admin_image_compress($image_obj){
-        return $image_obj->compress([
-            'width' => 180,
-            'height' => 180,
-            'quality' => 70,
-            'crop' => false,
-            'noCompressIfLarger' => true,
-        ]);
     }
 }

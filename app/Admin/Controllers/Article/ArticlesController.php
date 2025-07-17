@@ -18,9 +18,9 @@ use Illuminate\Http\Request;
  */
 class ArticlesController extends AdminController{
     // 图片、简介、关键词字段是否使用
-    protected bool $field_image_enable = true;
-    protected bool $field_intro_enable = true;
-    protected bool $field_keyword_enable = true;
+    protected bool $field_image_enable = false;
+    protected bool $field_intro_enable = false;
+    protected bool $field_keyword_enable = false;
 
     protected function grid(){
         return Grid::make(new Articles(['category']), function (Grid $grid){

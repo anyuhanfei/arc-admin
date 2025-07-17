@@ -23,23 +23,21 @@ class Articles extends EloquentRepository{
      * 获取指定分类id的文章列表
      *
      * @param integer $category_id
-     * @param integer $page
      * @param integer $limit
      * @return LengthAwarePaginator
      */
-    public function get_list_by_category(int $category_id, int $page, int $limit):LengthAwarePaginator{
-        return $this->eloquentClass::categoryId($category_id)->status('normal')->paginate($limit, ['*'], 'page', $page);
+    public function get_list_by_category(int $category_id, int $limit):LengthAwarePaginator{
+        return $this->eloquentClass::categoryId($category_id)->status('normal')->fastPaginate($limit);
     }
 
     /**
      * 获取全部文章数据
      *
-     * @param integer $page
      * @param integer $limit
      * @return LengthAwarePaginator
      */
-    public function get_list(int $page, int $limit):LengthAwarePaginator{
-        return $this->eloquentClass::status('normal')->paginate($limit, ['*'], 'page', $page);
+    public function get_list(int $limit):LengthAwarePaginator{
+        return $this->eloquentClass::status('normal')->fastPaginate($limit);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers\Users;
 
+use App\Enums\SysMessageLogs\SendTypeEnum;
 use App\Enums\Users\CoinEnum;
 use App\Enums\UserWithdrawLogs\StatusEnum;
 use App\Repositories\Sys\SysMessageLogs;
@@ -117,7 +118,7 @@ class UserWithdrawLogsController extends AdminController{
                     DB::beginTransaction();
                     try{
                         (new UserBalances())->update_fund($form->model()->user_id, $form->model()->coin_type, $form->model()->amount, '提现申请驳回', $form->model()->id);
-                        (new SysMessageLogs())->send_message($form->model()->user_id, "您的提现申请已被驳回", "提现申请被驳回，原因：{$form->reject_cause}，请重新提交申请。", '', "withdraw:{$form->model()->id}");
+                        (new SysMessageLogs())->send_message($form->model()->user_id, SendTypeEnum::SYS, "您的提现申请已被驳回", "提现申请被驳回，原因：{$form->reject_cause}，请重新提交申请。", '', "withdraw:{$form->model()->id}");
                         DB::commit();
                     }catch(\Exception $e){
                         DB::rollBack();

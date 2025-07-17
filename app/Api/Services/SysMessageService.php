@@ -46,14 +46,13 @@ class SysMessageService{
     /**
      * 获取会员的消息列表
      *
-     * @param integer $page
      * @param integer $limit
      * @param string $type
      * @return void
      */
-    public function get_sys_messages_list(int $page, int $limit, string $type){
+    public function get_sys_messages_list(int $limit, string $type){
         $log_sys_message_repository = new SysMessageLogs();
-        $datas = $log_sys_message_repository->get_list_by_user_type($this->user_id, $type, $page, $limit);
+        $datas = $log_sys_message_repository->get_list_by_user_type($this->user_id, $type, $limit);
         return format_paginated_datas($datas, ['id', 'title', 'image', 'content', 'created_at', 'read_status'], function($item) use($log_sys_message_repository, $type){
             $item->read_status = $log_sys_message_repository->get_data_read_status_by_user($this->user_id, $item->id, $type);
             $item->image = full_url($item->image);

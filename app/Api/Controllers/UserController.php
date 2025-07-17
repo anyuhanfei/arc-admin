@@ -100,13 +100,12 @@ class UserController extends BaseController{
      * @return void
      */
     public function sys_messages_list(\App\Api\Requests\PageRequest $request){
-        $page = $request->input("page");
         $limit = $request->input("limit");
         $type = $request->input("type", 'sys') ?? "sys";
         if(!in_array($type, SendTypeEnum::getKeys())){
             throwBusinessException("请传入正确的消息类型");
         }
-        $data = (new SysMessageService($this->user_id))->get_sys_messages_list($page, $limit, $type);
+        $data = (new SysMessageService($this->user_id))->get_sys_messages_list($limit, $type);
         return success("系统消息列表", $data);
     }
 
