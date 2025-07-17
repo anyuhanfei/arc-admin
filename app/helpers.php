@@ -136,9 +136,9 @@ function get_collection_field(\Illuminate\Database\Eloquent\Collection $data_lis
 */
 function admin_grid_user_field($user_data, $default = '已注销'){
     try {
-        $avatar = $user_data->avatar == '' ? config("app.url") . "/static/avatar.jpeg" : $user_data->avatar;
+        $avatar = $user_data->avatar == '' ? config("app.url") . "/static/avatar.jpeg" : full_url($user_data->avatar);
         $str = '<div style="width:200px">';
-        $str .= '<img data-action="preview-img" src="' . $avatar . '" style="margin-top: 1px;margin-right: 1px;max-height:60px;cursor:pointer;float:left;" class="img img-thumbnail">';
+        $str .= '<img data-action="preview-img" src="' . $avatar . '" style="margin-top: 1px;margin-right: 1px;width:60px;height:60px;cursor:pointer;float:left;" class="img img-thumbnail">';
         $str .= 'ID:&nbsp;<span class="label" style="padding:0em 0.3em 0em;background:#586cb1">' . $user_data->id . '</span>';
         $str .= "<br/>";
         $str .= '<span style="padding-top:2px;"><i class="feather icon-user"></i>:&nbsp;' . $user_data->nickname . '&nbsp;';

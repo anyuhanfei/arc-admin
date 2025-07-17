@@ -93,28 +93,28 @@ class UserWithdrawLogsController extends AdminController{
                 $form->display("bank_card_bank", '银行卡开户行');
                 $form->display("bank_card_sub_bank", "银行卡支行");
             }
-            if($form->model()->status == 0){
-                $form->radio('status')->options(['1' => '通过', '3' => '驳回'])->when('1', function(Form $form){
+            if($form->model()->status == StatusEnum::APPLY){
+                $form->radio('status')->options(['passed' => '通过', 'rejected' => '驳回'])->when('passed', function(Form $form){
                     // 如果是自动转账，请注释\删除
-                    $form->radio('remit_status', '打款状态')->options(['2' => '已打款'])->help("如果现实中已打款，请勾选");
-                })->when("3", function(Form $form){
+                    $form->radio('remit_status', '打款状态')->options(['paid' => '已打款'])->help("如果现实中已打款，请勾选");
+                })->when("rejected", function(Form $form){
                     // 输入驳回原因
-                    $form->text('reject_cause', '驳回原因')->required();
+                    $form->text('reject_cause', '驳回原因')->rules('required_if:status,rejected');
                 })->required();
             }
             // 如果是自动转账，请注释\删除
-            if($form->model()->status == 1){
-                $form->radio('status', '打款状态')->options(['2' => '已打款'])->required()->help("请在打款后勾选此项");
+            if($form->model()->status == StatusEnum::PASSED){
+                $form->radio('status', '打款状态')->options(['paid' => '已打款'])->required()->help("请在打款后勾选此项");
             }
             $form->saving(function (Form $form) {
                 // 是否是自动转账状态
                 $is_auto = false;
-                if($form->status == 1){  // 通过的处理操作
+                if($form->status == StatusEnum::PASSED){  // 通过的处理操作
                     // TODO::自动转账操作（手动打款无需编写额外代码）
                     if($is_auto){
-                        $form->status = 2;
+                        $form->status = StatusEnum::PAID;
                     }
-                }elseif($form->status == 3){  // 驳回的处理操作, 退回金额，发送驳回消息
+                }elseif($form->status == StatusEnum::REJECTED){  // 驳回的处理操作, 退回金额，发送驳回消息
                     DB::beginTransaction();
                     try{
                         (new UserBalances())->update_fund($form->model()->user_id, $form->model()->coin_type, $form->model()->amount, '提现申请驳回', $form->model()->id);
@@ -125,9 +125,9 @@ class UserWithdrawLogsController extends AdminController{
                         return $form->response()->error($e->getMessage());
                     }
                 }
-                // 如果手动勾选了自动打款
-                if($form->remit_status == 2){
-                    $form->status = 2;
+                // 如果手动勾选了已打款
+                if($form->remit_status == StatusEnum::PAID){
+                    $form->status = StatusEnum::PAID;
                 }
                 $form->deleteInput('remit_status');
                 $form->deleteInput('reject_cause');

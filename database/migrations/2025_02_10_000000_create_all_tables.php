@@ -95,7 +95,7 @@ return new class extends Migration
             $table->decimal('fee', 10)->default(0)->comment('手续费');
             $table->string('content')->default('')->comment('提现说明');
             $table->string('remark')->default('')->comment('会员备注');
-            $table->boolean('status')->default(false)->comment('状态，0=申请中、1=通过、2=驳回');
+            $table->enum('status', ['apply', 'passed', 'paid', 'rejected'])->default('apply')->comment('状态，apply=申请中、passed=已通过、paid=已打款、rejected=已驳回');
             $table->string('alipay_account')->default('')->comment('支付宝账号');
             $table->string('alipay_username')->default('')->comment('支付宝实名');
             $table->string('wx_account')->default('')->comment('微信账号');

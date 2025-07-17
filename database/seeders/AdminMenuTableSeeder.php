@@ -169,7 +169,7 @@ class AdminMenuTableSeeder extends Seeder
             [
                 'id' => 15,
                 'parent_id' => 14,
-                'order' => 15,
+                'order' => 16,
                 'title' => '文章管理',
                 'icon' => NULL,
                 'uri' => 'article/articles',
@@ -181,7 +181,7 @@ class AdminMenuTableSeeder extends Seeder
             [
                 'id' => 16,
                 'parent_id' => 14,
-                'order' => 16,
+                'order' => 15,
                 'title' => '文章分类管理',
                 'icon' => NULL,
                 'uri' => 'article/categories',

@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Users;
 
+use App\Enums\UserWithdrawLogs\StatusEnum;
 use App\Models\Users\UserWithdrawLogs as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
@@ -31,7 +32,7 @@ class UserWithdrawLogs extends EloquentRepository{
             'fee'=> $fee,
             'content'=> $content,
             'remark'=> $remark,
-            'status'=> 0,
+            'status'=> StatusEnum::APPLY,
             'alipay_account'=> $accounts['alipay_account'] ?? '',
             'alipay_username'=> $accounts['alipay_username'] ?? '',
             'wx_account'=> $accounts['wx_account'] ?? '',
