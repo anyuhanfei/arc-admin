@@ -25,7 +25,7 @@ class SysController extends BaseController{
      * @return void
      */
     public function banners_list(\App\Api\Requests\Sys\BannerRequest $request){
-        $site = $request->input("site", "首页") ?? '首页';
+        $site = $request->input("site", "home") ?? 'home';
         return success('轮播图', $this->service->get_banners_list($site));
     }
 

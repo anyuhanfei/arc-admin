@@ -34,7 +34,7 @@ class SysBannersController extends AdminController{
             $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
             if(count(SiteEnum::getKeys()) != 1){
-                $grid->column("site", '位置');
+                $grid->column("site", '位置')->using(SiteEnum::getDescriptions());;
             }
             $grid->column('image')->image('', 60, 60);
             if($this->field_link_enable){

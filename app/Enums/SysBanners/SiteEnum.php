@@ -10,10 +10,12 @@ enum SiteEnum implements BaseEnumInterface{
     use BaseEnumTrait;
 
     const HOME = 'home';
+    const USER = 'user';
 
     public static function getDescriptions(): array{
         return [
             self::HOME => '首页',
+            self::USER => '用户中心',
         ];
     }
 }
