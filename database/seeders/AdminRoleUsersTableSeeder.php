@@ -13,9 +13,11 @@ class AdminRoleUsersTableSeeder extends Seeder
     public function run(): void
     {
         $roleUsers = [
+            ['role_id' => 1, 'user_id'=> 1, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
             ['role_id' => 2, 'user_id'=> 2, 'created_at' => '2023-10-31 09:58:47', 'updated_at' => '2023-10-31 09:58:47'],
         ];
 
+        DB::table('admin_role_users')->truncate();  // 清空表
         DB::table('admin_role_users')->insert($roleUsers);
     }
 }

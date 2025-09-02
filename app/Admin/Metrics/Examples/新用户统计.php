@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 use App\Models\Users\Users;
 use Illuminate\Support\Facades\Cache;
 
-class 新会员统计 extends Line{
+class 新用户统计 extends Line{
 
     protected function init(){
         parent::init();
 
-        $this->title('新增会员统计');
+        $this->title('新增用户统计');
         $this->dropdown([
             '7' => '本周',
             '8' => '前一周',
@@ -23,10 +23,10 @@ class 新会员统计 extends Line{
     }
 
     public function handle(Request $request){
-        $本周数据 = $this->获取本周新增会员数量();
-        $前一周数据 = $this->获取前一周新增会员数量();
-        $本月数据 = $this->获取本月新增会员数量();
-        $前一月数据 = $this->获取前一月新增会员数量();
+        $本周数据 = $this->获取本周新增用户数量();
+        $前一周数据 = $this->获取前一周新增用户数量();
+        $本月数据 = $this->获取本月新增用户数量();
+        $前一月数据 = $this->获取前一月新增用户数量();
         $今日 = date('l, Y-m-d', time());
 
         $this->withContent($本周数据[$今日]);
@@ -89,12 +89,12 @@ HTML
     }
 
 
-    public function 获取本周新增会员数量(){
+    public function 获取本周新增用户数量(){
         $date = date('Y-m-d', strtotime('this week')); // 获取本周的第一天
         $today = date("Y-m-d", time()); // 今日
         $end_date = date('Y-m-d', strtotime('next week')); // 获取本周的最后一天
 
-        $members = array(); // 用于存储每天的新增会员数量
+        $members = array(); // 用于存储每天的新增用户数量
         while ($date < $end_date) {
             if($date == $today){  // 是今天的数据，缓存时间设置为60s (正在进行中，数据更新频繁)
                 $ttl = 60;
@@ -113,12 +113,12 @@ HTML
         return $members;
     }
 
-    public function 获取前一周新增会员数量(){
+    public function 获取前一周新增用户数量(){
         $date = date('Y-m-d', strtotime('last week')); // 获取前一周的第一天
         $end_date = date('Y-m-d', strtotime('this week')); // 获取本周的最后一天
 
         $ttl = 7 * 86400;  // 因为是过去的时间，所以不会改变了，直接缓存最大天数
-        $members = array(); // 用于存储每天的新增会员数量
+        $members = array(); // 用于存储每天的新增用户数量
         while ($date < $end_date) {
             // 获取当天数据并存储到结果中
             $members[date('l, Y-m-d', strtotime($date))] = Cache::remember("count_day_users_number:{$date}", $ttl, function() use($date){
@@ -130,12 +130,12 @@ HTML
         return $members;
     }
 
-    public function 获取本月新增会员数量(){
+    public function 获取本月新增用户数量(){
         $firstDay = strtotime(date('Y-m')); // 获取本月的第一天
         $today = date("Y-m-d", time()); // 今日
         $lastDay = strtotime(date('Y-m-01')) + (60*60*24*(date('t')-1)); // 获取本月的最后一天
 
-        $members = array(); // 用于存储每天的新增会员数量
+        $members = array(); // 用于存储每天的新增用户数量
         $ttl = strtotime(date("Y-m-d", time() + 86400)) -  time(); // 到第二天0点过期
         for($i = $firstDay; $i <= $lastDay; $i = strtotime('+1 day', $i)){
             $date = date("Y-m-d", $i);
@@ -153,11 +153,11 @@ HTML
         return $members;
     }
 
-    public function 获取前一月新增会员数量(){
+    public function 获取前一月新增用户数量(){
         $date = date("Y-m-d", strtotime("last month"));
         $end_date = date("Y-m-t", strtotime("last month"));
 
-        $members = array(); // 用于存储每天的新增会员数量
+        $members = array(); // 用于存储每天的新增用户数量
         $ttl = 30 * 86400;  // 因为是过去的时间，所以不会改变了，直接缓存最大天数
         while ($date <= $end_date) {
             // 获取当天数据并存储到结果中

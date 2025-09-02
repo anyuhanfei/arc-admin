@@ -7,13 +7,13 @@ use Dcat\Admin\Widgets\Metrics\Card;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
-class 总会员数统计 extends Card{
+class 总用户数统计 extends Card{
     protected $footer;
 
     protected function init(){
         parent::init();
 
-        $this->title('总会员数统计');
+        $this->title('总用户数统计');
         $this->dropdown([]);
     }
 
