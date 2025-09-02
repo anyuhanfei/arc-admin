@@ -106,7 +106,7 @@ class UsersController extends AdminController{
             $show->field('details.sex', '性别');
             $show->field('details.birthday', '出生日期');
             $show->divider();
-            $show->field('login_status')->asSelect(LoginStatusEnum::getDescriptions());
+            $show->field('login_status')->using(LoginStatusEnum::getDescriptions());
             $show->field('created_at');
         });
     }

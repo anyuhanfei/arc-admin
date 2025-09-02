@@ -57,7 +57,7 @@ class FeedbacksController extends AdminController{
             $show->field('images')->as(function(){
                 return json_decode($this->images, true);
             })->image('', 80, 80);
-            $show->field('status')->using((new Feedbacks())->status_array());
+            $show->field('status')->using(StatusEnum::getDescriptions());
             $show->field('admin_remark');
             $show->field('created_at');
             $show->field('updated_at');
@@ -70,9 +70,11 @@ class FeedbacksController extends AdminController{
      * @return Form
      */
     protected function form(){
-        return Form::make(new Feedbacks(), function (Form $form) {
+        return Form::make(new Feedbacks(['user']), function (Form $form) {
             $form->display('id');
             $form->display('user_id');
+            $form->display('user.nickname', '会员昵称');
+            $form->display("user.phone", '会员手机号');
             $form->display('type');
             $form->display('content');
             $form->display('contact');

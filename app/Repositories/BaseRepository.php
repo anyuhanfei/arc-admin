@@ -39,6 +39,9 @@ trait BaseRepository{
      * @return int 删除的行数
      */
     public function delete_data(int|array $ids):int{
+        if(is_int($ids)){
+            $ids = [$ids];
+        }
         return $this->eloquentClass::whereIn("id", $ids)->delete();
     }
 

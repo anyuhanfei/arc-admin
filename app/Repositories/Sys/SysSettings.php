@@ -40,7 +40,7 @@ class SysSettings extends EloquentRepository{
                 ]],
                 'test_image'=> ['type'=> "image", "title"=> "测试图片"],
                 'test_textarea'=> ['type'=> "textarea", "title"=> "测试长文本"],
-                'test_eidt'=> ['type'=> "edit", "title"=> "测试富文本"],
+                'test_eidt'=> ['type'=> "edit", "title"=> "测试富文本", "height"=> "800"],
             ],
             '应用设置'=> [
                 'withdraw_minimum_amount'=> ['type'=> 'number', 'title'=> "最低提现金额", 'step'=> '0.01', 'help'=> "单位为 元"],
@@ -89,7 +89,10 @@ class SysSettings extends EloquentRepository{
      * @param string|integer|float $value
      * @return int
      */
-    public function update_value_by_key(string $key, string|int|float $value):int{
+    public function update_value_by_key(string $key, string|int|float|array $value):int{
+        if(is_array($value)){
+            $value = json_encode($value);
+        }
         return $this->eloquentClass::key($key)->update([
             'value'=> $value,
         ]);

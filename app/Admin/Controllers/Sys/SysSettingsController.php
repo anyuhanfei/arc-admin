@@ -57,7 +57,7 @@ class SysSettingsController extends AdminController{
                                 $field = $form->textarea($field_key, $value_arr['title'])->rows(5);
                                 break;
                             case "edit":
-                                $field = $form->editor($field_key, $value_arr['title'])->height('600');
+                                $field = $form->editor($field_key, $value_arr['title'])->height($value_arr['height'] ?? '600');
                                 break;
                             default:
                                 $field = $form->text($field_key, $value_arr['title']);
@@ -98,7 +98,7 @@ class SysSettingsController extends AdminController{
                         $field_key = "sys.{$key}";
                         switch($value_arr['type']){
                             case "image":
-                                admin_form_media_selector_field($form->mediaSelector($field_key, $value_arr['title'])->required()->autoSave(false));
+                                admin_form_media_selector_field($form->mediaSelector($field_key, $value_arr['title'])->required());
                                 break;
                             default:
                                 $form->hidden($field_key, $value_arr['title']);

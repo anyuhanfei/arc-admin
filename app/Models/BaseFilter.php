@@ -14,14 +14,14 @@ trait BaseFilter{
 
     public function fullImage(): Attribute{
         return Attribute::make(
-            get: fn(string|null $value, array $data) => Str::contains($data['image'], '//') ? $data['image'] : Storage::disk('admin')->url($data['image']),
+            get: fn(string|null $value, array $data) => (Str::contains($data['image'], '//') || $data['image'] == '') ? $data['image'] : Storage::disk('admin')->url($data['image'])
         );
     }
 
     public function fullImages(): Attribute{
         return Attribute::make(
             get: fn (string|null $value, array $data) => array_map(function ($image) {
-                    return Str::contains($image, '//') ? $image : Storage::disk('admin')->url($image);
+                    return (Str::contains($image, '//') || $image == '') ? $image : Storage::disk('admin')->url($image);
                 }, comma_str_to_array($data['images'])),
         );
     }
