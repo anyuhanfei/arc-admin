@@ -11,7 +11,7 @@ use App\Models\BaseFilter;
 use App\Models\Users\Users;
 
 /**
- * 会员提现表数据模型
+ * 用户提现表数据模型
  */
 class UserWithdrawLogs extends Model{
 	use HasDateTimeFormatter;

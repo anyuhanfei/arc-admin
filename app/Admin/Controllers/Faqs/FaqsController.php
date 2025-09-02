@@ -46,7 +46,7 @@ class FaqsController extends AdminController{
             $form->select('type_id', '选择类型')->options("get/faqs/types")->required();
             $form->text('question')->required();
             $form->textarea('answer')->required();
-            $form->radio('status', '状态')->options(StatusEnum::getDescriptions())->help("当选择隐藏时，是对会员隐藏。")->default(StatusEnum::NORMAL)->required();
+            $form->radio('status', '状态')->options(StatusEnum::getDescriptions())->help("当选择隐藏时，是对用户隐藏。")->default(StatusEnum::NORMAL)->required();
             $form->disableViewButton();
             $form->disableViewCheck();
         });

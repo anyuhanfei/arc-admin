@@ -19,8 +19,8 @@ use GuzzleHttp\Psr7\Stream;
 # composer require alibabacloud/facebody-20191230
 
 # 使用流程：
-#   1. 为每一个会员创建一个样本
-#   2. 将会员的照片上传到样本中
+#   1. 为每一个用户创建一个样本
+#   2. 将用户的照片上传到样本中
 #   3. 使用时将本次的照片与样本中的照片比对，获取最匹配的样本后，再根据匹配度判断
 class AliyunOcrTool{
     protected $accessKeyId;
@@ -64,7 +64,7 @@ class AliyunOcrTool{
     }
 
     /**
-     * 创建一个样本，样本id为会员id
+     * 创建一个样本，样本id为用户id
      *
      * @param integer $id
      * @return boolean 创建结果

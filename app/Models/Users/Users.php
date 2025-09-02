@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\BaseFilter;
 
 /**
- * 会员表数据模型
+ * 用户表数据模型
  */
 class Users extends Model{
 	use HasDateTimeFormatter;

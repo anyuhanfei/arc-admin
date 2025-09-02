@@ -19,9 +19,9 @@ class HomeController extends Controller
             ->body(function (Row $row) {
                 $row->column(12, function (Column $column) {
                     $column->row(function (Row $row) {
-                        $row->column(6, new Examples\新会员统计());
-                        $row->column(2, new Examples\总会员数统计());
-                        $row->column(2, new Examples\冻结会员数统计());
+                        $row->column(6, new Examples\新用户统计());
+                        $row->column(2, new Examples\总用户数统计());
+                        $row->column(2, new Examples\冻结用户数统计());
                     });
                     $column->row(function(Row $row){
                         $row->column(6, new Examples\资金流水统计());

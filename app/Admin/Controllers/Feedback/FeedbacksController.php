@@ -18,7 +18,7 @@ class FeedbacksController extends AdminController{
     protected function grid(){
         return Grid::make(new Feedbacks(), function (Grid $grid){
             $grid->column('id')->sortable();
-            $grid->column("user", '会员信息')->width("370px")->display(function(){
+            $grid->column("user", '用户信息')->width("370px")->display(function(){
                 return admin_grid_user_field($this->user);
             });
             $grid->column('type');
@@ -49,8 +49,8 @@ class FeedbacksController extends AdminController{
         return Show::make($id, new Feedbacks(['user']), function (Show $show) {
             $show->field('id');
             $show->field('user_id');
-            $show->field('user.nickname', '会员昵称');
-            $show->field('user.avatar', '会员头像')->image("", 60, 60);
+            $show->field('user.nickname', '用户昵称');
+            $show->field('user.avatar', '用户头像')->image("", 60, 60);
             $show->field('type');
             $show->field('content');
             $show->field('contact');
@@ -73,8 +73,8 @@ class FeedbacksController extends AdminController{
         return Form::make(new Feedbacks(['user']), function (Form $form) {
             $form->display('id');
             $form->display('user_id');
-            $form->display('user.nickname', '会员昵称');
-            $form->display("user.phone", '会员手机号');
+            $form->display('user.nickname', '用户昵称');
+            $form->display("user.phone", '用户手机号');
             $form->display('type');
             $form->display('content');
             $form->display('contact');

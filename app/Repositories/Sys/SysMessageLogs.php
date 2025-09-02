@@ -18,9 +18,9 @@ class SysMessageLogs extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**
-     * API:向指定会员发送系统消息
+     * API:向指定用户发送系统消息
      *
-     * @param integer|array $user_ids 会员id或会员id集
+     * @param integer|array $user_ids 用户id或用户id集
      * @param string $title 标题
      * @param string $content 内容
      * @param string $image 图片
@@ -41,7 +41,7 @@ class SysMessageLogs extends EloquentRepository{
     }
 
     /**
-     * 获取会员的消息列表
+     * 获取用户的消息列表
      *
      * @param integer $user_id
      * @param string $type
@@ -53,7 +53,7 @@ class SysMessageLogs extends EloquentRepository{
     }
 
     /**
-     * 获取会员的最新一条消息
+     * 获取用户的最新一条消息
      *
      * @param integer $user_id
      * @param string $type
@@ -64,7 +64,7 @@ class SysMessageLogs extends EloquentRepository{
     }
 
     /**
-     * 获取会员的消息详情
+     * 获取用户的消息详情
      *
      * @param integer $user_id
      * @param integer $message_id
@@ -76,9 +76,9 @@ class SysMessageLogs extends EloquentRepository{
 
     /**
      * 设置消息为未读
-     *   执行此方法时，会员集合必须是已经处理好的，例如不能是0表示全部会员这种。
+     *   执行此方法时，用户集合必须是已经处理好的，例如不能是0表示全部用户这种。
      *
-     * @param integer|array $user_ids 会员id或会员id集
+     * @param integer|array $user_ids 用户id或用户id集
      * @param integer $message_id 消息id
      * @param string $type 消息类型
      * @return void
@@ -98,7 +98,7 @@ class SysMessageLogs extends EloquentRepository{
     /**
      * 设置消息为已读
      *
-     * @param integer $user_id 会员id
+     * @param integer $user_id 用户id
      * @param integer $message_id 消息id
      * @param string $type 消息类型
      * @return void
@@ -125,7 +125,7 @@ class SysMessageLogs extends EloquentRepository{
     }
 
     /**
-     * 获取会员未读消息数量
+     * 获取用户未读消息数量
      *
      * @param int $user_id
      * @param string $type 消息类型

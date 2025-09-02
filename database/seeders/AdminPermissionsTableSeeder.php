@@ -133,8 +133,8 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 12,
-                'name' => '会员管理',
-                'slug' => '会员管理',
+                'name' => '用户管理',
+                'slug' => '用户管理',
                 'http_method' => '',
                 'http_path' => '',
                 'order' => 25,
@@ -144,8 +144,8 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 13,
-                'name' => '会员管理',
-                'slug' => '会员列表',
+                'name' => '用户管理',
+                'slug' => '用户列表',
                 'http_method' => '',
                 'http_path' => '',
                 'order' => 26,
@@ -199,8 +199,8 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 18,
-                'name' => '会员资金记录',
-                'slug' => '会员资金记录',
+                'name' => '用户资金记录',
+                'slug' => '用户资金记录',
                 'http_method' => '',
                 'http_path' => '',
                 'order' => 39,
@@ -210,8 +210,8 @@ class AdminPermissionsTableSeeder extends Seeder
             ],
             [
                 'id' => 19,
-                'name' => '会员提现管理',
-                'slug' => '会员提现管理',
+                'name' => '用户提现管理',
+                'slug' => '用户提现管理',
                 'http_method' => '',
                 'http_path' => '',
                 'order' => 40,

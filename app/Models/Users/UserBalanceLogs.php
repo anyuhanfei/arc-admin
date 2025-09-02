@@ -12,7 +12,7 @@ use App\Models\BaseFilter;
 
 
 /**
- * 会员资金记录表数据模型
+ * 用户资金记录表数据模型
  */
 class UserBalanceLogs extends Model{
 	use HasDateTimeFormatter;

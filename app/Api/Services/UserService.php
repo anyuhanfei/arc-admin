@@ -23,7 +23,7 @@ class UserService{
 
 
     /**
-     * 通过token获取到会员id
+     * 通过token获取到用户id
      *
      * @param string $token token
      * @return int
@@ -43,7 +43,7 @@ class UserService{
     }
 
     /**
-     * 获取会员详情
+     * 获取用户详情
      *
      * @return array
      */
@@ -65,8 +65,8 @@ class UserService{
     }
 
     /**
-     * 修改会员数据, 会员信息包含会员表和详情表
-     *  逻辑上，会员的数据只能存放在 user 表和 user_detail 表中，如果有存放在其他表中的数据无法使用此方法修改
+     * 修改用户数据, 用户信息包含用户表和详情表
+     *  逻辑上，用户的数据只能存放在 user 表和 user_detail 表中，如果有存放在其他表中的数据无法使用此方法修改
      *  注:密码不能在此修改
      *
      * @param array $params
@@ -82,7 +82,7 @@ class UserService{
                 if($value == '' || $value == null || $value == false){
                     continue;
                 }
-                // 不是会员主表的数据就是会员详情数据
+                // 不是用户主表的数据就是用户详情数据
                 if(array_key_exists($key, $user_data)){
                     $update_user_data[$key] = $value;
                 }else{
@@ -173,7 +173,7 @@ class UserService{
 
 
     /**
-     * 获取会员资金流水记录
+     * 获取用户资金流水记录
      *
      * @param integer $page
      * @param integer $limit
@@ -194,7 +194,7 @@ class UserService{
     }
 
     /**
-     * 获取会员的消息列表
+     * 获取用户的消息列表
      *
      * @param integer $page
      * @param integer $limit
@@ -213,7 +213,7 @@ class UserService{
     }
 
     /**
-     * 获取会员的系统消息详情
+     * 获取用户的系统消息详情
      *
      * @param integer $message_id
      * @return Model
@@ -229,7 +229,7 @@ class UserService{
     }
 
     /**
-     * 会员提现申请操作
+     * 用户提现申请操作
      *
      * @param integer|float $amount
      * @param string $account_type
@@ -294,7 +294,7 @@ class UserService{
     }
 
     /**
-     * 会员提现列表
+     * 用户提现列表
      *
      * @param integer $page
      * @param integer $limit

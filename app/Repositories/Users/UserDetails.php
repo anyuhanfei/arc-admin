@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 /**
- * 会员详情表数据仓库
+ * 用户详情表数据仓库
  */
 class UserDetails extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**
      * 创建数据
-     *   一般伴随创建会员是调用
+     *   一般伴随创建用户是调用
      *
      * @param integer $id
      * @return EloquentModel
@@ -27,7 +27,7 @@ class UserDetails extends EloquentRepository{
     }
 
     /**
-     * 修改会员中指定的数据
+     * 修改用户中指定的数据
      *
      * @param integer $user_id
      * @param array $params
@@ -38,7 +38,7 @@ class UserDetails extends EloquentRepository{
     }
 
     /**
-     * 通过会员id获取会员详情数据
+     * 通过用户id获取用户详情数据
      *
      * @param integer $user_id
      * @return EloquentModel|null

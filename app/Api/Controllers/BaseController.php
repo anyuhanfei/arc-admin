@@ -15,7 +15,7 @@ class BaseController extends Controller{
     protected $token;
 
     public function __construct(Request $request){
-        // 通过 header 中的 token 获取对应的 会员id
+        // 通过 header 中的 token 获取对应的 用户id
         if($request->hasHeader('token')){
             $user_service = new UserService();
             $this->user_id = $user_service->use_token_get_id($request->header('token'));

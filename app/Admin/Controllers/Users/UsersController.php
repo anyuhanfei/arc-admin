@@ -15,10 +15,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 /**
- * 会员管理模块控制器
+ * 用户管理模块控制器
  */
 class UsersController extends AdminController{
-    // 会员是否可后台添加、删除
+    // 用户是否可后台添加、删除
     protected bool $create_operation = true;
     protected bool $delete_operation = true;
     // 上级id字段是否启用
@@ -41,10 +41,10 @@ class UsersController extends AdminController{
                 }
                 return $str;
             });
-            $grid->column('parent_user_id', '上级会员信息')->width("300px")->display(function(){
+            $grid->column('parent_user_id', '上级用户信息')->width("300px")->display(function(){
                 return $this->parent_user_id == 0 ? '' : admin_grid_user_field($this->parentUser);
             });
-            $grid->column('login_status')->select(LoginStatusEnum::getDescriptions())->help('如果关闭则此会员无法登录');
+            $grid->column('login_status')->select(LoginStatusEnum::getDescriptions())->help('如果关闭则此用户无法登录');
             $grid->column('created_at');
             $field_parent_enable = $this->field_parent_enable;
             $grid->filter(function (Grid\Filter $filter) use($field_parent_enable){
@@ -55,7 +55,7 @@ class UsersController extends AdminController{
                 $filter->like('email');
                 if($field_parent_enable){
                     $filter->like('parent_user_id');
-                    $filter->like('parentUser.account', '上级会员账号');
+                    $filter->like('parentUser.account', '上级用户账号');
                 }
                 $filter->equal('login_status')->select(LoginStatusEnum::getDescriptions());
             });
@@ -68,7 +68,7 @@ class UsersController extends AdminController{
             }
             // 导出
             $titles = [
-                'id'=> "ID", 'nickname'=> "昵称", 'account'=> "账号", 'phone'=> "手机号", 'email'=> "邮箱", 'parent_user_id'=> "上级会员ID", 'parentUser.phone'=> "上级手机号", 'login_status'=> "登录权限", 'created_at'=> "创建时间"
+                'id'=> "ID", 'nickname'=> "昵称", 'account'=> "账号", 'phone'=> "手机号", 'email'=> "邮箱", 'parent_user_id'=> "上级用户ID", 'parentUser.phone'=> "上级手机号", 'login_status'=> "登录权限", 'created_at'=> "创建时间"
             ];
             foreach(CoinEnum::getDescriptions() as $key=>$value){
                 $titles[$key] = $value;

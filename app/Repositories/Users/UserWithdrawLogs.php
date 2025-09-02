@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
- * 会员提现表数据仓库
+ * 用户提现表数据仓库
  */
 class UserWithdrawLogs extends EloquentRepository{
     protected $eloquentClass = Model::class;
@@ -46,7 +46,7 @@ class UserWithdrawLogs extends EloquentRepository{
     }
 
     /**
-     * 获取会员提现列表
+     * 获取用户提现列表
      *
      * @param integer $user_id
      * @param integer $page

@@ -6,7 +6,7 @@ return [
         'feedback'=> "内容管理"
     ],
     'fields' => [
-        'user_id' => '会员ID',
+        'user_id' => '用户ID',
         'type' => '反馈类型',
         'content' => '反馈内容',
         'contact' => '联系方式',

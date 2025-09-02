@@ -14,13 +14,13 @@ use App\Models\Users\Users as Model;
 use Dcat\Admin\Repositories\EloquentRepository;
 
 /**
- * 会员表数据仓库
+ * 用户表数据仓库
  */
 class Users extends EloquentRepository{
     protected $eloquentClass = Model::class;
 
     /**
-     * 后台接单：获取会员列表
+     * 后台接单：获取用户列表
      *
      * @return Collection
      */
@@ -29,7 +29,7 @@ class Users extends EloquentRepository{
     }
 
     /**
-     * 创建会员
+     * 创建用户
      *
      * @param [type] $params
      * @return EloquentModel
@@ -122,7 +122,7 @@ class Users extends EloquentRepository{
     }
 
     /**
-     * 获取指定id的会员集
+     * 获取指定id的用户集
      *
      * @param array $ids
      * @return Collection
@@ -132,7 +132,7 @@ class Users extends EloquentRepository{
     }
 
     /**
-     * 获取全部会员的id
+     * 获取全部用户的id
      *
      * @return array
      */
@@ -141,7 +141,7 @@ class Users extends EloquentRepository{
     }
 
     /**
-     * 修改会员中指定的数据
+     * 修改用户中指定的数据
      *
      * @param integer $user_id
      * @param array $params
@@ -152,14 +152,14 @@ class Users extends EloquentRepository{
     }
 
     /**
-     * 验证会员状态
+     * 验证用户状态
      *
      * @param Model $user_data
      * @return void
      */
     public function verify_status_by_user(Model $user_data){
         if(!$user_data || $user_data->login_status == LoginStatusEnum::FROZEN){
-            throwBusinessException("会员不存在或已冻结", NO_LOGIN);
+            throwBusinessException("用户不存在或已冻结", NO_LOGIN);
         }
     }
 
@@ -190,9 +190,9 @@ class Users extends EloquentRepository{
 
     /**************************************start token***************************************** */
     /**
-     * 设置会员的token
+     * 设置用户的token
      *
-     * @param int $user_id 会员id
+     * @param int $user_id 用户id
      * @return string
      */
     public function set_token(int $user_id):string{
@@ -210,10 +210,10 @@ class Users extends EloquentRepository{
     }
 
     /**
-     * 删除会员的token信息
+     * 删除用户的token信息
      *  一般用于退出登录操作（无论是否设置为单点登录, 都仅删除当前登录的token）
      *
-     * @param int $user_id 会员id
+     * @param int $user_id 用户id
      * @return bool
      */
     public function delete_token(int $user_id, string $token):bool{
@@ -223,7 +223,7 @@ class Users extends EloquentRepository{
     }
 
     /**
-     * 通过token获取会员的id
+     * 通过token获取用户的id
      *
      * @param string $token token
      * @return int

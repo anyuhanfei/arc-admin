@@ -8,7 +8,7 @@ use App\Api\Controllers\BaseController;
 use App\Api\Services\UserLoginService;
 
 /**
- * 会员登录相关
+ * 用户登录相关
  */
 class UserLoginController extends BaseController{
     protected $service;

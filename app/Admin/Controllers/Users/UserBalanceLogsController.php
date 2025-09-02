@@ -9,7 +9,7 @@ use Dcat\Admin\Show;
 use Dcat\Admin\Http\Controllers\AdminController;
 
 /**
- * 会员资金管理模块控制器
+ * 用户资金管理模块控制器
  */
 class UserBalanceLogsController extends AdminController{
 
@@ -17,7 +17,7 @@ class UserBalanceLogsController extends AdminController{
         return Grid::make(new UserBalanceLogs(['user']), function (Grid $grid){
             $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
-            $grid->column("user", '会员信息')->display(function($value){
+            $grid->column("user", '用户信息')->display(function($value){
                 return admin_grid_user_field($value);
             });
             $grid->column('fund_type');
@@ -31,8 +31,8 @@ class UserBalanceLogsController extends AdminController{
             $grid->filter(function (Grid\Filter $filter){
                 $filter->equal('id');
                 $filter->equal('user_id');
-                $filter->equal('user.account', '会员账号');
-                $filter->equal('user.phone', '会员手机号');
+                $filter->equal('user.account', '用户账号');
+                $filter->equal('user.phone', '用户手机号');
                 $fund_type_array = UserBalanceLogs::fund_type_array();
                 $filter->equal('fund_type')->select(array_combine($fund_type_array, $fund_type_array));
                 $filter->between('created_at')->datetime();
@@ -51,7 +51,7 @@ class UserBalanceLogsController extends AdminController{
         return Show::make($id, new UserBalanceLogs(['user']), function (Show $show){
             $show->field('id');
             $show->field('user_id');
-            $show->field('user.account', '会员账号');
+            $show->field('user.account', '用户账号');
             $show->field('coin_type')->as(function($value){
                 return CoinEnum::getDescription($value) ?? "";
             });

@@ -128,7 +128,7 @@ function get_collection_field(\Illuminate\Database\Eloquent\Collection $data_lis
 }
 
 /**
- * 后台会员展示优化
+ * 后台用户展示优化
  *  使用方式：在 grid() 方法中的字段列表对象中使用 display() 方法，然后使用此方法
 *
 * @param [type] $user_data

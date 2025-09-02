@@ -7,7 +7,7 @@ use Dcat\Admin\Repositories\EloquentRepository;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 /**
- * 会员支付记录表数据仓库
+ * 用户支付记录表数据仓库
  */
 class UserPaymentLogs extends EloquentRepository{
     protected $eloquentClass = Model::class;

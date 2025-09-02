@@ -57,7 +57,7 @@ class WxminiLoginTool{
     }
 
     /**
-     * 访问微信小程序接口，获取会员openid
+     * 访问微信小程序接口，获取用户openid
      *
      * @param string $code
      * @return void

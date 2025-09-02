@@ -15,14 +15,14 @@ use Dcat\Admin\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\DB;
 
 /**
- * 会员提现记录控制器
+ * 用户提现记录控制器
  */
 class UserWithdrawLogsController extends AdminController{
     protected function grid(){
         return Grid::make(new UserWithdrawLogs(['user']), function (Grid $grid) {
             $grid->model()->orderBy('id', 'desc');
             $grid->column('id')->sortable();
-            $grid->column("user", '会员信息')->width("270px")->display(function(){
+            $grid->column("user", '用户信息')->width("270px")->display(function(){
                 return admin_grid_user_field($this->user);
             });
             $grid->column('coin_type')->using(CoinEnum::getDescriptions());
@@ -51,9 +51,9 @@ class UserWithdrawLogsController extends AdminController{
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
                 $filter->equal('user_id');
-                $filter->like('user.account', '会员账号');
-                $filter->like('user.nickname', '会员昵称');
-                $filter->like('user.phone', '会员手机号');
+                $filter->like('user.account', '用户账号');
+                $filter->like('user.nickname', '用户昵称');
+                $filter->like('user.phone', '用户手机号');
             });
             $grid->selector(function (Grid\Tools\Selector $selector) {
                 $selector->select("coin_type", "币种", CoinEnum::getDescriptions());

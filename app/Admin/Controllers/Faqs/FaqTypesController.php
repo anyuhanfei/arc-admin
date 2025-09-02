@@ -42,7 +42,7 @@ class FaqTypesController extends AdminController{
         return Form::make(new FaqTypes(), function (Form $form) {
             $form->display('id');
             $form->text('name')->required();
-            $form->radio('status')->options(StatusEnum::getDescriptions())->help("当选择隐藏时，是对会员隐藏。")->default(StatusEnum::NORMAL);
+            $form->radio('status')->options(StatusEnum::getDescriptions())->help("当选择隐藏时，是对用户隐藏。")->default(StatusEnum::NORMAL);
             $form->disableViewButton();
             $form->disableViewCheck();
         //     $form->saving(function (Form $form){

@@ -149,7 +149,7 @@ class SysMessageLogsController extends AdminController{
     protected function form(){
         return Form::make(new SysMessageLogs(), function (Form $form) {
             if($form->isCreating()){
-                // TODO::暂时只有创建时才能选择会员
+                // TODO::暂时只有创建时才能选择用户
                 if(count(SendUsersGroupEnum::getDescriptions()) > 1){
                     $form->radio("send_users_group")->options(SendUsersGroupEnum::getDescriptions())->default(SendUsersGroupEnum::USERS)->required()->when(SendUsersGroupEnum::USERS, function (Form $form){
                         $form->multipleSelect('user_ids', '选择用户')->options("get/users")->help('不选择表示所有用户')->saving(function ($value) {

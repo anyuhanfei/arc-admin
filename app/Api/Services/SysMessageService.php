@@ -44,7 +44,7 @@ class SysMessageService{
     }
 
     /**
-     * 获取会员的消息列表
+     * 获取用户的消息列表
      *
      * @param integer $limit
      * @param string $type
@@ -60,7 +60,7 @@ class SysMessageService{
     }
 
     /**
-     * 获取会员的系统消息详情
+     * 获取用户的系统消息详情
      *
      * @param integer $message_id
      * @return Model
@@ -77,7 +77,7 @@ class SysMessageService{
     }
 
     /**
-     * 会员提现申请操作
+     * 用户提现申请操作
      *
      * @param integer|float $amount
      * @param string $account_type
@@ -142,7 +142,7 @@ class SysMessageService{
     }
 
     /**
-     * 会员提现列表
+     * 用户提现列表
      *
      * @param integer $page
      * @param integer $limit

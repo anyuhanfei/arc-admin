@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model as EloquentModel;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
- * 会员资金记录表数据仓库
+ * 用户资金记录表数据仓库
  */
 class UserBalanceLogs extends EloquentRepository{
     protected $eloquentClass = Model::class;
@@ -25,7 +25,7 @@ class UserBalanceLogs extends EloquentRepository{
     /**
      * 添加数据
      *
-     * @param integer $user_id 会员id
+     * @param integer $user_id 用户id
      * @param string $coin_type 币种
      * @param string $fund_type 操作说明
      * @param integer|float $amount 金额
@@ -49,7 +49,7 @@ class UserBalanceLogs extends EloquentRepository{
     }
 
     /**
-     * 获取会员资金流水记录
+     * 获取用户资金流水记录
      *
      * @param integer $user_id
      * @param integer $page

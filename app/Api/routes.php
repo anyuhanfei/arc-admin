@@ -56,9 +56,9 @@ Route::match(['get', 'post'], 'alipay/notify', [\App\Api\Controllers\PayControll
 Route::group([
     'middleware' => ['user.token'],
 ], function(Router $router){
-    // 会员详情
+    // 用户详情
     $router->post('user/detail', [\App\Api\Controllers\UserController::class, 'user_detail']);
-    // 修改会员基本信息
+    // 修改用户基本信息
     $router->post('user/update/data', [\App\Api\Controllers\UserController::class, 'update_basic_detail']);
 
     // 绑定微信小程序/APP/公众号手机号
@@ -80,7 +80,7 @@ Route::group([
     // 意见反馈
     $router->post('feedback/apply', [\App\Api\Controllers\UserController::class, 'feedback']);
 
-    // 会员退出登录
+    // 用户退出登录
     $router->post('user/logout', [\App\Api\Controllers\UserController::class, 'logout']);
 
 });

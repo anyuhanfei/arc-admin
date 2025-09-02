@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * 会员资金表数据模型
+ * 用户资金表数据模型
  */
 class UserBalances extends Model{
     public $timestamps = false;

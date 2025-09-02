@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // 创建会员表
+        // 创建用户表
         Schema::create('users', function (Blueprint $table) {
-            $table->comment('会员表');
+            $table->comment('用户表');
             $table->integer('id', true);
             $table->string('avatar')->default('')->comment('头像');
             $table->string('nickname')->default('')->comment('昵称');
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('phone')->default('')->comment('手机号');
             $table->string('email')->default('')->comment('邮箱');
             $table->string('password')->default('')->comment('密码');
-            $table->integer('parent_user_id')->default(0)->comment('上级会员id');
+            $table->integer('parent_user_id')->default(0)->comment('上级用户id');
             $table->string('unionid')->default('');
             $table->string('wxmini_openid')->default('');
             $table->string("wxapp_openid")->default('');
@@ -35,27 +35,27 @@ return new class extends Migration
             $table->dateTime('deleted_at')->nullable();
         });
 
-        // 创建会员信息详情表
+        // 创建用户信息详情表
         Schema::create('user_details', function (Blueprint $table) {
-            $table->comment('会员信息详情表');
+            $table->comment('用户信息详情表');
             $table->integer('id')->primary();
             $table->enum('sex', ['未知', '男', '女'])->nullable()->default('未知')->comment('性别');
             $table->string('birthday')->nullable()->comment('生日');
         });
 
-        // 创建会员资金表
+        // 创建用户资金表
         Schema::create('user_balances', function (Blueprint $table) {
-            $table->comment('会员资金表');
+            $table->comment('用户资金表');
             $table->integer('id')->primary();
             $table->decimal('money', 10)->default(0)->comment('余额');
             $table->decimal('integral', 10)->default(0)->comment('积分');
         });
 
-        // 创建会员资金记录表
+        // 创建用户资金记录表
         Schema::create('user_balance_logs', function (Blueprint $table) {
-            $table->comment('会员资金记录');
+            $table->comment('用户资金记录');
             $table->integer('id', true);
-            $table->integer('user_id')->default(0)->comment('会员id');
+            $table->integer('user_id')->default(0)->comment('用户id');
             $table->string('coin_type')->default('')->comment('币种');
             $table->string('fund_type')->default('')->comment('记录说明');
             $table->string('relevance')->default('')->comment('关联数据');
@@ -72,7 +72,7 @@ return new class extends Migration
         Schema::create('user_payment_logs', function (Blueprint $table) {
             $table->comment('用户支付记录');
             $table->string('out_trade_no')->primary()->comment('支付流水号');
-            $table->integer('user_id')->default(0)->comment('会员id');
+            $table->integer('user_id')->default(0)->comment('用户id');
             $table->string('pay_method')->default('')->comment('支付方式');
             $table->string('pay_type')->default('')->comment('支付用途');
             $table->decimal('amount', 10)->default(0)->comment('支付金额');
@@ -85,16 +85,16 @@ return new class extends Migration
             $table->dateTime('deleted_at')->nullable();
         });
 
-        // 创建会员提现记录表
+        // 创建用户提现记录表
         Schema::create('user_withdraw_logs', function (Blueprint $table) {
-            $table->comment('会员提现记录');
+            $table->comment('用户提现记录');
             $table->integer('id', true);
-            $table->integer('user_id')->comment('会员id');
+            $table->integer('user_id')->comment('用户id');
             $table->string('coin_type')->default('')->comment('币种');
             $table->decimal('amount', 10)->default(0)->comment('金额');
             $table->decimal('fee', 10)->default(0)->comment('手续费');
             $table->string('content')->default('')->comment('提现说明');
-            $table->string('remark')->default('')->comment('会员备注');
+            $table->string('remark')->default('')->comment('用户备注');
             $table->enum('status', ['apply', 'passed', 'paid', 'rejected'])->default('apply')->comment('状态，apply=申请中、passed=已通过、paid=已打款、rejected=已驳回');
             $table->string('alipay_account')->default('')->comment('支付宝账号');
             $table->string('alipay_username')->default('')->comment('支付宝实名');
@@ -153,7 +153,7 @@ return new class extends Migration
         Schema::create('feedbacks', function (Blueprint $table) {
             $table->comment('意见反馈表');
             $table->integer('id', true);
-            $table->integer('user_id')->default(0)->comment('会员ID');
+            $table->integer('user_id')->default(0)->comment('用户ID');
             $table->string('type', 50)->default('')->comment('反馈类型');
             $table->text('content')->comment('反馈内容');
             $table->string('contact', 100)->default('')->comment('联系方式');
@@ -184,7 +184,7 @@ return new class extends Migration
             $table->integer('id', true);
             $table->string('send_users_group', 50)->default('USERS')->comment('发送用户组');
             $table->string("send_type", 50)->default('SYS')->comment('发送类型');
-            $table->string('user_ids', 2550)->default('0')->comment('会员id集');
+            $table->string('user_ids', 2550)->default('0')->comment('用户id集');
             $table->string('title')->default('')->comment('标题');
             $table->string('image')->default('')->comment('图片');
             $table->string('content')->default('')->comment('内容');

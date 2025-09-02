@@ -10,7 +10,7 @@ use App\Api\Services\UserService;
 use App\Enums\SysMessageLogs\SendTypeEnum;
 
 /**
- * 会员信息相关
+ * 用户信息相关
  */
 class UserController extends BaseController{
     protected $service;
@@ -21,13 +21,13 @@ class UserController extends BaseController{
     }
 
     /**
-     * 获取会员信息
+     * 获取用户信息
      *
      * @return void
      */
     public function user_detail(){
         $data = $this->service->get_user_detail();
-        return success("会员信息", $data);
+        return success("用户信息", $data);
     }
 
     /**
@@ -122,7 +122,7 @@ class UserController extends BaseController{
     }
 
     /**
-     * 获取会员资金流水记录
+     * 获取用户资金流水记录
      *
      * @param Request $request
      * @return void
@@ -133,11 +133,11 @@ class UserController extends BaseController{
         $search['coin_type'] = $request->input("coin_type", '') ?? '';
         $search['fund_type'] = $request->input("fund_type", '') ?? '';
         $data = $this->service->get_user_balances_log_list($page, $limit, $search);
-        return success("会员资金列表", $data);
+        return success("用户资金列表", $data);
     }
 
     /**
-     * 会员提现申请
+     * 用户提现申请
      *
      * @param \App\Api\Requests\User\WithdrawRequest $request
      * @return void
@@ -160,7 +160,7 @@ class UserController extends BaseController{
     }
 
     /**
-     * 会员提现列表
+     * 用户提现列表
      *
      * @param \App\Api\Requests\PageRequest $request
      * @return void

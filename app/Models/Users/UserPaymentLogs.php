@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Models\Users\Users;
 
 /**
- * 会员支付记录表数据模型
+ * 用户支付记录表数据模型
  */
 class UserPaymentLogs extends Model{
 	use HasDateTimeFormatter;
